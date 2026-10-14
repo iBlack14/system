@@ -1,0 +1,126 @@
+/* Mobile presentation only. Existing DOM controls and all actions are retained. */
+.mobile-record-controls{display:none}
+.mobile-bottom-nav{display:none}
+@media screen and (max-width:767px){
+  /* The bottom navigation is a direct child of AdminLTE's grid. Keep it out of
+     the grid flow or it creates an implicit sidebar-sized column on mobile. */
+  .acotec-app .app-wrapper{
+    grid-template-areas:"lte-app-header" "lte-app-main" "lte-app-footer";
+    grid-template-columns:minmax(0,1fr);
+    width:100%;
+    max-width:100%;
+  }
+  .acotec-app .app-header,.acotec-app .app-main,.acotec-app .app-footer{width:100%;min-width:0}
+  .acotec-app .app-main,.acotec-app .app-content,.acotec-app .card-body{min-width:0}
+  .acotec-app .app-content{padding:12px 8px 20px}
+  .acotec-app .app-main{padding-bottom:calc(76px + env(safe-area-inset-bottom))}
+  .mobile-bottom-nav{
+    position:fixed;
+    right:0;
+    bottom:0;
+    left:0;
+    z-index:1036;
+    display:flex;
+    align-items:stretch;
+    justify-content:space-around;
+    height:calc(68px + env(safe-area-inset-bottom));
+    padding:6px 4px env(safe-area-inset-bottom);
+    background:#fff;
+    border-top:1px solid #e2e8f0;
+    box-shadow:0 -6px 20px rgba(15,23,42,.08);
+  }
+  .mobile-bottom-nav>a,.mobile-bottom-nav>button{
+    flex:1 1 0;
+    min-width:0;
+    border:0;
+    background:transparent;
+    color:#64748b;
+    text-decoration:none;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:2px;
+    font:600 10px/1.2 'Plus Jakarta Sans',sans-serif;
+  }
+  .mobile-bottom-nav i{font-size:19px;line-height:1}
+  .mobile-bottom-nav .active{color:#e07109}
+  body.modal-open .mobile-bottom-nav{visibility:hidden}
+  .acotec-app .card-header{padding:12px;gap:8px;align-items:flex-start!important}
+  .acotec-app .card-header>div{min-width:0;flex:1 1 100%}
+  .acotec-app .card-header>.btn{width:100%}
+  .acotec-app .card-title{font-size:17px}
+  .acotec-app .card-header .card-title{float:none}
+  .acotec-app .card-header p{clear:both;overflow-wrap:anywhere}
+  .acotec-app .card-body{padding:12px}
+  .acotec-app .table-responsive{border:0;margin:0;overflow:visible}
+  .acotec-app .table{min-width:0;width:100%;overflow-wrap:anywhere}
+  .acotec-app .table>tbody>tr>td,.acotec-app .table>tbody>tr>th,.acotec-app .table>thead>tr>th{white-space:normal}
+  .acotec-app .table .table{table-layout:fixed}
+  .acotec-app table.mobile-records{display:block;width:100%!important;min-width:0!important}
+  .acotec-app table.mobile-records>colgroup{display:none}
+  .acotec-app table.mobile-records>thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+  .acotec-app table.mobile-records>tbody{display:block;width:100%}
+  .acotec-app table.mobile-records>tbody>tr{display:block;border:1px solid #e2e3e5;border-radius:12px;margin:0 0 12px;padding:8px 12px;background:#fff}
+  .acotec-app table.mobile-records>tbody>tr.collapse:not(.show){display:none}
+  .acotec-app table.mobile-records>tbody>tr>td{display:block;width:auto!important;white-space:normal!important;overflow-wrap:anywhere;padding:8px 0;border:0;box-shadow:none!important;background:transparent!important;text-align:left!important;font-size:13px}
+  .acotec-app table.mobile-records>tbody>tr>td[data-mobile-label]{display:grid;grid-template-columns:minmax(85px,.75fr) minmax(0,1.25fr);gap:0 12px;align-items:start}
+  .acotec-app table.mobile-records>tbody>tr>td[data-mobile-label]::before{content:attr(data-mobile-label);font-size:11px;font-weight:600;color:#6d7075;grid-column:1;grid-row:1 / span 8;overflow-wrap:normal}
+  .acotec-app table.mobile-records>tbody>tr>td>*{min-width:0;max-width:100%}
+  .acotec-app table.mobile-records>tbody>tr>td[data-mobile-label]>*{grid-column:2}
+  .acotec-app table.mobile-records>tbody>tr>td.mobile-record-actions{display:flex;flex-wrap:wrap;align-items:center;gap:8px;border-bottom:1px solid #eee;padding-bottom:10px}
+  .acotec-app table.mobile-records>tbody>tr>td.mobile-record-actions::before{flex:1}
+  .acotec-app table.mobile-records>tbody>tr>td.mobile-record-actions br{display:none}
+  .acotec-app table.mobile-records .btn{min-width:44px;min-height:44px;width:max-content}
+  .acotec-app table.mobile-records img{max-height:120px;object-fit:contain}
+  .mobile-record-controls{display:flex;gap:8px;margin-bottom:12px}
+  .mobile-record-controls:empty{display:none}
+  .acotec-app .dt-container .dt-layout-row{display:flex!important;flex-wrap:wrap;gap:10px;margin:10px 0}
+  .acotec-app .dt-container .dt-layout-cell{max-width:100%;min-width:0;flex:1 1 100%;padding:0!important}
+  .acotec-app .dt-search{display:flex;align-items:center;gap:8px;flex-wrap:wrap;text-align:left}
+  .acotec-app .dt-search input{flex:1;width:100%!important;min-width:0;margin:0!important}
+  .acotec-app .pagination{flex-wrap:wrap;gap:3px;justify-content:center}
+  .acotec-app .page-link{min-width:40px;min-height:44px;display:grid;place-items:center;padding:8px}
+  .acotec-app .form-control,.acotec-app .form-select,.acotec-login .form-control{font-size:16px;min-height:44px;max-width:100%}
+  .acotec-app input[type=file]{width:100%;white-space:normal}
+  .acotec-app .modal-dialog{width:100%;max-width:100%;margin:0}
+  .acotec-app .modal-dialog>form{width:100%;min-width:0}
+  .acotec-app .modal-content{max-height:100dvh;border-radius:16px 16px 0 0;overflow:hidden}
+  .acotec-app .modal-content>form{display:flex;flex-direction:column;min-height:0;max-height:100dvh;overflow:hidden}
+  .acotec-app .modal-body{overflow-y:auto;min-height:0;overscroll-behavior:contain}
+  .acotec-app .modal-body .card{box-shadow:none!important}
+  .acotec-app .modal-body .card-header{min-height:44px;padding:10px 12px}
+  .acotec-app .modal-header,.acotec-app .modal-footer{flex-shrink:0}
+  .acotec-app .modal-title{min-width:0;overflow-wrap:anywhere}
+  .acotec-app .modal-header .btn-close{flex-shrink:0}
+  .acotec-app .modal-footer{position:relative;background:#fff}
+  .acotec-app .btn,.acotec-app .btn-sm{min-height:44px}
+  .acotec-app .form-check{min-height:44px;display:flex;align-items:center;gap:8px}
+  .acotec-app .form-check-input{min-width:20px;min-height:20px}
+  .acotec-app .select2-container{max-width:100%;min-width:0}
+  .acotec-app .select2-container .select2-selection--single{min-height:44px!important}
+  .acotec-app .select2-search__field{font-size:16px}
+  .acotec-app .card-footer form.d-flex{flex-wrap:wrap}
+  .acotec-app .btn-close{min-width:44px;min-height:44px;padding:0}
+  .acotec-app .modal-body .row>[class*="col-"]{flex:0 0 100%;max-width:100%;width:100%}
+  .acotec-app .nav-tabs{flex-wrap:wrap;gap:4px}
+  .acotec-app .nav-tabs .nav-link{min-height:44px;padding:10px}
+  .acotec-app .app-sidebar .nav-link{min-height:44px}
+  .acotec-app .acotec-stat-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin-right:0;padding:0;overflow:visible}
+  .acotec-app .acotec-stat-card{min-width:0;min-height:112px}
+  .acotec-app .acotec-stat-card>p{white-space:normal;overflow:visible}
+  .acotec-app .quick-grid{display:grid;grid-template-columns:1fr;margin-right:0;padding:0;overflow:visible}
+  .acotec-app .quick-card{min-width:0}
+  .acotec-app .sidebar-brand .brand-link{width:100%}
+  body.acotec-app.sidebar-open .acotec-logo-sidebar{display:block}
+  body.acotec-app.sidebar-open .acotec-mark-image{display:none}
+  body.acotec-app.sidebar-open .sidebar-brand{padding:10px 12px}
+  .acotec-app .sidebar-wrapper{padding-bottom:90px!important}
+  /* The same chronological events, stacked instead of a horizontal carousel. */
+  .acotec-app .timeline-horizontal{display:flex;flex-direction:column;gap:0;overflow:visible;padding:20px 0}
+  .acotec-app .timeline-item{min-width:0;width:100%;text-align:left;padding:0 0 20px 28px}
+  .acotec-app .timeline-item::after{left:7px;top:18px;width:2px;height:calc(100% - 4px)}
+  .acotec-app .timeline-badge{position:absolute;left:0;top:12px;width:16px;height:16px;margin:0;z-index:1}
+  .acotec-app .timeline-content{padding:12px;overflow-wrap:anywhere;box-shadow:none}
+}
+@media print{.mobile-record-controls,.mobile-bottom-nav{display:none!important}}

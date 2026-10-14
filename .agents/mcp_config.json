@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "stitch": {
+      "command": "npx",
+      "args": ["-y", "stitch-mcp"],
+      "env": {
+        "GOOGLE_CLOUD_PROJECT": "gen-lang-client-0326829183",
+        "PATH": "C:\\Users\\huanc\\AppData\\Local\\Google\\Cloud SDK\\google-cloud-sdk\\bin;${env:PATH}"
+      }
+    }
+  }
+}
