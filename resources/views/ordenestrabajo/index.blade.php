@@ -3,18 +3,20 @@
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
 <style>
-.select2-container .select2-selection--single {
-    height: 31px !important;
-    padding: 2px 6px;
-    font-size: 14px;
-}
+@media (min-width: 768px) {
+    .select2-container .select2-selection--single {
+        height: 31px !important;
+        padding: 2px 6px;
+        font-size: 14px;
+    }
 
-.select2-container--default .select2-selection--single .select2-selection__rendered {
-    line-height: 26px !important;
-}
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        line-height: 26px !important;
+    }
 
-.select2-container--default .select2-selection--single .select2-selection__arrow {
-    height: 30px !important;
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        height: 30px !important;
+    }
 }
 </style>
 @endpush
@@ -35,7 +37,7 @@
                 <!-- /.card-header -->
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="listadoTable" class="table table-striped table-hover table-sm">
+                        <table id="listadoTable" class="table table-striped table-hover table-sm mobile-records">
                             <thead>
                                 <tr>
                                     <th>Opciones</th>

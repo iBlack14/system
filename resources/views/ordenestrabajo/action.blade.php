@@ -15,7 +15,7 @@
                 </div>
 
                 <!-- BODY -->
-                <div class="modal-body" style="max-height: 75vh; overflow-y: auto; padding-bottom: 20px;">
+                <div class="modal-body">
 
                     <!-- ================= CLIENTE ================= -->
                     <div class="card mb-3 shadow-sm">

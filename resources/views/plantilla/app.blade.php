@@ -79,9 +79,9 @@
       <!--end::Footer-->
       <nav class="mobile-bottom-nav" aria-label="Accesos rápidos móvil">
         <a href="{{ route('dashboard') }}"><i class="bi bi-grid-1x2-fill"></i><span>Inicio</span></a>
-        @can('clientes_list')<a href="{{ route('clientes.index') }}"><i class="bi bi-people"></i><span>Clientes</span></a>@endcan
+        @can('ordenestrabajo_list')<a href="{{ route('ordenestrabajo.index') }}"><i class="bi bi-clipboard-check"></i><span>OT</span></a>@endcan
         @can('ventas_list')<a href="{{ route('ventas.index') }}"><i class="bi bi-receipt"></i><span>Ventas</span></a>@endcan
-        @can('productos_list')<a href="{{ route('productos.index') }}"><i class="bi bi-box-seam"></i><span>Productos</span></a>@endcan
+        @can('clientes_list')<a href="{{ route('clientes.index') }}"><i class="bi bi-people"></i><span>Clientes</span></a>@endcan
         <button type="button" data-lte-toggle="sidebar"><i class="bi bi-three-dots"></i><span>Más</span></button>
       </nav>
     </div>

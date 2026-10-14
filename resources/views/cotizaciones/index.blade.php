@@ -139,7 +139,7 @@
                 </div>
                 <div class="card-body p-4">
                     <div class="table-responsive rounded-3 border">
-                        <table id="listadoTable" class="table table-hover align-middle mb-0 w-100">
+                        <table id="listadoTable" class="table table-hover align-middle mb-0 w-100 mobile-records">
                             <thead>
                                 <tr>
                                     <th class="text-center" style="width: 135px;">Acciones</th>

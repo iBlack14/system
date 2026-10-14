@@ -43,6 +43,9 @@ class CrudManager {
         if (this.elements.form) {
             this.form = this.elements.form;
         }
+        if (this.elements.table) {
+            this.elements.table.classList.add('mobile-records');
+        }
     }
 
     /**

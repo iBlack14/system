@@ -54,6 +54,8 @@
   .acotec-app .card-header p{clear:both;overflow-wrap:anywhere}
   .acotec-app .card-body{padding:12px}
   .acotec-app .table-responsive{border:0;margin:0;overflow:visible}
+  .acotec-app .modal-body .table-responsive,
+  .acotec-app .table-responsive:not(:has(table.mobile-records)){overflow-x:auto;-webkit-overflow-scrolling:touch}
   .acotec-app .table{min-width:0;width:100%;overflow-wrap:anywhere}
   .acotec-app .table>tbody>tr>td,.acotec-app .table>tbody>tr>th,.acotec-app .table>thead>tr>th{white-space:normal}
   .acotec-app .table .table{table-layout:fixed}
@@ -122,5 +124,21 @@
   .acotec-app .timeline-item::after{left:7px;top:18px;width:2px;height:calc(100% - 4px)}
   .acotec-app .timeline-badge{position:absolute;left:0;top:12px;width:16px;height:16px;margin:0;z-index:1}
   .acotec-app .timeline-content{padding:12px;overflow-wrap:anywhere;box-shadow:none}
+}
+/* ── Login responsive ── */
+@media screen and (max-width:767px){
+  .login-layout{
+    grid-template-columns:1fr;
+    grid-template-rows:auto;
+    min-height:100dvh;
+  }
+  .login-story{display:none} /* panel decorativo oculto en móvil */
+  .login-entry{
+    min-height:100dvh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding:32px 20px;
+  }
 }
 @media print{.mobile-record-controls,.mobile-bottom-nav{display:none!important}}

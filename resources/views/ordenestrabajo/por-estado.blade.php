@@ -1,7 +1,6 @@
 @extends('plantilla.app')
 
 @push('estilos')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
 @endpush
 
 @section('contenido')
@@ -53,7 +52,7 @@
 
 
                 <table id="tablaEstado"
-                       class="table table-bordered table-striped table-hover align-middle">
+                       class="table table-bordered table-striped table-hover align-middle mobile-records">
 
                     <thead class="table-light">
                         <tr>
@@ -70,7 +69,7 @@
                             <tr>
 
                                 @foreach ($columnas as $col)
-                                    <td>
+                                    <td data-mobile-label="{{ $headers[$col] ?? ucfirst(str_replace('_', ' ', $col)) }}">
 
                                         @switch($col)
 
@@ -388,9 +387,6 @@
 @endsection
 
 @push('scripts')
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     $('#tablaEstado').DataTable({

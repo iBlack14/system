@@ -1,5 +1,5 @@
 <div class="modal fade" id="modalDocumentacionOT" tabindex="-1">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-lg modal-fullscreen-sm-down">
         <form id="formDocumentacionOT"
               method="POST"
               enctype="multipart/form-data">

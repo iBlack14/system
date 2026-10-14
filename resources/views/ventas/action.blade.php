@@ -1,7 +1,7 @@
 <!-- Modal -->
 <div class="modal fade" id="modalUpdate" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-xl modal-fullscreen-sm-down">
         <div class="modal-content fs-7">
             <form id="formUpdate" method="post">
                 @csrf
@@ -26,25 +26,27 @@
                                       <hr>
 
                     <!-- Checkboxes para módulos -->
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input toggle-section" type="checkbox" id="chkServicio"
-                            data-target="#seccionServicios">
-                        <label class="form-check-label" for="chkServicio">Servicios</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input toggle-section" type="checkbox" id="chkTransporte"
-                            data-target="#seccionTransporte">
-                        <label class="form-check-label" for="chkTransporte">Transporte de Herramientas</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input toggle-section" type="checkbox" id="chkMateriales"
-                            data-target="#seccionMateriales">
-                        <label class="form-check-label" for="chkMateriales">Materiales</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input toggle-section" type="checkbox" id="chkTPersonal"
-                            data-target="#seccionTPersonal">
-                        <label class="form-check-label" for="chkTPersonal">Transporte de Personal</label>
+                    <div class="d-flex flex-wrap gap-2 gap-md-3 mb-2">
+                        <div class="form-check me-2">
+                            <input class="form-check-input toggle-section" type="checkbox" id="chkServicio"
+                                data-target="#seccionServicios">
+                            <label class="form-check-label" for="chkServicio">Servicios</label>
+                        </div>
+                        <div class="form-check me-2">
+                            <input class="form-check-input toggle-section" type="checkbox" id="chkTransporte"
+                                data-target="#seccionTransporte">
+                            <label class="form-check-label" for="chkTransporte">Transporte de Herramientas</label>
+                        </div>
+                        <div class="form-check me-2">
+                            <input class="form-check-input toggle-section" type="checkbox" id="chkMateriales"
+                                data-target="#seccionMateriales">
+                            <label class="form-check-label" for="chkMateriales">Materiales</label>
+                        </div>
+                        <div class="form-check me-2">
+                            <input class="form-check-input toggle-section" type="checkbox" id="chkTPersonal"
+                                data-target="#seccionTPersonal">
+                            <label class="form-check-label" for="chkTPersonal">Transporte de Personal</label>
+                        </div>
                     </div>
 
                     <hr>

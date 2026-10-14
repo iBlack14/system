@@ -2,7 +2,7 @@
 
 @section('contenido')
 <div class="container-fluid py-3">
-    <div class="d-flex justify-content-between align-items-center mb-3">
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
         <div>
             <h1 class="h3 mb-1">Integración WooCommerce</h1>
             <p class="text-muted mb-0">Solo administra productos creados explícitamente por este módulo.</p>
@@ -18,7 +18,7 @@
 
     <div class="row g-3 mb-4">
         @foreach(['erp'=>'Productos ERP','linked'=>'Vinculados','pending'=>'Pendientes','orders'=>'Pedidos web','errors'=>'Errores','duplicates'=>'Códigos duplicados'] as $key=>$label)
-        <div class="col-6 col-md-2"><div class="card h-100"><div class="card-body"><div class="text-muted small">{{ $label }}</div><div class="fs-3 fw-semibold">{{ $stats[$key] }}</div></div></div></div>
+        <div class="col-6 col-sm-4 col-md-2"><div class="card h-100"><div class="card-body"><div class="text-muted small">{{ $label }}</div><div class="fs-3 fw-semibold">{{ $stats[$key] }}</div></div></div></div>
         @endforeach
     </div>
 
@@ -37,23 +37,25 @@
     <div class="card">
         <div class="card-header fw-semibold">Productos del ERP</div>
         <div class="table-responsive">
-            <table class="table table-sm table-hover align-middle mb-0">
-                <thead><tr><th>SKU</th><th>Nombre</th><th class="text-end">Precio</th><th class="text-end">Stock</th><th>Estado</th><th style="min-width:280px">Acción</th></tr></thead>
+            <table class="table table-sm table-hover align-middle mb-0 mobile-records">
+                <thead><tr><th>SKU</th><th>Nombre</th><th class="text-end">Precio</th><th class="text-end">Stock</th><th>Estado</th><th>Acción</th></tr></thead>
                 <tbody>
                 @foreach($products as $product)
                     <tr>
-                        <td><code>{{ $product->codigo }}</code></td><td>{{ $product->nombre }}</td>
-                        <td class="text-end">S/ {{ number_format((float)$product->precio_venta, 2) }}</td><td class="text-end">{{ $product->stock }}</td>
-                        <td>@if($product->wooCommerceLink)<span class="badge bg-success">{{ $product->wooCommerceLink->status }}</span>@else<span class="badge bg-secondary">No vinculado</span>@endif</td>
-                        <td>
+                        <td data-mobile-label="SKU"><code>{{ $product->codigo }}</code></td>
+                        <td data-mobile-label="Nombre">{{ $product->nombre }}</td>
+                        <td data-mobile-label="Precio" class="text-end">S/ {{ number_format((float)$product->precio_venta, 2) }}</td>
+                        <td data-mobile-label="Stock" class="text-end">{{ $product->stock }}</td>
+                        <td data-mobile-label="Estado">@if($product->wooCommerceLink)<span class="badge bg-success">{{ $product->wooCommerceLink->status }}</span>@else<span class="badge bg-secondary">No vinculado</span>@endif</td>
+                        <td data-mobile-label="Acción" class="mobile-record-actions">
                             @if(!$product->wooCommerceLink)
-                            <form method="POST" action="{{ route('woocommerce.products.sync', $product) }}" class="d-flex gap-2" onsubmit="return confirm('Se creará este producto como BORRADOR en WooCommerce. ¿Continuar?')">
+                            <form method="POST" action="{{ route('woocommerce.products.sync', $product) }}" class="d-flex flex-wrap gap-2" onsubmit="return confirm('Se creará este producto como BORRADOR en WooCommerce. ¿Continuar?')">
                                 @csrf
                                 <select name="category_id" class="form-select form-select-sm"><option value="">Sin categoría</option>@foreach($categories as $category)<option value="{{ $category->id }}">{{ $category->name }}</option>@endforeach</select>
                                 <button class="btn btn-sm btn-primary text-nowrap">Crear borrador</button>
                             </form>
                             @else
-                                <form method="POST" action="{{ route('woocommerce.products.category', $product) }}" class="d-flex gap-2">
+                                <form method="POST" action="{{ route('woocommerce.products.category', $product) }}" class="d-flex flex-wrap gap-2">
                                     @csrf @method('PUT')
                                     <select name="category_id" class="form-select form-select-sm" required>
                                         @foreach($categories as $category)

@@ -41,18 +41,24 @@ document.addEventListener('DOMContentLoaded', () => {
     // Label existing cells, keeping the actual buttons, inputs and delegated handlers.
     const prepareTable = table => {
         const header = table.tHead?.rows[0];
-        if (!header || [...header.cells].some(cell => cell.colSpan !== 1)) return;
-        const labels = [...header.cells].map(cell => cell.textContent.trim());
+        if (!header) return;
+        const visibleHeaderCells = [...header.cells].filter(cell => {
+            return cell.style.display !== 'none' && (!cell.hasAttribute('style') || !cell.style.display.includes('none'));
+        });
+        const labels = visibleHeaderCells.map(cell => cell.textContent.trim());
         table.classList.add('mobile-records');
         for (const body of table.tBodies) {
             for (const row of body.rows) {
-                if (row.cells.length !== labels.length) continue;
+                if (row.cells.length === 1 && (row.cells[0].classList.contains('dataTables_empty') || row.cells[0].colSpan > 1)) continue;
                 [...row.cells].forEach((cell, index) => {
-                    cell.dataset.mobileLabel = labels[index];
-                    cell.classList.toggle('mobile-record-actions', /^(opciones|acciones)$/i.test(labels[index]));
+                    const label = cell.dataset.mobileLabel || labels[index] || '';
+                    if (label) {
+                        cell.dataset.mobileLabel = label;
+                    }
+                    cell.classList.toggle('mobile-record-actions', /^(opciones|acciones)$/i.test(label));
                     cell.querySelectorAll('input:not([type="hidden"]), select, textarea').forEach(field => {
-                        if (labels[index] && !field.labels?.length && !field.hasAttribute('aria-label')) {
-                            field.setAttribute('aria-label', labels[index]);
+                        if (label && !field.labels?.length && !field.hasAttribute('aria-label')) {
+                            field.setAttribute('aria-label', label);
                         }
                     });
                 });

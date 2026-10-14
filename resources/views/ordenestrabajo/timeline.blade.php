@@ -94,32 +94,34 @@
 @push('estilos')
 <style>
 
-.timeline-horizontal {
-    display: flex;
-    overflow-x: auto;
-    padding: 30px 10px;
-    gap: 40px;
-    align-items: flex-start;
-}
+@media (min-width: 768px) {
+    .timeline-horizontal {
+        display: flex;
+        overflow-x: auto;
+        padding: 30px 10px;
+        gap: 40px;
+        align-items: flex-start;
+    }
 
-.timeline-item {
-    min-width: 250px;
-    position: relative;
-    text-align: center;
-}
+    .timeline-item {
+        min-width: 250px;
+        position: relative;
+        text-align: center;
+    }
 
-.timeline-item::after {
-    content: '';
-    position: absolute;
-    top: 18px;
-    left: 100%;
-    width: 40px;
-    height: 3px;
-    background: #dcdcdc;
-}
+    .timeline-item::after {
+        content: '';
+        position: absolute;
+        top: 18px;
+        left: 100%;
+        width: 40px;
+        height: 3px;
+        background: #dcdcdc;
+    }
 
-.timeline-item:last-child::after {
-    display: none;
+    .timeline-item:last-child::after {
+        display: none;
+    }
 }
 
 .timeline-badge {

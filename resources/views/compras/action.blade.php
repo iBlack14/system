@@ -1,7 +1,7 @@
 <!-- Modal -->
 <div class="modal fade" id="modalUpdate" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-xl modal-fullscreen-sm-down">
         <div class="modal-content fs-7">
             <form id="formUpdate" method="post">
                 @csrf

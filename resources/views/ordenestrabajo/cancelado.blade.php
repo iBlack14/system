@@ -1,5 +1,5 @@
 <div class="modal fade" id="modalCanceladoOT" tabindex="-1">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-xl modal-fullscreen-sm-down">
         <form id="formCanceladoOT" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')

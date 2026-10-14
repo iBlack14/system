@@ -1,6 +1,6 @@
 <!-- Modal -->
 <div class="modal fade" id="modalUpdate" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-xl modal-dialog-centered">
+  <div class="modal-dialog modal-xl modal-dialog-centered modal-fullscreen-sm-down">
     <div class="modal-content border-0 shadow-lg rounded-3 overflow-hidden">
       <form id="formUpdate" method="post" enctype="multipart/form-data">
         @csrf

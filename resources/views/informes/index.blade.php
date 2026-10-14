@@ -19,7 +19,7 @@
 
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="listadoTable" class="table table-stripesd table-hover table-sm">
+                        <table id="listadoTable" class="table table-striped table-hover table-sm mobile-records">
                             <thead>
                                 <tr>
                                     <th>Opciones</th>

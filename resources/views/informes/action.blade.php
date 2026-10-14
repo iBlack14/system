@@ -6,7 +6,7 @@
 <div class="modal fade" id="modalUpdate" data-bs-backdrop="static" data-bs-keyboard="false"
      tabindex="-1" aria-hidden="true">
 
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-xl modal-fullscreen-sm-down">
         <div class="modal-content">
 
             <form id="formUpdate" method="POST" enctype="multipart/form-data">

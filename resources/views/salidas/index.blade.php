@@ -33,7 +33,7 @@
 
                         <table
                             id="listadoTable"
-                            class="table table-striped table-hover table-sm">
+                            class="table table-striped table-hover table-sm mobile-records">
 
                             <thead>
                                 <tr>

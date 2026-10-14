@@ -114,7 +114,7 @@
 
                 <div class="card-body p-4">
                     <div class="table-responsive rounded-3 border">
-                        <table id="listadoTable" class="table table-hover align-middle mb-0 w-100 table-sticky-header">
+                        <table id="listadoTable" class="table table-hover align-middle mb-0 w-100 table-sticky-header mobile-records">
                             <thead>
                                 <tr>
                                     <th class="text-center" style="width: 100px;">Acciones</th>

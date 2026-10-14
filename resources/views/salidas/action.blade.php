@@ -7,7 +7,7 @@
     aria-labelledby="staticBackdropLabel"
     aria-hidden="true">
 
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-xl modal-fullscreen-sm-down">
         <div class="modal-content fs-7">
 
             <form id="formUpdate" method="POST">
