@@ -55,12 +55,17 @@ class Producto extends Model
         });
     }
 
-        public function salidasAlmacen()
+    public function salidasAlmacen()
     {
         return $this->hasMany(
             SalidaAlmacenProducto::class,
             'producto_id'
         );
+    }
+
+    public function wooCommerceLink()
+    {
+        return $this->hasOne(WooCommerceProductLink::class, 'producto_id');
     }
 
 }

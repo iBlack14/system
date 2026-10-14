@@ -41,6 +41,9 @@
                         <li><a href="{{route('productos.index')}}" class="nav-link" id="itemProductos">
                             <i class="nav-icon bi bi-box"></i><p>Productos</p></a>
                         </li>
+                        <li><a href="{{route('woocommerce.index')}}" class="nav-link" id="itemWooCommerce">
+                            <i class="nav-icon bi bi-shop"></i><p>WooCommerce</p></a>
+                        </li>
                         @endcan
 
                         @can('proveedores_list')

@@ -2,6 +2,16 @@
 
 return [
 
+    'woocommerce' => [
+        'url' => env('WOOCOMMERCE_URL'),
+        'consumer_key' => env('WOOCOMMERCE_CONSUMER_KEY'),
+        'consumer_secret' => env('WOOCOMMERCE_CONSUMER_SECRET'),
+        'version' => env('WOOCOMMERCE_API_VERSION', 'wc/v3'),
+        'webhook_secret' => env('WOOCOMMERCE_WEBHOOK_SECRET'),
+        'timeout' => (int) env('WOOCOMMERCE_TIMEOUT', 30),
+        'ca_bundle' => env('WOOCOMMERCE_CA_BUNDLE'),
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Third Party Services
