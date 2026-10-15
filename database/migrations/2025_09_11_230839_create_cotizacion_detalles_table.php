@@ -11,22 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-       Schema::create('cotizacion_detalles', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('cotizacion_id');
-            $table->unsignedBigInteger('producto_id')->nullable(); // si trabajas con tabla productos
-            $table->string('descripcion'); // nombre o detalle del producto/servicio
-            $table->integer('cantidad');
-            $table->decimal('precio_unitario', 10, 2);
-            $table->decimal('subtotal', 10, 2);
-            $table->timestamps();
+       if (Schema::hasTable('cotizaciones') && !Schema::hasTable('cotizacion_detalles')) {
+           Schema::create('cotizacion_detalles', function (Blueprint $table) {
+                $table->id();
+                $table->unsignedBigInteger('cotizacion_id');
+                $table->unsignedBigInteger('producto_id')->nullable();
+                $table->string('descripcion');
+                $table->integer('cantidad');
+                $table->decimal('precio_unitario', 10, 2);
+                $table->decimal('subtotal', 10, 2);
+                $table->timestamps();
 
-            // 🔗 Relación con cotizaciones
-            $table->foreign('cotizacion_id')->references('id')->on('cotizaciones')->onDelete('cascade');
-
-            // 🔗 Relación opcional con productos
-            $table->foreign('producto_id')->references('id')->on('productos')->onDelete('set null');
-        });
+                $table->foreign('cotizacion_id')->references('id')->on('cotizaciones')->onDelete('cascade');
+                $table->foreign('producto_id')->references('id')->on('productos')->onDelete('set null');
+           });
+       }
     }
 
     /**

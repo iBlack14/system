@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (Schema::hasTable('orden_trabajos')) return;
         Schema::create('orden_trabajos', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
@@ -25,3 +26,4 @@ return new class extends Migration
         Schema::dropIfExists('orden_trabajos');
     }
 };
+

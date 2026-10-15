@@ -12,14 +12,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('cotizacion_detalles', function (Blueprint $table) {
-        $table->enum('categoria', [
-            'servicio',
-            'mano_obra',
-            'material',
-            'equipo',
-            'transporte'
-        ])->default('servicio')->after('total');
-    });
+            if (!Schema::hasColumn('cotizacion_detalles', 'total')) {
+                $table->decimal('total', 12, 2)->default(0);
+            }
+            if (!Schema::hasColumn('cotizacion_detalles', 'categoria')) {
+                $table->enum('categoria', [
+                    'servicio',
+                    'mano_obra',
+                    'material',
+                    'equipo',
+                    'transporte'
+                ])->default('servicio');
+            }
+        });
     }
 
     /**

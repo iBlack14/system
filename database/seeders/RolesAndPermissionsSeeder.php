@@ -28,7 +28,21 @@ class RolesAndPermissionsSeeder extends Seeder
             'users',
             'roles_permisos',
             'compras',
-            'proveedores'
+            'proveedores',
+            'salidas',
+            'cotizaciones',
+            'notacredito',
+            'sedes',
+            'responsables',
+            'servicios',
+            'tpersonal',
+            'transporte',
+            'condiciones',
+            'ordenestrabajo',
+            'ordenesservicio',
+            'informes',
+            'tecnicos',
+            'bancos'
         ];
         $actions = ['list', 'create', 'edit', 'delete'];
         $permissions = [];

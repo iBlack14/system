@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (Schema::hasTable('cotizacion_detalles')) return;
        Schema::create('cotizacion_detalles', function (Blueprint $table) {
         $table->bigIncrements('id');
 
@@ -52,3 +53,4 @@ return new class extends Migration
         Schema::dropIfExists('cotizacion_detalles');
     }
 };
+
