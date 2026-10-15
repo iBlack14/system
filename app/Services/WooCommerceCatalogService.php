@@ -58,7 +58,7 @@ class WooCommerceCatalogService
     {
         $query = Producto::query()
             ->whereNotNull('codigo')->where('codigo', '<>', '')
-            ->whereDoesntHave('wooCommerceLink')
+            ->whereDoesntHave('wooCommerceLink', fn ($link) => $link->whereNotNull('woocommerce_product_id'))
             ->whereNotIn('codigo', function ($subquery) {
                 $subquery->select('codigo')->from('productos')->whereNotNull('codigo')
                     ->groupBy('codigo')->havingRaw('COUNT(*) > 1');
@@ -98,7 +98,7 @@ class WooCommerceCatalogService
             $payload = [
                 'name' => $producto->nombre,
                 'type' => 'simple',
-                'status' => 'draft',
+                'status' => config('services.woocommerce.product_status', 'publish'),
                 'sku' => $sku,
                 'regular_price' => number_format((float) $producto->precio_venta, 2, '.', ''),
                 'manage_stock' => true,
@@ -117,7 +117,7 @@ class WooCommerceCatalogService
                     'woocommerce_category_id' => $category?->id,
                     'woocommerce_product_id' => $remote['id'],
                     'sku' => $sku,
-                    'status' => 'draft',
+                    'status' => config('services.woocommerce.product_status', 'publish'),
                     'last_synced_at' => now(),
                     'last_error' => null,
                 ]
@@ -125,10 +125,29 @@ class WooCommerceCatalogService
         });
     }
 
+    public function syncProduct(Producto $producto): WooCommerceProductLink
+    {
+        $link = WooCommerceProductLink::where('producto_id', $producto->id)->first();
+
+        if (! $link?->woocommerce_product_id) {
+            return $this->syncNewProduct($producto);
+        }
+
+        $link->update([
+            'sku' => trim((string) $producto->codigo),
+        ]);
+
+        return $this->updateLinkedProduct($link->refresh());
+    }
+
     public function updateLinkedProduct(WooCommerceProductLink $link): WooCommerceProductLink
     {
         $link->loadMissing('producto', 'category');
-        $payload = ['sku' => $link->sku];
+        $payload = [
+            'sku' => trim((string) $link->producto->codigo),
+            'name' => $link->producto->nombre,
+            'description' => $link->producto->descripcion ?: '',
+        ];
         if ($link->sync_price) {
             $payload['regular_price'] = number_format((float) $link->producto->precio_venta, 2, '.', '');
         }
@@ -136,12 +155,13 @@ class WooCommerceCatalogService
             $payload['manage_stock'] = true;
             $payload['stock_quantity'] = max(0, (int) floor((float) $link->producto->stock));
         }
-        if ($link->category?->woocommerce_id) {
-            $payload['categories'] = [['id' => $link->category->woocommerce_id]];
-        }
-
         $this->client->put("products/{$link->woocommerce_product_id}", $payload);
-        $link->update(['last_synced_at' => now(), 'last_error' => null]);
+        $link->update([
+            'sku' => trim((string) $link->producto->codigo),
+            'status' => 'synced',
+            'last_synced_at' => now(),
+            'last_error' => null,
+        ]);
 
         return $link->refresh();
     }

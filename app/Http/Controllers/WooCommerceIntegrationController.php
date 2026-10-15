@@ -30,11 +30,10 @@ class WooCommerceIntegrationController extends Controller
 
         return view('woocommerce.index', [
             'products' => $products,
-            'categories' => WooCommerceCategory::orderBy('name')->get(),
             'stats' => [
                 'erp' => Producto::count(),
                 'linked' => WooCommerceProductLink::whereNotNull('woocommerce_product_id')->count(),
-                'pending' => Producto::doesntHave('wooCommerceLink')->count(),
+                'pending' => Producto::whereDoesntHave('wooCommerceLink', fn ($link) => $link->whereNotNull('woocommerce_product_id'))->count(),
                 'orders' => WooCommerceOrder::count(),
                 'errors' => WooCommerceWebhookEvent::where('status', 'failed')->count(),
                 'duplicates' => $duplicateCodes->count(),
@@ -67,6 +66,28 @@ class WooCommerceIntegrationController extends Controller
         } catch (\Throwable $e) {
             return back()->withErrors(['woocommerce' => $e->getMessage()]);
         }
+    }
+
+    public function syncAll(WooCommerceCatalogService $catalog)
+    {
+        $products = $catalog->candidates();
+        $synced = 0;
+        $errors = 0;
+
+        foreach ($products as $product) {
+            try {
+                $catalog->syncProduct($product);
+                $synced++;
+            } catch (\Throwable $e) {
+                WooCommerceProductLink::updateOrCreate(
+                    ['producto_id' => $product->id],
+                    ['sku' => trim((string) $product->codigo), 'status' => 'error', 'last_error' => $e->getMessage()]
+                );
+                $errors++;
+            }
+        }
+
+        return back()->with('success', "Sincronización finalizada: {$synced} productos enviados y {$errors} observaciones. Los productos existentes de WooCommerce no fueron modificados.");
     }
 
     public function updateProductCategory(Request $request, Producto $producto, WooCommerceCatalogService $catalog)

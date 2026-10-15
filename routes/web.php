@@ -58,6 +58,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/woocommerce/categories/import', [WooCommerceIntegrationController::class, 'importCategories'])->name('woocommerce.categories.import');
     Route::post('/woocommerce/categories', [WooCommerceIntegrationController::class, 'storeCategory'])->name('woocommerce.categories.store');
     Route::post('/woocommerce/products/{producto}/sync', [WooCommerceIntegrationController::class, 'syncProduct'])->name('woocommerce.products.sync');
+    Route::post('/woocommerce/products/sync-all', [WooCommerceIntegrationController::class, 'syncAll'])->name('woocommerce.products.sync-all');
     Route::put('/woocommerce/products/{producto}/category', [WooCommerceIntegrationController::class, 'updateProductCategory'])->name('woocommerce.products.category');
     Route::get('/afectacion-tipos/select', [AfectacionTipoController::class, 'select'])->name('afectacion-tipos.select');
     Route::resource('afectacion-tipos', AfectacionTipoController::class)->except(['create', 'edit']);

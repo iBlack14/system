@@ -10,6 +10,8 @@ return [
         'webhook_secret' => env('WOOCOMMERCE_WEBHOOK_SECRET'),
         'timeout' => (int) env('WOOCOMMERCE_TIMEOUT', 30),
         'ca_bundle' => env('WOOCOMMERCE_CA_BUNDLE'),
+        'sync_enabled' => env('WOOCOMMERCE_SYNC_ENABLED', false),
+        'product_status' => env('WOOCOMMERCE_PRODUCT_STATUS', 'publish'),
     ],
 
     /*

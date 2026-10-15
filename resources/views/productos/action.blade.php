@@ -41,7 +41,7 @@
                 <div class="invalid-feedback"></div>
               </div>
 
-              <div class="col-md-5">
+              <div class="col-md-8">
                 <label for="nombre" class="form-label small fw-semibold text-dark mb-1">
                   Nombre del Producto <span class="text-danger">*</span>
                 </label>
@@ -65,7 +65,7 @@
                 <div class="invalid-feedback"></div>
               </div>
 
-              <div class="col-md-8">
+              <div class="col-md-5">
                 <label for="descripcion" class="form-label small fw-semibold text-dark mb-1">Descripción Detallada</label>
                 <input type="text" id="descripcion" name="descripcion" class="form-control form-control-sm" placeholder="Especificaciones, marca o detalles técnicos (opcional)">
                 <div class="invalid-feedback"></div>

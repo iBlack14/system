@@ -5,11 +5,11 @@
     <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
         <div>
             <h1 class="h3 mb-1">Integración WooCommerce</h1>
-            <p class="text-muted mb-0">Solo administra productos creados explícitamente por este módulo.</p>
+            <p class="text-muted mb-0">El ERP controla automáticamente SKU, nombre, descripción, precio y stock de sus productos vinculados.</p>
         </div>
-        <form method="POST" action="{{ route('woocommerce.categories.import') }}">
+        <form method="POST" action="{{ route('woocommerce.products.sync-all') }}" onsubmit="return confirm('Se enviarán todos los productos pendientes del ERP. Los productos existentes de WooCommerce no serán modificados. ¿Continuar?')">
             @csrf
-            <button class="btn btn-outline-primary"><i class="bi bi-arrow-repeat me-1"></i>Importar categorías</button>
+            <button class="btn btn-primary"><i class="bi bi-cloud-arrow-up me-1"></i>Sincronización inicial</button>
         </form>
     </div>
 
@@ -20,18 +20,6 @@
         @foreach(['erp'=>'Productos ERP','linked'=>'Vinculados','pending'=>'Pendientes','orders'=>'Pedidos web','errors'=>'Errores','duplicates'=>'Códigos duplicados'] as $key=>$label)
         <div class="col-6 col-sm-4 col-md-2"><div class="card h-100"><div class="card-body"><div class="text-muted small">{{ $label }}</div><div class="fs-3 fw-semibold">{{ $stats[$key] }}</div></div></div></div>
         @endforeach
-    </div>
-
-    <div class="card mb-4">
-        <div class="card-header fw-semibold">Crear categoría</div>
-        <div class="card-body">
-            <form method="POST" action="{{ route('woocommerce.categories.store') }}" class="row g-2">
-                @csrf
-                <div class="col-md-5"><input name="name" class="form-control" placeholder="Nombre de categoría" required></div>
-                <div class="col-md-5"><select name="parent_id" class="form-select"><option value="">Sin categoría superior</option>@foreach($categories as $category)<option value="{{ $category->id }}">{{ $category->name }}</option>@endforeach</select></div>
-                <div class="col-md-2"><button class="btn btn-primary w-100">Crear</button></div>
-            </form>
-        </div>
     </div>
 
     <div class="card">
@@ -46,25 +34,22 @@
                         <td data-mobile-label="Nombre">{{ $product->nombre }}</td>
                         <td data-mobile-label="Precio" class="text-end">S/ {{ number_format((float)$product->precio_venta, 2) }}</td>
                         <td data-mobile-label="Stock" class="text-end">{{ $product->stock }}</td>
-                        <td data-mobile-label="Estado">@if($product->wooCommerceLink)<span class="badge bg-success">{{ $product->wooCommerceLink->status }}</span>@else<span class="badge bg-secondary">No vinculado</span>@endif</td>
-                        <td data-mobile-label="Acción" class="mobile-record-actions">
-                            @if(!$product->wooCommerceLink)
-                            <form method="POST" action="{{ route('woocommerce.products.sync', $product) }}" class="d-flex flex-wrap gap-2" onsubmit="return confirm('Se creará este producto como BORRADOR en WooCommerce. ¿Continuar?')">
-                                @csrf
-                                <select name="category_id" class="form-select form-select-sm"><option value="">Sin categoría</option>@foreach($categories as $category)<option value="{{ $category->id }}">{{ $category->name }}</option>@endforeach</select>
-                                <button class="btn btn-sm btn-primary text-nowrap">Crear borrador</button>
-                            </form>
+                        <td data-mobile-label="Estado">
+                            @if($product->wooCommerceLink?->woocommerce_product_id)
+                                <span class="badge bg-success">Sincronizado</span>
+                            @elseif($product->wooCommerceLink?->status === 'error')
+                                <span class="badge bg-danger">Error</span>
                             @else
-                                <form method="POST" action="{{ route('woocommerce.products.category', $product) }}" class="d-flex flex-wrap gap-2">
-                                    @csrf @method('PUT')
-                                    <select name="category_id" class="form-select form-select-sm" required>
-                                        @foreach($categories as $category)
-                                            <option value="{{ $category->id }}" @selected($product->wooCommerceLink->woocommerce_category_id === $category->id)>{{ $category->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    <button class="btn btn-sm btn-outline-primary text-nowrap">Mover categoría</button>
-                                </form>
-                                <div class="small text-muted mt-1">Woo #{{ $product->wooCommerceLink->woocommerce_product_id }}</div>
+                                <span class="badge bg-secondary">Pendiente</span>
+                            @endif
+                        </td>
+                        <td data-mobile-label="Acción" class="mobile-record-actions">
+                            @if($product->wooCommerceLink?->woocommerce_product_id)
+                                <div class="small text-muted">Woo #{{ $product->wooCommerceLink->woocommerce_product_id }}</div>
+                            @elseif($product->wooCommerceLink?->status === 'error')
+                                <span class="small text-danger" title="{{ $product->wooCommerceLink->last_error }}">Requiere revisión</span>
+                            @else
+                                <span class="small text-muted">Pendiente de sincronización inicial</span>
                             @endif
                         </td>
                     </tr>
