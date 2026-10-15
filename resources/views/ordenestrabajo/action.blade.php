@@ -8,6 +8,24 @@
                     color: #ffffff;
                     border-bottom: none;
                 }
+                #modalUpdate #formUpdate {
+                    display: flex;
+                    flex-direction: column;
+                    flex: 1 1 auto;
+                    min-height: 0;
+                    max-height: 100%;
+                    overflow: hidden;
+                }
+                #modalUpdate .modal-body {
+                    flex: 1 1 auto;
+                    min-height: 0;
+                    overflow-y: auto;
+                    overscroll-behavior: contain;
+                }
+                #modalUpdate .modal-header,
+                #modalUpdate .modal-footer {
+                    flex: 0 0 auto;
+                }
                 #modalUpdate .card {
                     border: 1px solid #cbd5e1;
                     border-radius: 0.5rem;
