@@ -71,6 +71,233 @@
                     color: #0f172a;
                     line-height: 1.4;
                 }
+                #modalUpdate .modal-dialog {
+                    width: min(1480px, calc(100vw - 2rem));
+                    max-width: none;
+                    margin: 1rem auto;
+                    height: calc(100vh - 2rem);
+                }
+                #modalUpdate .modal-content {
+                    height: 100%;
+                    border-radius: 0.85rem;
+                    overflow: hidden;
+                }
+                #modalUpdate form {
+                    display: flex;
+                    flex-direction: column;
+                    height: 100%;
+                    min-height: 0;
+                }
+                #modalUpdate .modal-header {
+                    padding: 0.85rem 1.25rem !important;
+                }
+                #modalUpdate .modal-body {
+                    padding: 1.1rem 1.25rem !important;
+                    overflow-y: auto;
+                    min-height: 0;
+                }
+                #modalUpdate .informe-summary-grid {
+                    display: grid;
+                    grid-template-columns: minmax(330px, 0.8fr) minmax(570px, 1.35fr);
+                    grid-template-areas:
+                        "cliente orden"
+                        "clasificacion orden";
+                    gap: 0.85rem;
+                    margin-bottom: 1rem;
+                }
+                #modalUpdate .aspectos-grid {
+                    display: grid;
+                    grid-template-columns: repeat(2, minmax(0, 1fr));
+                    gap: 1rem;
+                    align-items: start;
+                }
+                #modalUpdate .informe-summary-grid > .card {
+                    margin-bottom: 0 !important;
+                }
+                #modalUpdate .informe-client-card {
+                    grid-area: cliente;
+                    position: relative;
+                    z-index: 40;
+                    overflow: visible !important;
+                }
+                #modalUpdate .informe-client-card .card-body,
+                #modalUpdate .informe-client-card .position-relative {
+                    overflow: visible !important;
+                }
+                #modalUpdate .informe-client-card .search-list {
+                    z-index: 2200 !important;
+                    width: 100% !important;
+                    max-height: 240px !important;
+                    overflow-x: hidden !important;
+                    overflow-y: auto !important;
+                    background: #ffffff !important;
+                    border: 1px solid #cbd5e1 !important;
+                    border-radius: 0.5rem !important;
+                    box-shadow: 0 14px 30px rgba(15, 23, 42, 0.2) !important;
+                }
+                #modalUpdate .informe-ot-card {
+                    grid-area: orden;
+                    position: relative;
+                    z-index: 10;
+                }
+                #modalUpdate .informe-class-card {
+                    grid-area: clasificacion;
+                    position: relative;
+                    z-index: 1;
+                }
+                #modalUpdate .card-header.section-header,
+                #modalUpdate .card-header.aspecto-header {
+                    padding: 0.58rem 0.85rem;
+                }
+                #modalUpdate .card-body {
+                    padding: 0.85rem !important;
+                }
+                #modalUpdate .aspecto-card {
+                    margin-bottom: 0 !important;
+                    overflow: hidden;
+                    border-color: #dbe3ee;
+                    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06) !important;
+                }
+                #modalUpdate .aspecto-card .card-body {
+                    min-height: 82px;
+                }
+                #modalUpdate .aspecto-header > div:first-child {
+                    min-width: 0;
+                }
+                #modalUpdate .aspecto-header > div:first-child > span:last-child {
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+                #modalUpdate .aspecto-card .btn-add-item,
+                #modalUpdate .aspecto-card .btn-add-grupo {
+                    padding: 0.3rem 0.65rem !important;
+                    box-shadow: none !important;
+                }
+                #modalUpdate .grupo-imagen {
+                    margin-bottom: 0.75rem !important;
+                }
+                #modalUpdate .grupo-preview {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 0.55rem;
+                    margin-left: 0;
+                    margin-right: 0;
+                }
+                #modalUpdate .grupo-preview .imagen-item {
+                    flex: 0 0 112px;
+                    width: 112px;
+                    max-width: 112px;
+                    margin: 0 !important;
+                    padding: 0;
+                }
+                #modalUpdate .grupo-preview .imagen-item img {
+                    width: 100% !important;
+                    height: 82px !important;
+                    max-height: 82px !important;
+                    object-fit: cover;
+                }
+                #modalUpdate .btn-remove-imagen,
+                #modalUpdate .btn-remove-img {
+                    width: 25px;
+                    height: 25px;
+                    padding: 0 !important;
+                    font-size: 0.72rem;
+                }
+                #modalUpdate .modal-footer {
+                    padding: 0.75rem 1.25rem !important;
+                    position: relative;
+                    z-index: 20;
+                    box-shadow: 0 -5px 14px rgba(15, 23, 42, 0.08);
+                    flex-shrink: 0;
+                }
+                @media (max-width: 1199.98px) {
+                    #modalUpdate .aspectos-grid {
+                        grid-template-columns: 1fr;
+                    }
+                }
+                @media (max-width: 991.98px) {
+                    #modalUpdate .informe-summary-grid {
+                        display: block;
+                    }
+                    #modalUpdate .informe-summary-grid > .card {
+                        margin-bottom: 0.75rem !important;
+                    }
+                }
+                @media (max-width: 767.98px) {
+                    #modalUpdate .modal-dialog {
+                        width: 100%;
+                        margin: 0;
+                        height: 100dvh;
+                    }
+                    #modalUpdate .modal-header {
+                        padding: 0.75rem 0.9rem !important;
+                    }
+                    #modalUpdate .modal-header small { display: none; }
+                    #modalUpdate .modal-body {
+                        padding: 0.75rem !important;
+                    }
+                    #modalUpdate .card-header.aspecto-header {
+                        align-items: flex-start !important;
+                        flex-direction: column;
+                        gap: 0.45rem;
+                    }
+                    #modalUpdate .aspectos-grid { gap: .75rem; }
+                    #modalUpdate .aspecto-header > div:first-child > span:last-child {
+                        white-space: normal;
+                    }
+                    #modalUpdate .aspecto-card .card-body > .mb-3 > .d-flex,
+                    #modalUpdate .aspecto-card .card-body > .mt-4 > .d-flex {
+                        align-items: stretch !important;
+                        flex-direction: column;
+                        gap: 0.55rem;
+                    }
+                    #modalUpdate .btn-add-item,
+                    #modalUpdate .btn-add-grupo {
+                        width: 100%;
+                    }
+                    #modalUpdate .item-row .input-group-text {
+                        flex-direction: row !important;
+                        order: 3;
+                        width: 100%;
+                    }
+                    #modalUpdate .item-row {
+                        display: flex;
+                        flex-wrap: wrap;
+                    }
+                    #modalUpdate .item-row textarea {
+                        flex: 1 0 100%;
+                        width: 100%;
+                        border-radius: .375rem .375rem 0 0 !important;
+                    }
+                    #modalUpdate .item-row .btn-remove-item {
+                        flex: 1;
+                    }
+                    #modalUpdate .grupo-imagen .card-header {
+                        align-items: flex-start !important;
+                        gap: .5rem;
+                    }
+                    #modalUpdate .grupo-preview .imagen-item {
+                        flex: 0 0 calc(50% - .3rem);
+                        width: calc(50% - .3rem);
+                        max-width: calc(50% - .3rem);
+                    }
+                    #modalUpdate .grupo-preview .imagen-item img {
+                        height: 105px !important;
+                        max-height: 105px !important;
+                    }
+                    #modalUpdate .modal-footer {
+                        display: grid !important;
+                        grid-template-columns: 1fr 1fr;
+                        gap: .5rem;
+                        padding: .65rem .75rem !important;
+                    }
+                    #modalUpdate .modal-footer .btn {
+                        width: 100%;
+                        padding-left: .5rem !important;
+                        padding-right: .5rem !important;
+                    }
+                }
             </style>
 
             <form id="formUpdate" method="POST" enctype="multipart/form-data">
@@ -92,8 +319,10 @@
                 <!-- MODAL BODY -->
                 <div class="modal-body p-4 bg-light">
 
+                    <div class="informe-summary-grid">
+
                     <!-- SECCIÓN 1: DATOS DEL CLIENTE -->
-                    <div class="card mb-3 shadow-sm bg-white">
+                    <div class="card mb-3 shadow-sm bg-white informe-client-card">
                         <div class="card-header section-header d-flex align-items-center">
                             <i class="bi bi-building me-2 text-primary fs-5"></i>
                             <span>1. Datos del Cliente</span>
@@ -115,7 +344,7 @@
                     </div>
 
                     <!-- SECCIÓN 2: ORDEN DE TRABAJO -->
-                    <div class="card mb-3 shadow-sm bg-white">
+                    <div class="card mb-3 shadow-sm bg-white informe-ot-card">
                         <div class="card-header section-header d-flex align-items-center">
                             <i class="bi bi-clipboard-check me-2 text-primary fs-5"></i>
                             <span>2. Orden de Trabajo Relacionada</span>
@@ -143,7 +372,7 @@
                     </div>
 
                     <!-- SECCIÓN 3: INFORMACIÓN DEL INFORME -->
-                    <div class="card mb-3 shadow-sm bg-white">
+                    <div class="card mb-3 shadow-sm bg-white informe-class-card">
                         <div class="card-header section-header d-flex align-items-center">
                             <i class="bi bi-info-circle me-2 text-primary fs-5"></i>
                             <span>3. Clasificación del Informe</span>
@@ -163,12 +392,15 @@
                         </div>
                     </div>
 
+                    </div>
+
                     <!-- SECCIÓN 4: ASPECTOS TÉCNICOS DINÁMICOS -->
                     <div class="d-flex align-items-center mb-2 px-1">
                         <i class="bi bi-layers-fill text-primary me-2"></i>
                         <h6 class="fw-bold text-dark mb-0">4. Aspectos Técnicos y Evaluaciones</h6>
                     </div>
 
+                    <div class="aspectos-grid">
                     @foreach ($aspectosCatalogo as $aspecto)
                         <div class="card mb-3 shadow-sm aspecto-card bg-white"
                              data-aspecto-id="{{ $aspecto->id }}"
@@ -228,6 +460,7 @@
                             </div>
                         </div>
                     @endforeach
+                    </div>
 
                 </div>
 

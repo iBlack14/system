@@ -75,10 +75,11 @@ class OrdenesServicioController extends Controller
                 if (!empty($row->archivo_pdf)) {
                 $buttons .= '
                 <a href="'.asset('uploads/ordenes_servicio/'.$row->archivo_pdf).'"
-                target="_blank"
+                download
                 class="btn btn-sm btn-danger ms-1"
-                title="Ver PDF Orden de Servicio">
-                <i class="bi bi-file-earmark-pdf-fill"></i>
+                title="Descargar PDF de la orden de servicio"
+                aria-label="Descargar PDF de la orden de servicio">
+                <i class="bi bi-download"></i>
                 </a>
                 ';
                 }
@@ -218,6 +219,10 @@ class OrdenesServicioController extends Controller
             'estado'           => $registro->estado,
             'observaciones'    => $registro->observaciones,
             'dias'             => $registro->dias,
+            'archivo_pdf'      => $registro->archivo_pdf,
+            'archivo_pdf_url'  => $registro->archivo_pdf
+                ? asset('uploads/ordenes_servicio/'.$registro->archivo_pdf)
+                : null,
         ]);
 
     } catch (\Exception $e) {
@@ -232,9 +237,26 @@ class OrdenesServicioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-         $data = $this->validateData($request, $id);
+        $data = $this->validateData($request, $id);
         $registro = OrdenesServicio::findOrFail($id);
+
+        if ($request->hasFile('archivo_pdf')) {
+            $file = $request->file('archivo_pdf');
+            $nombreArchivo = time().'_'.uniqid().'.pdf';
+            $file->move(public_path('uploads/ordenes_servicio'), $nombreArchivo);
+
+            if ($registro->archivo_pdf) {
+                $anterior = public_path('uploads/ordenes_servicio/'.$registro->archivo_pdf);
+                if (is_file($anterior)) {
+                    @unlink($anterior);
+                }
+            }
+
+            $data['archivo_pdf'] = $nombreArchivo;
+        } else {
+            unset($data['archivo_pdf']);
+        }
+
         $registro->update($data);
 
         return response()->json([

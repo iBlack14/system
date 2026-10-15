@@ -1,8 +1,42 @@
+@push('estilos')
+<style>
+    #modalUpdate .modal-dialog { max-width: 1180px; }
+    #modalUpdate .modal-content { border: 0; border-radius: 1rem; overflow: hidden; }
+    #modalUpdate .modal-header { padding: 1rem 1.4rem; }
+    #modalUpdate .modal-body { padding: 1.25rem 1.4rem !important; }
+    #modalUpdate .quote-panel { border: 1px solid #e4e9f1 !important; border-radius: .8rem !important; box-shadow: 0 3px 12px rgba(15,23,42,.045) !important; }
+    #modalUpdate .quote-main-data { position:relative; z-index:30; }
+    #modalUpdate .client-form-card { position:relative; z-index:35; overflow:visible !important; }
+    #modalUpdate .client-form-card .card-body,
+    #modalUpdate .client-form-card .row,
+    #modalUpdate .client-form-card .col-12,
+    #modalUpdate .client-form-card .input-group { overflow:visible !important; }
+    #modalUpdate .quote-step { display:inline-flex; align-items:center; justify-content:center; width:1.45rem; height:1.45rem; border-radius:50%; background:#fff1e8; color:#e65f00; font-size:.72rem; font-weight:700; margin-right:.4rem; }
+    #modalUpdate .module-options { display:grid !important; grid-template-columns:repeat(4,minmax(0,1fr)); gap:.65rem !important; }
+    #modalUpdate .module-pill-toggle { min-height:3rem; justify-content:flex-start; border:1px solid #dfe5ee; border-radius:.65rem; padding:.65rem .75rem; background:#fff; transition:.15s ease; }
+    #modalUpdate .module-pill-toggle:hover { border-color:#f58220; background:#fff9f4; transform:translateY(-1px); }
+    #modalUpdate .module-pill-toggle:has(input:checked) { border-color:#f58220; background:#fff4eb; box-shadow:0 0 0 2px rgba(245,130,32,.12); }
+    #modalUpdate .form-control, #modalUpdate .form-select, #modalUpdate .input-group-text { min-height:38px; border-color:#dbe2ea; }
+    #modalUpdate .form-control:focus, #modalUpdate .form-select:focus { border-color:#f58220; box-shadow:0 0 0 .2rem rgba(245,130,32,.12); }
+    #modalUpdate .search-list { z-index:2000 !important; margin-top:.3rem; border-radius:.65rem !important; overflow-y:auto !important; overflow-x:hidden !important; min-width:100%; }
+    #modalUpdate .client-form-card .search-list { top:calc(100% + .25rem) !important; left:0 !important; right:0 !important; width:100% !important; max-height:260px !important; }
+    #modalUpdate .selection-help { display:flex; align-items:flex-start; gap:.35rem; color:#64748b; font-size:.74rem; margin-top:.4rem; line-height:1.35; }
+    #modalUpdate .modal-footer { position:sticky; bottom:0; z-index:5; padding:.85rem 1.4rem; box-shadow:0 -4px 14px rgba(15,23,42,.05); }
+    @media (max-width: 991.98px) { #modalUpdate .module-options { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+    @media (max-width: 575.98px) {
+        #modalUpdate .modal-content { border-radius:0; }
+        #modalUpdate .modal-body { padding:.9rem !important; }
+        #modalUpdate .module-options { grid-template-columns:1fr; }
+        #modalUpdate .modal-footer .btn { flex:1; }
+    }
+</style>
+@endpush
+
 <!-- Modal -->
 <div class="modal fade" id="modalUpdate" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-fullscreen-sm-down">
-        <div class="modal-content fs-7">
+        <div class="modal-content fs-7 cotizacion-form">
             <form id="formUpdate" method="post">
                 @csrf
                 <input type="hidden" id="method_field" name="_method">
@@ -13,8 +47,8 @@
                             <i class="bi bi-file-earmark-ruled fs-6"></i>
                         </span>
                         <div>
-                            <h5 class="modal-title fw-bold text-dark mb-0" id="modalTitle">Registro de Cotización</h5>
-                            <small class="text-muted">Complete los datos comerciales y desglose de módulos</small>
+                            <h5 class="modal-title fw-bold text-dark mb-0" id="modalTitle">Nueva cotización</h5>
+                            <small class="text-muted">Selecciona el cliente, la OT y los conceptos que deseas cotizar</small>
                         </div>
                     </div>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -22,7 +56,7 @@
 
                 <div class="modal-body p-4 bg-light-subtle">
                     <!-- Formulario de Comprobante y Cliente -->
-                    <div class="row g-3 mb-4">
+                    <div class="row g-3 mb-4 quote-main-data">
                         <div class="col-lg-6">
                             @include('cotizaciones.partials.cliente-form')
                         </div>
@@ -32,16 +66,16 @@
                     </div>
 
                     <!-- Selector de Módulos (Pill Toggles) -->
-                    <div class="card border border-light-subtle shadow-sm rounded-3 p-3 bg-white mb-4">
+                    <div class="card quote-panel p-3 bg-white mb-4">
                         <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
                             <div>
                                 <span class="fw-bold text-dark small text-uppercase letter-spacing-1">
-                                    <i class="bi bi-layers-fill text-primary me-1"></i> Módulos a Incluir
+                                    <span class="quote-step">2</span> Módulos a incluir
                                 </span>
                                 <p class="text-muted small mb-0">Active las secciones que aplican a esta propuesta comercial:</p>
                             </div>
                         </div>
-                        <div class="d-flex align-items-center flex-wrap gap-2 pt-1">
+                        <div class="module-options pt-2">
                             <label class="module-pill-toggle" for="chkServicio">
                                 <input class="toggle-section" type="checkbox" id="chkServicio" data-target="#seccionServicios">
                                 <i class="bi bi-gear-fill text-primary"></i>
@@ -70,7 +104,7 @@
 
                     <!-- Secciones de módulos -->
                     <div id="seccionServicios" style="display: none;" class="mb-4">
-                        <div class="card border border-light-subtle shadow-sm rounded-3 overflow-hidden bg-white">
+                            <div class="card quote-panel overflow-hidden bg-white">
                             <div class="card-header bg-white border-bottom py-2 px-3 d-flex align-items-center justify-content-between">
                                 <span class="fw-bold text-primary small d-flex align-items-center gap-2">
                                     <i class="bi bi-gear-fill"></i> Módulo de Servicios
@@ -92,7 +126,7 @@
                     </div>
 
                     <div id="seccionTransporte" style="display: none;" class="mb-4">
-                        <div class="card border border-light-subtle shadow-sm rounded-3 overflow-hidden bg-white">
+                            <div class="card quote-panel overflow-hidden bg-white">
                             <div class="card-header bg-white border-bottom py-2 px-3 d-flex align-items-center justify-content-between">
                                 <span class="fw-bold text-secondary small d-flex align-items-center gap-2">
                                     <i class="bi bi-truck"></i> Módulo de Transporte de Herramientas
@@ -114,7 +148,7 @@
                     </div>
 
                     <div id="seccionMateriales" style="display: none;" class="mb-4">
-                        <div class="card border border-light-subtle shadow-sm rounded-3 overflow-hidden bg-white">
+                            <div class="card quote-panel overflow-hidden bg-white">
                             <div class="card-header bg-white border-bottom py-2 px-3 d-flex align-items-center justify-content-between">
                                 <span class="fw-bold text-warning-emphasis small d-flex align-items-center gap-2">
                                     <i class="bi bi-box-seam"></i> Módulo de Materiales
@@ -136,7 +170,7 @@
                     </div>
 
                     <div id="seccionTPersonal" style="display: none;" class="mb-4">
-                        <div class="card border border-light-subtle shadow-sm rounded-3 overflow-hidden bg-white">
+                            <div class="card quote-panel overflow-hidden bg-white">
                             <div class="card-header bg-white border-bottom py-2 px-3 d-flex align-items-center justify-content-between">
                                 <span class="fw-bold text-success small d-flex align-items-center gap-2">
                                     <i class="bi bi-people-fill"></i> Módulo Transporte de Personal
@@ -159,10 +193,10 @@
 
                     <!-- Módulo Condiciones -->
                     <div id="seccionCondiciones" class="mb-4">
-                        <div class="card border border-light-subtle shadow-sm rounded-3 overflow-hidden bg-white">
+                        <div class="card quote-panel overflow-hidden bg-white">
                             <div class="card-header bg-white border-bottom py-2 px-3 d-flex align-items-center justify-content-between">
                                 <span class="fw-bold text-dark small d-flex align-items-center gap-2">
-                                    <i class="bi bi-card-checklist text-primary"></i> Condiciones Comerciales
+                                    <span class="quote-step">3</span><i class="bi bi-card-checklist text-primary"></i> Condiciones comerciales
                                 </span>
                             </div>
                             <div class="card-body p-3">
@@ -183,7 +217,7 @@
                     <!-- Tabla de totales y resumen -->
                     <div class="row g-3">
                         <div class="col-lg-5">
-                            <div class="card border border-light-subtle rounded-3 p-3 bg-white h-100 shadow-sm">
+                            <div class="card quote-panel p-3 bg-white h-100">
                                 <div class="d-flex align-items-center gap-2 text-muted small fw-semibold mb-2">
                                     <i class="bi bi-info-circle text-primary"></i> Información del Cálculo
                                 </div>
@@ -193,7 +227,7 @@
                             </div>
                         </div>
                         <div class="col-lg-7">
-                            <div class="card border border-light-subtle rounded-3 shadow-sm bg-white overflow-hidden p-3">
+                            <div class="card quote-panel bg-white overflow-hidden p-3">
                                 @include('cotizaciones.partials.tabla-detalles')
                             </div>
                         </div>
@@ -247,6 +281,4 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 @endpush
-
-
 

@@ -1,5 +1,104 @@
 @extends('plantilla.app')
 @push('estilos')
+<style>
+.informes-table-wrap {
+    width: 100%;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    border-radius: .75rem;
+    background: #fff;
+}
+
+#listadoTable {
+    min-width: 1450px;
+    margin-bottom: 0 !important;
+}
+
+#listadoTable th,
+#listadoTable td {
+    padding: .7rem .75rem;
+    vertical-align: middle;
+}
+
+#listadoTable th { white-space: nowrap; }
+#listadoTable td:nth-child(4),
+#listadoTable td:nth-child(5),
+#listadoTable td:nth-child(6) {
+    white-space: normal;
+    min-width: 180px;
+}
+
+.informes-table-wrap .dt-scroll-body {
+    max-height: calc(100vh - 355px);
+    overflow-y: auto !important;
+    scrollbar-width: thin;
+    scrollbar-color: #94a3b8 #eef2f7;
+}
+
+.informes-table-wrap .dt-scroll-body::-webkit-scrollbar { width: 10px; height: 12px; }
+.informes-table-wrap .dt-scroll-body::-webkit-scrollbar-track { background: #eef2f7; }
+.informes-table-wrap .dt-scroll-body::-webkit-scrollbar-thumb {
+    background: #94a3b8;
+    border: 2px solid #eef2f7;
+    border-radius: 999px;
+}
+
+.informes-table-wrap .dt-scroll-head th {
+    background: #f8fafc !important;
+    color: #334155;
+    font-size: .76rem;
+    letter-spacing: .025em;
+    text-transform: uppercase;
+}
+
+.informes-table-wrap .dt-scroll-head th:first-child,
+.informes-table-wrap .dt-scroll-body td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 4;
+    min-width: 132px;
+    box-shadow: 6px 0 10px -10px rgba(15, 23, 42, .65);
+}
+
+.informes-table-wrap .dt-scroll-head th:first-child {
+    z-index: 6;
+    background: #f8fafc !important;
+}
+
+.informes-table-wrap .dt-scroll-body tr:nth-child(odd) td:first-child { background: #f1f3f5; }
+.informes-table-wrap .dt-scroll-body tr:nth-child(even) td:first-child { background: #fff; }
+
+.informes-table-wrap td:first-child .btn,
+.informes-table-wrap td:first-child a.btn {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2px !important;
+    border-radius: .45rem;
+}
+
+@media (max-width: 767.98px) {
+    .informes-table-wrap { overflow: visible; border: 0; }
+    .informes-table-wrap .dt-scroll-head { display: none; }
+    .informes-table-wrap .dt-scroll-body {
+        max-height: none;
+        overflow: visible !important;
+        border: 0 !important;
+    }
+    .informes-table-wrap .dt-scroll-body table {
+        min-width: 0 !important;
+        width: 100% !important;
+    }
+    .informes-table-wrap td:first-child .btn,
+    .informes-table-wrap td:first-child a.btn {
+        width: 44px;
+        height: 44px;
+    }
+}
+</style>
 @endpush
 
 @section('contenido')
@@ -18,7 +117,7 @@
                 </div>
 
                 <div class="card-body">
-                    <div class="table-responsive">
+                    <div class="table-responsive informes-table-wrap">
                         <table id="listadoTable" class="table table-striped table-hover table-sm mobile-records">
                             <thead>
                                 <tr>
@@ -146,7 +245,13 @@ class InformesManager extends CrudManager {
                 { data: 'orden_trabajo_id' },         
                 { data: 'fecha_creacion'}           
             ],
-            responsive: true,
+            responsive: false,
+            scrollX: true,
+            autoWidth: true,
+            columnDefs: [
+                { targets: 0, width: '132px', className: 'text-center' },
+                { targets: [2, 6, 7, 8], className: 'text-center' }
+            ],
             order: [[1, 'asc']]
         });
     }

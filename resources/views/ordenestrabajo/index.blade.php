@@ -42,6 +42,105 @@
     background-color: #2563eb !important;
     color: #ffffff !important;
 }
+
+/* Mantiene visibles todas las columnas de la relación de órdenes. */
+.ordenes-table-wrap {
+    width: 100%;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.75rem;
+    background: #ffffff;
+    -webkit-overflow-scrolling: touch;
+}
+
+#listadoTable {
+    min-width: 1800px;
+    margin-bottom: 0 !important;
+}
+
+#listadoTable th,
+#listadoTable td {
+    vertical-align: middle;
+}
+
+#listadoTable th {
+    white-space: nowrap;
+}
+
+.ordenes-table-wrap .dt-container > .row:first-child,
+.ordenes-table-wrap .dataTables_wrapper > .row:first-child {
+    padding: 0.85rem 1rem;
+    margin: 0;
+    border-bottom: 1px solid #e2e8f0;
+    background: #f8fafc;
+}
+
+.ordenes-table-wrap .dt-scroll-body {
+    max-height: calc(100vh - 355px);
+    overflow-y: auto !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+    scrollbar-color: #94a3b8 #eef2f7;
+    scrollbar-width: thin;
+}
+
+.ordenes-table-wrap .dt-scroll-body::-webkit-scrollbar {
+    width: 10px;
+    height: 12px;
+}
+
+.ordenes-table-wrap .dt-scroll-body::-webkit-scrollbar-track {
+    background: #eef2f7;
+}
+
+.ordenes-table-wrap .dt-scroll-body::-webkit-scrollbar-thumb {
+    background: #94a3b8;
+    border: 2px solid #eef2f7;
+    border-radius: 999px;
+}
+
+.ordenes-table-wrap .dt-scroll-head th {
+    background: #f8fafc !important;
+    color: #334155;
+    font-size: 0.76rem;
+    letter-spacing: 0.025em;
+    text-transform: uppercase;
+}
+
+.ordenes-table-wrap .dt-scroll-head th:first-child,
+.ordenes-table-wrap .dt-scroll-body td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 4;
+    min-width: 118px;
+    box-shadow: 6px 0 10px -10px rgba(15, 23, 42, 0.65);
+}
+
+.ordenes-table-wrap .dt-scroll-head th:first-child {
+    z-index: 6;
+    background: #f8fafc !important;
+}
+
+.ordenes-table-wrap .dt-scroll-body tr:nth-child(odd) td:first-child {
+    background: #f1f3f5;
+}
+
+.ordenes-table-wrap .dt-scroll-body tr:nth-child(even) td:first-child {
+    background: #ffffff;
+}
+
+.ordenes-table-wrap .dt-container > .row:last-child,
+.ordenes-table-wrap .dataTables_wrapper > .row:last-child {
+    padding: 0.8rem 1rem;
+    margin: 0;
+    background: #ffffff;
+}
+
+@media (max-width: 767.98px) {
+    .ordenes-table-wrap {
+        overflow: visible;
+        border: 0;
+    }
+}
 </style>
 @endpush
 @section('contenido')
@@ -60,7 +159,7 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <div class="table-responsive">
+                    <div class="table-responsive ordenes-table-wrap">
                         <table id="listadoTable" class="table table-striped table-hover table-sm mobile-records">
                             <thead>
                                 <tr>
@@ -371,11 +470,12 @@ class OrdenTrabajoManager extends CrudManager {
                 { data: 'observaciones', name: 'observaciones' }
             ],
             columnDefs: [
-                { targets: 0, width: '10%', className: 'text-center' },              
+                { targets: 0, width: '118px', className: 'text-center' },              
                 { targets: [2,6,7,10,11], className: 'text-center' }
             ],
-            responsive: true,
-            autoWidth: false
+            responsive: false,
+            scrollX: true,
+            autoWidth: true
         });
     }
 

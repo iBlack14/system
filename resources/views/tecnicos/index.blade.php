@@ -19,7 +19,7 @@
                 <!-- /.card-header -->
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="listadoTable" class="table table-striped table-hover table-sm">
+                        <table id="listadoTable" class="table table-striped table-hover table-sm mobile-records">
                             <thead>
                                 <tr>
                                     <th>Opciones</th>
@@ -201,10 +201,12 @@ onSelectProvincia(provinceId) {
                 { targets: 6, width: '10%' },
                 { targets: 7, width: '10%' },
                 { targets: 8, width: '10%' },
-                { targets: 8, width: '5%' },
-                { targets: 9, width: '5%' }
+                { targets: 9, width: '8%' },
+                { targets: 10, width: '7%', className: 'text-center' }
             ],
-            responsive: true,
+            responsive: false,
+            scrollX: true,
+            autoWidth: true,
             order: [[1, 'asc']]
         });
     }

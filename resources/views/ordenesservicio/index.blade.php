@@ -1,5 +1,87 @@
 @extends('plantilla.app')
 @push('estilos')
+<style>
+.os-table-wrap {
+    width: 100%;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    border-radius: .75rem;
+    background: #fff;
+}
+
+#listadoTable {
+    min-width: 2200px;
+    margin-bottom: 0 !important;
+}
+
+#listadoTable th,
+#listadoTable td {
+    padding: .65rem .75rem;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.os-table-wrap .dt-scroll-body {
+    max-height: calc(100vh - 355px);
+    overflow-y: auto !important;
+    scrollbar-width: thin;
+    scrollbar-color: #94a3b8 #eef2f7;
+}
+
+.os-table-wrap .dt-scroll-body::-webkit-scrollbar {
+    width: 10px;
+    height: 12px;
+}
+
+.os-table-wrap .dt-scroll-body::-webkit-scrollbar-track { background: #eef2f7; }
+.os-table-wrap .dt-scroll-body::-webkit-scrollbar-thumb {
+    background: #94a3b8;
+    border: 2px solid #eef2f7;
+    border-radius: 999px;
+}
+
+.os-table-wrap .dt-scroll-head th {
+    background: #f8fafc !important;
+    color: #334155;
+    font-size: .76rem;
+    letter-spacing: .025em;
+    text-transform: uppercase;
+}
+
+.os-table-wrap .dt-scroll-head th:first-child,
+.os-table-wrap .dt-scroll-body td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 4;
+    min-width: 150px;
+    box-shadow: 6px 0 10px -10px rgba(15, 23, 42, .65);
+}
+
+.os-table-wrap .dt-scroll-head th:first-child {
+    z-index: 6;
+    background: #f8fafc !important;
+}
+
+.os-table-wrap .dt-scroll-body tr:nth-child(odd) td:first-child { background: #f1f3f5; }
+.os-table-wrap .dt-scroll-body tr:nth-child(even) td:first-child { background: #fff; }
+
+.os-table-wrap td:first-child .btn {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2px !important;
+    border-radius: .45rem;
+}
+
+.os-table-wrap td:first-child .btn i { font-size: .82rem; }
+
+@media (max-width: 767.98px) {
+    .os-table-wrap { overflow: visible; border: 0; }
+}
+</style>
 @endpush
 @section('contenido')
 <div class="container-fluid">
@@ -17,7 +99,7 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <div class="table-responsive">
+                    <div class="table-responsive os-table-wrap">
                         <table id="listadoTable" class="table table-striped table-hover table-sm">
                             <thead>
                                 <tr>
@@ -222,11 +304,12 @@ showConformidadOSModal(id) {
                 { data: 'dias', name: 'dias' }
             ],
             columnDefs: [
-                { targets: 0, width: '10%', className: 'text-center' },           
+                { targets: 0, width: '150px', className: 'text-center' },           
                 { targets: [2,6,7,10,11], className: 'text-center' }
             ],
-            responsive: true,
-            autoWidth: false
+            responsive: false,
+            scrollX: true,
+            autoWidth: true
         });
     }
 
@@ -340,6 +423,18 @@ showConformidadOSModal(id) {
         document.getElementById('observaciones').value = data.observaciones ?? '';
         document.getElementById('dias').value = data.dias ?? 0;
 
+        const pdfInput = document.getElementById('archivo_pdf');
+        const pdfRequired = document.getElementById('pdfRequired');
+        const currentPdfLink = document.getElementById('currentPdfLink');
+        pdfInput.required = false;
+        pdfRequired?.classList.add('d-none');
+        if (data.archivo_pdf_url) {
+            currentPdfLink.href = data.archivo_pdf_url;
+            currentPdfLink.classList.remove('d-none');
+        } else {
+            currentPdfLink.classList.add('d-none');
+        }
+
         document.getElementById('forma_pago').dispatchEvent(new Event('change'));
         updateDiasState();
 
@@ -358,6 +453,14 @@ showConformidadOSModal(id) {
    showCreateModal() {
     super.showCreateModal();
     this.resetForm();
+
+    const pdfInput = document.getElementById('archivo_pdf');
+    const pdfRequired = document.getElementById('pdfRequired');
+    const currentPdfLink = document.getElementById('currentPdfLink');
+    pdfInput.required = true;
+    pdfRequired?.classList.remove('d-none');
+    currentPdfLink.classList.add('d-none');
+    currentPdfLink.removeAttribute('href');
 
     // 🔥 LIMPIAR SELECT OT (CLAVE)
     const otSelect = document.getElementById('ot_codigo');

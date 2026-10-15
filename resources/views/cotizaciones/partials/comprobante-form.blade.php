@@ -1,9 +1,9 @@
-<div class="card border border-light-subtle shadow-sm rounded-3 p-3 bg-white h-100">
+<div class="card quote-panel p-3 bg-white h-100">
     <div class="d-flex align-items-center gap-2 mb-2">
         <span class="badge bg-secondary-subtle text-secondary p-1.5 rounded-2">
             <i class="bi bi-wallet2"></i>
         </span>
-        <span class="fw-bold text-dark small text-uppercase">Condiciones Comerciales</span>
+        <span class="fw-bold text-dark small text-uppercase">Datos comerciales</span>
     </div>
     <div class="row g-2">
         <!-- Fila 1: Forma de pago y Estado -->

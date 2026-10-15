@@ -82,6 +82,18 @@ document.addEventListener('DOMContentLoaded', () => {
         select.add(placeholder);
         const api = window.jQuery?.fn.dataTable?.isDataTable(table)
             ? window.jQuery(table).DataTable() : null;
+        if (labels.length >= 8) {
+            table.classList.add('wide-data-table');
+            if (window.innerWidth >= 768) {
+                table.style.minWidth = Math.max(1080, labels.length * 135) + 'px';
+            }
+            if (api?.responsive && table.dataset.completeColumns !== 'true') {
+                api.responsive.disable();
+                api.columns().visible(true, false);
+                api.columns.adjust();
+                table.dataset.completeColumns = 'true';
+            }
+        }
         if (api) {
             const settings = api.settings()[0];
             labels.forEach((label, index) => {

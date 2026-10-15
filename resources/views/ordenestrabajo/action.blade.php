@@ -88,6 +88,47 @@
                     background-color: #2563eb !important;
                     color: #ffffff !important;
                 }
+                /* El autocompletado del cliente debe flotar sobre las tarjetas siguientes. */
+                #modalUpdate .ot-client-card {
+                    position: relative;
+                    z-index: 30;
+                    overflow: visible !important;
+                }
+                #modalUpdate .ot-client-card .card-body,
+                #modalUpdate .ot-client-card .row,
+                #modalUpdate .ot-client-card .position-relative {
+                    overflow: visible !important;
+                }
+                #modalUpdate .ot-client-card .search-list {
+                    z-index: 2100 !important;
+                    width: 100% !important;
+                    max-height: 240px !important;
+                    overflow-x: hidden !important;
+                    overflow-y: auto !important;
+                    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.18) !important;
+                }
+                #modalUpdate .ot-personnel-card {
+                    position: relative;
+                    z-index: 20;
+                    overflow: visible !important;
+                }
+                #modalUpdate .ot-personnel-card .card-body,
+                #modalUpdate .ot-personnel-card .row,
+                #modalUpdate .ot-personnel-card .position-relative {
+                    overflow: visible !important;
+                }
+                #modalUpdate .ot-personnel-card .search-list {
+                    z-index: 2100 !important;
+                    width: 100% !important;
+                    max-height: 240px !important;
+                    overflow-x: hidden !important;
+                    overflow-y: auto !important;
+                    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.18) !important;
+                }
+                #modalUpdate .ot-details-card {
+                    position: relative;
+                    z-index: 1;
+                }
             </style>
 
             <form id="formUpdate" method="post">
@@ -112,7 +153,7 @@
                 <div class="modal-body p-4 bg-light">
 
                     <!-- ================= CLIENTE Y SEDE ================= -->
-                    <div class="card mb-3 shadow-sm bg-white">
+                    <div class="card mb-3 shadow-sm bg-white ot-client-card">
                         <div class="card-header d-flex align-items-center">
                             <i class="bi bi-building me-2 text-primary fs-5"></i>
                             <span>1. Cliente y Sede</span>
@@ -148,7 +189,7 @@
                     </div>
 
                     <!-- ================= SOLICITANTE Y PERSONAL ================= -->
-                    <div class="card mb-3 shadow-sm bg-white">
+                    <div class="card mb-3 shadow-sm bg-white ot-personnel-card">
                         <div class="card-header d-flex align-items-center">
                             <i class="bi bi-person-lines-fill me-2 text-primary fs-5"></i>
                             <span>2. Solicitante y Personal Asignado</span>
@@ -184,7 +225,7 @@
                     </div>
 
                     <!-- ================= DATOS DE LA OT ================= -->
-                    <div class="card shadow-sm bg-white">
+                    <div class="card shadow-sm bg-white ot-details-card">
                         <div class="card-header d-flex align-items-center">
                             <i class="bi bi-clipboard-check me-2 text-primary fs-5"></i>
                             <span>3. Detalles Operativos de la Orden de Trabajo</span>

@@ -614,7 +614,31 @@ body.acotec-app:not(.sidebar-collapse) .sidebar-menu .nav-treeview .nav-link.act
   border: 1px solid var(--ac-border);
   border-radius: var(--ac-radius-sm);
   background: #ffffff;
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: #94a3b8 #eef2f7;
+}
+
+.acotec-app .table-responsive::-webkit-scrollbar {
+  height: 12px;
+}
+
+.acotec-app .table-responsive::-webkit-scrollbar-track {
+  background: #eef2f7;
+}
+
+.acotec-app .table-responsive::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+  border: 2px solid #eef2f7;
+  border-radius: 999px;
+}
+
+@media (min-width: 768px) {
+  .acotec-app table.wide-data-table {
+    width: 100% !important;
+  }
 }
 
 .acotec-app .table {
@@ -1439,4 +1463,3 @@ label.form-label {
   background-color: #2563eb !important;
   color: #ffffff !important;
 }
-

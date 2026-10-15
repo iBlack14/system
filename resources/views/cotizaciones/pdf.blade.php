@@ -4,7 +4,214 @@
     <meta charset="UTF-8">
     <title>Cotización N° {{ $cotizacion->id }}</title>
 
-    @include('cotizaciones.partials.pdf-styles')
+  <style>
+
+    /* ==========================
+       CONFIGURACIÓN GENERAL
+    ========================== */
+
+    @page {
+        margin: 20px 25px;
+    }
+
+    body {
+        font-family: DejaVu Sans, sans-serif;
+        font-size: 11px;
+        color: #333;
+    }
+
+    p {
+        margin: 3px 0;
+    }
+
+    /* ==========================
+       CONTROL DE SALTOS DE PÁGINA
+    ========================== */
+
+    /* Bloques generales (info, encabezado, secciones) */
+    .bloque {
+        margin-bottom: 15px;
+    }
+
+    /* Títulos de sección */
+    .section-title {
+        background-color: #e9ecef;
+        padding: 6px 10px;
+        color: #131211;
+        font-weight: bold;
+        margin-top: 12px;
+        page-break-after: avoid; /* mantiene título y primeras filas juntas */
+    }
+
+    /* Tablas */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 10px;
+        page-break-inside: auto; /* permite romper tabla si no cabe */
+    }
+
+    thead {
+        display: table-header-group; /* encabezado se repite al romper tabla */
+    }
+
+    tbody {
+        display: table-row-group;
+    }
+
+    tr {
+        page-break-inside: auto; /* permite que las filas se rompan automáticamente */
+        page-break-after: auto;
+    }
+
+    td, th {
+        border: 1px solid #ddd;
+        padding: 6px;
+    }
+
+    th {
+        background-color: #ff7300;
+        color: #fff;
+        text-align: left;
+    }
+
+    tr:nth-child(even) td {
+        background-color: #f9f9f9;
+    }
+
+    .text-right {
+        text-align: right;
+        white-space: nowrap;
+    }
+
+    .total {
+        font-weight: bold;
+        background-color: #e2e6ea;
+    }
+
+    /* ==========================
+       ENCABEZADO
+    ========================== */
+
+    .header-table {
+        width: 100%;
+        border-bottom: 3px solid #ff7300;
+        margin-bottom: 20px;
+        page-break-inside: avoid;
+    }
+
+    .header-left {
+        vertical-align: top;
+    }
+
+    .header-right {
+        text-align: right;
+        vertical-align: top;
+    }
+
+    .logo {
+        width: 160px;
+        height: auto;
+    }
+
+    h2 {
+        margin: 0;
+        color: #ff7300;
+    }
+
+    /* ==========================
+       INFO GENERAL
+    ========================== */
+
+    .info {
+        background: #f8f9fa;
+        border-left: 4px solid #ff7300;
+        padding: 10px;
+        margin-bottom: 20px;
+        page-break-inside: avoid;
+    }
+
+    /* ==========================
+       TRANSPORTES - NO ROMPER
+    ========================== */
+
+    .transporte-bloque {
+        page-break-inside: avoid; /* evita que se divida la tabla */
+        margin-bottom: 15px;
+    }
+
+    .transporte-bloque table {
+        page-break-inside: avoid; /* tabla completa sin romper */
+    }
+
+    .transporte-bloque .total {
+        page-break-inside: avoid; /* total junto con la tabla */
+    }
+
+    /* ==========================
+       RESUMEN FISCAL
+    ========================== */
+
+    /* Bloque de resumen fiscal y total: indivisible */
+    .resumen-fiscal-bloque {
+        page-break-inside: avoid; /* nunca se separa del total */
+        margin-top: 20px;
+    }
+
+    .resumen-fiscal {
+        width: 40%;
+        margin-left: auto;
+    }
+
+    .resumen-fiscal td {
+        border: none;
+        padding: 4px;
+    }
+
+    .resumen-total {
+        background: #ff7300;
+        color: #fff;
+        text-align: right;
+        font-size: 14px;
+        padding: 8px;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+
+   /* ==========================
+    CONDICIONES COMERCIALES
+    ========================== */
+    .condiciones-bloque {
+        page-break-inside: avoid; /* evita que el bloque se rompa */
+        margin-bottom: 15px;
+    }
+
+    .condiciones-bloque table {
+        width: 100%;
+        border-collapse: collapse;
+        page-break-inside: avoid; /* evita que la tabla se divida */
+    }
+
+    .condiciones-bloque tr {
+        page-break-inside: avoid; /* evita que las filas se dividan */
+    }
+
+    /* ==========================
+       FOOTER
+    ========================== */
+
+    .footer {
+        border-top: 2px solid #ff7300;
+        text-align: center;
+        padding-top: 10px;
+        font-size: 11px;
+        color: #666;
+        margin-top: 30px;
+        page-break-inside: avoid;
+    }
+
+  </style>
+@include('cotizaciones.partials.pdf-styles')
 </head>
 
 <body>
@@ -15,92 +222,61 @@
 <table class="header-table">
     <tr>
         <td class="header-left">
-            <img src="{{ public_path('assets/branding/acotec-logo.png') }}" class="logo" alt="Acotec E.I.R.L.">
-            <div class="company-name">AUTOMATIZACIÓN Y CONTROL EN LA TECNOLOGÍA E.I.R.L.</div>
-            <div class="company-meta">
-                <strong>RUC:</strong> 20601096391 &nbsp;|&nbsp; <strong>E-mail:</strong> areacomercial@acotec.pe<br>
-                Jr. Amazonas Mz. 69 Lt. 31 Las Palmeras - Pacasmayo, La Libertad - Perú
-            </div>
+            <h2>COTIZACIÓN N° ACO1 - {{ $cotizacion->id }}</h2>
+            <p><strong>ACOTEC E.I.R.L.</strong></p>
+            <p><strong>RUC: 20601096391</strong></p>
+            <p>mrojas@acotec.pe , acoteceirl@gmail.com</p>
+            <p>areacomercial@acotec.pe</p>
         </td>
         <td class="header-right">
-            <table class="doc-box">
-                <tr>
-                    <td class="doc-box-ruc">R.U.C. N° 20601096391</td>
-                </tr>
-                <tr>
-                    <td class="doc-box-title">COTIZACIÓN</td>
-                </tr>
-                <tr>
-                    <td class="doc-box-body">
-                        <div class="doc-number">N° ACO1 - {{ str_pad($cotizacion->id, 5, '0', STR_PAD_LEFT) }}</div>
-                        <div class="doc-date">FECHA: {{ \Carbon\Carbon::parse($cotizacion->fecha ?? now())->format('d/m/Y') }}</div>
-                    </td>
-                </tr>
-            </table>
+            <img src="{{ public_path('assets/branding/acotec-logo.png') }}" class="logo" alt="Acotec E.I.R.L.">
         </td>
     </tr>
 </table>
 
-<div class="header-divider"></div>
-
 {{-- ==========================
-     INFORMACIÓN DEL CLIENTE Y SERVICIO
+     DATOS GENERALES
 ========================== --}}
-<table class="client-section">
-    <tr>
-        <td class="client-label">Cliente</td>
-        <td class="client-val" style="width: 42%;"><strong>{{ $cotizacion->cliente->razon_social ?? '---' }}</strong></td>
-        <td class="client-label">N° O.T.</td>
-        <td class="client-val"><strong>{{ $cotizacion->ordenTrabajo->codigo_ot_cliente ?? '-' }}</strong></td>
-    </tr>
-    <tr>
-        <td class="client-label">R.U.C. / Doc</td>
-        <td class="client-val">{{ $cotizacion->cliente->numero_documento ?? '-' }}</td>
-        <td class="client-label">Sede / Planta</td>
-        <td class="client-val">{{ $cotizacion->ordenTrabajo->sedes->nombre ?? '-' }}</td>
-    </tr>
-    <tr>
-        <td class="client-label">Dirección</td>
-        <td class="client-val">{{ $cotizacion->cliente->direccion ?? '-' }}</td>
-        <td class="client-label">Solicitante</td>
-        <td class="client-val">{{ $cotizacion->ordenTrabajo->responsables->nombre ?? '-' }}</td>
-    </tr>
-    <tr>
-        <td class="client-label">Descripción</td>
-        <td class="client-val" colspan="3">{{ $cotizacion->ordenTrabajo->descripcion ?? '-' }}</td>
-    </tr>
-</table>
+<div class="info">
+    <p><strong>Fecha:</strong> {{ \Carbon\Carbon::parse($cotizacion->fecha ?? now())->format('d/m/Y') }}</p>
+    <p><strong>Orden de Trabajo:</strong> {{ $cotizacion->ordenTrabajo->codigo_ot_cliente ?? '-' }}</p>
+    <p><strong>Cliente:</strong> {{ $cotizacion->cliente->razon_social ?? '---' }}</p>
+    <p><strong>Sede / Oficina:</strong> {{ $cotizacion->ordenTrabajo->sedes->nombre ?? '-' }}</p>    
+    <p><strong>Solicitante:</strong> {{ $cotizacion->ordenTrabajo->responsables->nombre ?? '-' }}</p>
+    <p><strong>Descripción de Trabajo:</strong> {{ $cotizacion->ordenTrabajo->descripcion ?? '-' }}</p>
+    <p><strong>Proveedor:</strong> AUTOMATIZACIÓN Y CONTROL EN LA TECNOLOGÍA E.I.R.L.</p>    
+</div>
 
 {{-- ==========================
      MATERIALES
 ========================== --}}
 @if($cotizacion->productos->count())
 <div class="bloque">
-    <div class="section-header">1. Materiales y Repuestos</div>
-    <table class="data-table">
+    <div class="section-title">Materiales</div>
+    <table>
         <thead>
             <tr>
-                <th style="width: 25px;" class="text-center">Ítem</th>
+                <th>#</th>
                 <th>Descripción</th>
-                <th style="width: 50px;" class="text-center">Unidad</th>
-                <th style="width: 45px;" class="text-center">Cant.</th>
-                <th style="width: 75px;" class="text-right">P. Unit.</th>
-                <th style="width: 80px;" class="text-right">Importe</th>
+                <th>Unidad</th>
+                <th>Cant.</th>
+                <th>Precio</th>
+                <th>Subtotal</th>
             </tr>
         </thead>
         <tbody>
             @foreach($cotizacion->productos as $i => $item)
             <tr>
-                <td class="text-center">{{ str_pad($i + 1, 2, '0', STR_PAD_LEFT) }}</td>
+                <td>{{ $i + 1 }}</td>
                 <td>{{ $item->producto->nombre }}</td>
-                <td class="text-center">{{ $item->producto->unidad_codigo }}</td>
-                <td class="text-center">{{ $item->cantidad }}</td>
+                <td>{{ $item->producto->unidad_codigo }}</td>
+                <td>{{ $item->cantidad }}</td>
                 <td class="text-right">S/ {{ number_format($item->precio_unitario, 2) }}</td>
                 <td class="text-right">S/ {{ number_format($item->subtotal, 2) }}</td>
             </tr>
             @endforeach
-            <tr class="subtotal-row">
-                <td colspan="5" style="text-align: right; padding-right: 8px;">Subtotal Materiales</td>
+            <tr class="total">
+                <td colspan="5">Total Materiales</td>
                 <td class="text-right">S/ {{ number_format($totalProductos, 2) }}</td>
             </tr>
         </tbody>
@@ -113,31 +289,31 @@
 ========================== --}}
 @if($cotizacion->servicios->count())
 <div class="bloque">
-    <div class="section-header">2. Servicios Técnicos Especializados</div>
-    <table class="data-table">
+    <div class="section-title">Servicios</div>
+    <table>
         <thead>
             <tr>
-                <th style="width: 25px;" class="text-center">Ítem</th>
+                <th>#</th>
                 <th>Descripción</th>
-                <th style="width: 50px;" class="text-center">Unidad</th>
-                <th style="width: 45px;" class="text-center">Cant.</th>
-                <th style="width: 75px;" class="text-right">P. Unit.</th>
-                <th style="width: 80px;" class="text-right">Importe</th>
+                <th>Unidad</th>
+                <th>Cant.</th>
+                <th>Precio</th>
+                <th>Subtotal</th>
             </tr>
         </thead>
         <tbody>
             @foreach($cotizacion->servicios as $i => $item)
             <tr>
-                <td class="text-center">{{ str_pad($i + 1, 2, '0', STR_PAD_LEFT) }}</td>
+                <td>{{ $i + 1 }}</td>
                 <td>{{ $item->servicio->descripcion }}</td>
-                <td class="text-center">{{ $item->servicio->unidad_codigo }}</td>
-                <td class="text-center">{{ $item->cantidad }}</td>
+                <td>{{ $item->servicio->unidad_codigo }}</td>
+                <td>{{ $item->cantidad }}</td>
                 <td class="text-right">S/ {{ number_format($item->precio_unitario, 2) }}</td>
                 <td class="text-right">S/ {{ number_format($item->subtotal, 2) }}</td>
             </tr>
             @endforeach
-            <tr class="subtotal-row">
-                <td colspan="5" style="text-align: right; padding-right: 8px;">Subtotal Servicios</td>
+            <tr class="total">
+                <td colspan="5">Total Servicios</td>
                 <td class="text-right">S/ {{ number_format($totalServicios, 2) }}</td>
             </tr>
         </tbody>
@@ -150,31 +326,31 @@
 ========================== --}}
 @if($cotizacion->transportes->count())
 <div class="bloque transporte-bloque">
-    <div class="section-header">3. Transporte de Herramientas y Equipos</div>
-    <table class="data-table">
+    <div class="section-title">Transporte de Herramientas</div>
+    <table>
         <thead>
             <tr>
-                <th style="width: 25px;" class="text-center">Ítem</th>
+                <th>#</th>
                 <th>Descripción</th>
-                <th style="width: 50px;" class="text-center">Unidad</th>
-                <th style="width: 45px;" class="text-center">Cant.</th>
-                <th style="width: 75px;" class="text-right">P. Unit.</th>
-                <th style="width: 80px;" class="text-right">Importe</th>
+                <th>Unidad</th>
+                <th>Cant.</th>
+                <th>Precio</th>
+                <th>Subtotal</th>
             </tr>
         </thead>
         <tbody>
             @foreach($cotizacion->transportes as $i => $item)
             <tr>
-                <td class="text-center">{{ str_pad($i + 1, 2, '0', STR_PAD_LEFT) }}</td>
+                <td>{{ $i + 1 }}</td>
                 <td>Transporte de Herramientas</td>
-                <td class="text-center">{{ $item->transporte->unidad_codigo }}</td>
-                <td class="text-center">{{ $item->cantidad }}</td>
+                <td>{{ $item->transporte->unidad_codigo }}</td>
+                <td>{{ $item->cantidad }}</td>
                 <td class="text-right">S/ {{ number_format($item->precio_unitario, 2) }}</td>
                 <td class="text-right">S/ {{ number_format($item->subtotal, 2) }}</td>
             </tr>
             @endforeach
-            <tr class="subtotal-row">
-                <td colspan="5" style="text-align: right; padding-right: 8px;">Subtotal Transporte de Herramientas</td>
+            <tr class="total">
+                <td colspan="5">Total Transporte de Herramientas</td>
                 <td class="text-right">S/ {{ number_format($totalTransporte, 2) }}</td>
             </tr>
         </tbody>
@@ -187,31 +363,31 @@
 ========================== --}}
 @if($cotizacion->tpersonal->count())
 <div class="bloque transporte-bloque">
-    <div class="section-header">4. Transporte y Movilización de Personal</div>
-    <table class="data-table">
+    <div class="section-title">Transporte de Personal</div>
+    <table>
         <thead>
             <tr>
-                <th style="width: 25px;" class="text-center">Ítem</th>
+                <th>#</th>
                 <th>Descripción</th>
-                <th style="width: 50px;" class="text-center">Unidad</th>
-                <th style="width: 45px;" class="text-center">Cant.</th>
-                <th style="width: 75px;" class="text-right">P. Unit.</th>
-                <th style="width: 80px;" class="text-right">Importe</th>
+                <th>Unidad</th>
+                <th>Cant.</th>
+                <th>Precio</th>
+                <th>Subtotal</th>
             </tr>
         </thead>
         <tbody>
             @foreach($cotizacion->tpersonal as $i => $item)
             <tr>
-                <td class="text-center">{{ str_pad($i + 1, 2, '0', STR_PAD_LEFT) }}</td>
+                <td>{{ $i + 1 }}</td>
                 <td>Transporte de Personal</td>
-                <td class="text-center">{{ $item->tpersonal->unidad_codigo }}</td>
-                <td class="text-center">{{ $item->cantidad }}</td>
+                <td>{{ $item->tpersonal->unidad_codigo }}</td>
+                <td>{{ $item->cantidad }}</td>
                 <td class="text-right">S/ {{ number_format($item->precio_unitario, 2) }}</td>
                 <td class="text-right">S/ {{ number_format($item->subtotal, 2) }}</td>
             </tr>
             @endforeach
-            <tr class="subtotal-row">
-                <td colspan="5" style="text-align: right; padding-right: 8px;">Subtotal Transporte de Personal</td>
+            <tr class="total">
+                <td colspan="5">Total Transporte de Personal</td>
                 <td class="text-right">S/ {{ number_format($totalTPersonal, 2) }}</td>
             </tr>
         </tbody>
@@ -223,46 +399,54 @@
      RESUMEN FISCAL
 ========================== --}}
 <div class="bloque resumen-fiscal-bloque">
-    <table class="financial-table">
+    <table class="resumen-fiscal">
         <tr>
-            <td style="color: #4b5563;">Op. Gravada:</td>
-            <td class="text-right" style="color: #111827; font-weight: bold;">S/ {{ number_format($opGravada, 2) }}</td>
+            <td><strong>OP. GRAVADA</strong></td>
+            <td class="text-right"><strong>S/ {{ number_format($opGravada, 2) }}</strong></td>
         </tr>
         <tr>
-            <td style="color: #4b5563;">I.G.V. (18%):</td>
-            <td class="text-right" style="color: #111827; font-weight: bold;">S/ {{ number_format($igv, 2) }}</td>
+            <td><strong>IGV (18%)</strong></td>
+            <td class="text-right"><strong>S/ {{ number_format($igv, 2) }}</strong></td>
         </tr>  
-        <tr class="total-row">
-            <td>TOTAL GENERAL:</td>
-            <td class="text-right">S/ {{ number_format($totalGeneral, 2) }}</td>
-        </tr>
     </table>
+
+    <div class="resumen-total">
+        TOTAL GENERAL: S/ {{ number_format($totalGeneral, 2) }}
+    </div>
 </div>
 
 {{-- ==========================
      CONDICIONES COMERCIALES
 ========================== --}}
 @if($cotizacion->condiciones->count())
-<table class="terms-box">
-    <tr>
-        <td class="terms-header">Condiciones Comerciales</td>
-    </tr>
-    <tr>
-        <td class="terms-body">
+<div class="bloque condiciones-bloque">
+
+    <div class="section-title">
+        CONDICIONES COMERCIALES
+    </div>
+
+    <table>
+        <tbody>
             @foreach($cotizacion->condiciones as $i => $item)
-            <p><strong>{{ $i + 1 }}.-</strong> {{ $item->condiciones->descripcion }}</p>
+            <tr>
+                <td>
+                    {{ $i + 1 }}.- 
+                    {{ $item->condiciones->descripcion }}
+                </td>
+            </tr>
             @endforeach
-        </td>
-    </tr>
-</table>
+        </tbody>
+    </table>
+
+</div>
 @endif
 
 {{-- ==========================
      PIE
 ========================== --}}
 <div class="footer">
-    <p>ACOTEC E.I.R.L. &bull; Automatización y Control en la Tecnología &bull; RUC: 20601096391</p>
-    <p>Jr. Amazonas Mz. 69 Lt. 31 Las Palmeras - Pacasmayo - La Libertad - Perú &bull; www.acotec.pe</p>
+    <p>Gracias por confiar en <strong>ACOTEC E.I.R.L.</strong></p>
+    <p>Jr. Amazonas Mz. 69 Lt 31 Las Palmeras - Pacasmayo - La Libertad - Perú</p>
 </div>
 
 </body>
