@@ -1298,5 +1298,4 @@ public function timeline($id)
     return view('ordenestrabajo.timeline', compact('orden', 'timeline'));
 }
 
-
 }

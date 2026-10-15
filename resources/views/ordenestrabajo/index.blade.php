@@ -3,20 +3,44 @@
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
 <style>
-@media (min-width: 768px) {
-    .select2-container .select2-selection--single {
-        height: 31px !important;
-        padding: 2px 6px;
-        font-size: 14px;
-    }
+.select2-container .select2-selection--single {
+    height: 38px !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 0.375rem !important;
+    background-color: #ffffff !important;
+    display: flex !important;
+    align-items: center !important;
+}
 
-    .select2-container--default .select2-selection--single .select2-selection__rendered {
-        line-height: 26px !important;
-    }
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 36px !important;
+    color: #0f172a !important;
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+    padding-left: 10px !important;
+}
 
-    .select2-container--default .select2-selection--single .select2-selection__arrow {
-        height: 30px !important;
-    }
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 36px !important;
+    right: 8px !important;
+}
+
+.select2-dropdown {
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 0.375rem !important;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15) !important;
+    z-index: 1065 !important;
+}
+
+.select2-results__option {
+    color: #1e293b !important;
+    font-size: 0.875rem !important;
+    padding: 8px 12px !important;
+}
+
+.select2-results__option--highlighted[aria-selected] {
+    background-color: #2563eb !important;
+    color: #ffffff !important;
 }
 </style>
 @endpush
@@ -138,7 +162,7 @@ class OrdenTrabajoManager extends CrudManager {
             hiddenId: 'tecnico_id',
             url: "{{ route('tecnicos.buscar') }}",
             template: (item) => {
-                return `${item.dni} - ${item.nombre}`;
+                return item.dni ? `${item.dni} - ${item.nombre}` : item.nombre;
             }
         });
 

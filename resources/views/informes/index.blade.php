@@ -70,77 +70,60 @@ class InformesManager extends CrudManager {
             onSelect: (cliente) => {
                 this.populateSelect(
                     'ot_codigo',
-                    `{{ url('ordenestrabajo/por-cliente') }}/${cliente.id}?estado=1`,
-                    item => `<option value="${item.id}">${item.id} - ${item.codigo_ot_cliente} -  ${item.descripcion}</option>`
+                    `{{ url('ordenestrabajo/por-cliente') }}/${cliente.id}`,
+                    item => `<option value="${item.id}">${item.codigo_ot_cliente} — ${item.descripcion ?? ''}</option>`,
+                    { placeholder: 'Seleccione una Orden de Trabajo' }
                 );
             }
         });
-
-        this.setupOTDescripcion();
     }
 
-    /* =====================================================
-       🔥 ORDEN DE GRUPOS (NUEVO)
-    ===================================================== */
-    // setupOrdenGrupos() {
+    showCreateModal() {
+        super.showCreateModal();
+        this.resetForm();
 
-    //     const form = this.form;
-    //     if (!form) return;
+        this.elements.modalTitle.textContent = 'Registrar Informe Técnico';
+        this.elements.methodField.value = '';
+        this.form.action = this.baseUrl;
 
-    //     form.addEventListener('submit', () => {
+        const otSelect = document.getElementById('ot_codigo');
+        if (otSelect) {
+            otSelect.disabled = false;
+            otSelect.innerHTML = '<option value="">Seleccione una OT</option>';
+        }
 
-    //         // eliminar anteriores (evita duplicados)
-    //         form.querySelectorAll('input[name^="orden_grupo"]').forEach(el => el.remove());
+        const clienteRazon = document.getElementById('cliente_razon_social');
+        if (clienteRazon) clienteRazon.value = '';
+        const clienteId = document.getElementById('cliente_id');
+        if (clienteId) clienteId.value = '';
 
-    //         document.querySelectorAll('.grupo-imagen').forEach((grupo, index) => {
+        const otEstado = document.getElementById('ot_estado');
+        if (otEstado) otEstado.value = '';
 
-    //             const grupoId = grupo.dataset.grupo;
+        const otDesc = document.getElementById('ot_descripcion');
+        if (otDesc) otDesc.value = '';
 
-    //             if (!grupoId) return;
+        const informeTipoText = document.getElementById('informe_tipo_text');
+        if (informeTipoText) informeTipoText.value = 'INFORME INICIAL';
 
-    //             const input = document.createElement('input');
-    //             input.type = 'hidden';
-    //             input.name = `orden_grupo[${grupoId}]`;
-    //             input.value = index + 1;
+        const informeTipo = document.getElementById('informe_tipo');
+        if (informeTipo) informeTipo.value = 'inicial';
 
-    //             form.appendChild(input);
-    //         });
+        const fechaField = document.getElementById('fecha_creacion');
+        if (fechaField) {
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            fechaField.value = `${yyyy}-${mm}-${dd}`;
+        }
 
-    //     });
-    // }
+        document.querySelectorAll('.items-container').forEach(el => el.innerHTML = '');
+        document.querySelectorAll('.grupos-container').forEach(el => el.innerHTML = '');
 
-    /* ===================================================== */
-
-    setupOTDescripcion() {
-
-        const selectOT = document.getElementById('ot_codigo');
-        const descripcionField = document.getElementById('ot_descripcion');
-        const estadoField = document.getElementById('ot_estado');
-
-        if (!selectOT || !descripcionField || !estadoField) return;
-
-        selectOT.addEventListener('change', async (e) => {
-
-            const otCodigo = e.target.value;
-
-            descripcionField.value = '';
-            estadoField.value = '';
-
-            if (!otCodigo) return;
-
-            try {
-                const response = await fetch(`{{ url('ordenestrabajo/detalle') }}/${otCodigo}`);
-                const data = await response.json();
-
-                descripcionField.value = data.descripcion ?? 'Sin descripción';
-                estadoField.value = data.estado ?? 'Sin estado';
-
-            } catch (error) {
-                console.error('Error OT', error);
-                descripcionField.value = 'Error';
-                estadoField.value = 'Error';
-            }
-        });
+        if (typeof aplicarAspectosPorEstado === 'function') {
+            aplicarAspectosPorEstado(1);
+        }
     }
 
     initializeDataTable() {

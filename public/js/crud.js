@@ -401,17 +401,38 @@ class CrudManager {
             if (!data.length) return;
 
             const list = document.createElement('ul');
-            list.className = 'list-group position-absolute w-100 search-list';
-            list.style.zIndex = '1050';
+            list.className = 'list-group position-absolute w-100 search-list shadow-lg';
+            list.style.zIndex = '1065';
             list.style.top = '100%';
+            list.style.maxHeight = '240px';
+            list.style.overflowY = 'auto';
+            list.style.backgroundColor = '#ffffff';
+            list.style.border = '1px solid #cbd5e1';
+            list.style.borderRadius = '0.375rem';
+            list.style.boxShadow = '0 10px 25px -5px rgba(0,0,0,0.2)';
 
             suggestions = data;
 
             data.forEach((item, index) => {
                 const li = document.createElement('li');
-                li.className = 'list-group-item list-group-item-action';
+                li.className = 'list-group-item list-group-item-action text-dark fw-medium py-2 px-3 border-bottom';
+                li.style.cursor = 'pointer';
+                li.style.color = '#0f172a';
+                li.style.backgroundColor = '#ffffff';
+                li.style.fontSize = '0.875rem';
                 li.textContent = template(item);
                 li.dataset.index = index;
+
+                li.onmouseover = () => {
+                    li.style.backgroundColor = '#f1f5f9';
+                    li.style.color = '#1d4ed8';
+                };
+                li.onmouseout = () => {
+                    if (activeIndex !== index) {
+                        li.style.backgroundColor = '#ffffff';
+                        li.style.color = '#0f172a';
+                    }
+                };
 
                 li.onclick = () => {
                     input.value = template(item);
@@ -479,12 +500,20 @@ class CrudManager {
             }
 
             items.forEach((item, i) => {
-                item.classList.toggle('active', i === activeIndex);
+                const isActive = (i === activeIndex);
+                item.classList.toggle('active', isActive);
+                if (isActive) {
+                    item.style.backgroundColor = '#e0e7ff';
+                    item.style.color = '#1d4ed8';
+                } else {
+                    item.style.backgroundColor = '#ffffff';
+                    item.style.color = '#0f172a';
+                }
             });
         });
 
         input.addEventListener('blur', () => {
-            setTimeout(() => clearSuggestions(), 200);
+            setTimeout(() => clearSuggestions(), 250);
         });
     }
 
@@ -493,23 +522,38 @@ class CrudManager {
      * @param {string} selectId - ID del elemento select
      * @param {string} url - URL para obtener los datos
      * @param {function} [getOption] - Función para generar cada <option>
+     * @param {object} [options] - Opciones extra como placeholder
      */
-    populateSelect(selectId, url, getOption = item => `<option value="${item.id}">${item.nombre}</option>`) {
+    populateSelect(selectId, url, getOption = item => `<option value="${item.id}">${item.nombre}</option>`, options = {}) {
         const select = document.getElementById(selectId);
         if (!select) {
             console.warn(`No se encontró el select con id "${selectId}"`);
             return;
         }
 
+        const placeholder = (options && options.placeholder) ? options.placeholder : 'Seleccione...';
         // Limpiar el select
-        select.innerHTML = '<option value="">Seleccione...</option>';
+        select.innerHTML = `<option value="">${placeholder}</option>`;
 
         fetch(url)
             .then(response => response.json())
             .then(data => {
-                data.forEach(item => {
+                const list = Array.isArray(data) ? data : (data && Array.isArray(data.data) ? data.data : []);
+                list.forEach(item => {
                     select.insertAdjacentHTML('beforeend', getOption(item));
                 });
+
+                // Si Select2 está activo para este elemento, refrescarlo
+                if (window.jQuery && (jQuery(select).hasClass("select2-hidden-accessible") || jQuery(select).data('select2'))) {
+                    jQuery(select).trigger('change.select2');
+                    jQuery(select).trigger('change');
+                } else {
+                    select.dispatchEvent(new Event('change', { bubbles: true }));
+                }
+
+                if (options && typeof options.onComplete === 'function') {
+                    options.onComplete(data);
+                }
             })
             .catch(error => {
                 console.error(`Error al poblar select "${selectId}":`, error);
