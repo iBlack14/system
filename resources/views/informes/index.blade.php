@@ -181,7 +181,7 @@ class InformesManager extends CrudManager {
         super.showCreateModal();
         this.resetForm();
 
-        this.elements.modalTitle.textContent = 'Registrar Informe Técnico';
+        this.elements.modalTitle.textContent = 'Registrar Informe';
         this.elements.methodField.value = '';
         this.form.action = this.baseUrl;
 

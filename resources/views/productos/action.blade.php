@@ -43,7 +43,7 @@
 
               <div class="col-md-8">
                 <label for="nombre" class="form-label small fw-semibold text-dark mb-1">
-                  Nombre del Producto <span class="text-danger">*</span>
+                  Nombre <span class="text-danger">*</span>
                 </label>
                 <input type="text" id="nombre" name="nombre" class="form-control form-control-sm" placeholder="Ej: TEE PVC 3' SCH80" required>
                 <div class="invalid-feedback"></div>
@@ -59,20 +59,20 @@
 
               <div class="col-md-2">
                 <label for="afectacion_tipo_codigo" class="form-label small fw-semibold text-dark mb-1">
-                  Afec. Tipo <span class="text-danger">*</span>
+                  Afectación tipo <span class="text-danger">*</span>
                 </label>
                 <select name="afectacion_tipo_codigo" id="afectacion_tipo_codigo" class="form-select form-select-sm" required></select>
                 <div class="invalid-feedback"></div>
               </div>
 
               <div class="col-md-5">
-                <label for="descripcion" class="form-label small fw-semibold text-dark mb-1">Descripción Detallada</label>
+                <label for="descripcion" class="form-label small fw-semibold text-dark mb-1">Descripción</label>
                 <input type="text" id="descripcion" name="descripcion" class="form-control form-control-sm" placeholder="Especificaciones, marca o detalles técnicos (opcional)">
                 <div class="invalid-feedback"></div>
               </div>
 
               <div class="col-md-4">
-                <label for="imagen" class="form-label small fw-semibold text-dark mb-1">Foto / Imagen</label>
+                <label for="imagen" class="form-label small fw-semibold text-dark mb-1">Imagen</label>
                 <input type="file" id="imagen" name="imagen" class="form-control form-control-sm" accept="image/*">
                 <div class="invalid-feedback"></div>
                 <div class="mt-2 text-center" id="contenedor_preview_imagen">
@@ -94,7 +94,7 @@
             <div class="row g-3 align-items-center">
               <div class="col-md-4">
                 <label for="costo_unitario" class="form-label small fw-semibold text-dark mb-1">
-                  Costo Unitario (S/) <span class="text-danger">*</span>
+                  Costo unitario <span class="text-danger">*</span>
                 </label>
                 <div class="input-group input-group-sm">
                   <span class="input-group-text bg-light text-muted">S/</span>
@@ -105,7 +105,7 @@
 
               <div class="col-md-4">
                 <label for="utilidad" class="form-label small fw-semibold text-dark mb-1">
-                  Margen Utilidad (%) <span class="text-danger">*</span>
+                  Utilidad <span class="text-danger">*</span>
                 </label>
                 <div class="input-group input-group-sm">
                   <span class="input-group-text bg-light text-muted">%</span>
@@ -116,7 +116,7 @@
 
               <div class="col-md-4">
                 <label for="precio_venta" class="form-label small fw-bold text-primary mb-1">
-                  Precio de Venta Sugerido <span class="text-danger">*</span>
+                  Precio de Venta <span class="text-danger">*</span>
                 </label>
                 <div class="input-group input-group-sm">
                   <span class="input-group-text bg-primary-subtle text-primary border-primary-subtle fw-bold">S/</span>
@@ -133,22 +133,22 @@
               </span>
               <div class="row g-2">
                 <div class="col-6 col-md-3">
-                  <label for="porcentaje5" class="form-label text-muted small mb-1" style="font-size: 0.76rem;">Escala 1 - 5 (%)</label>
+                  <label for="porcentaje5" class="form-label text-muted small mb-1" style="font-size: 0.76rem;">Porcentaje 1-5 <span class="text-danger">*</span></label>
                   <input type="number" step="0.01" id="porcentaje5" name="porcentaje5" class="form-control form-control-sm text-end" required>
                   <div class="invalid-feedback"></div>
                 </div>
                 <div class="col-6 col-md-3">
-                  <label for="porcentaje10" class="form-label text-muted small mb-1" style="font-size: 0.76rem;">Escala 6 - 10 (%)</label>
+                  <label for="porcentaje10" class="form-label text-muted small mb-1" style="font-size: 0.76rem;">Porcentaje 5-10 <span class="text-danger">*</span></label>
                   <input type="number" step="0.01" id="porcentaje10" name="porcentaje10" class="form-control form-control-sm text-end" required>
                   <div class="invalid-feedback"></div>
                 </div>
                 <div class="col-6 col-md-3">
-                  <label for="porcentaje50" class="form-label text-muted small mb-1" style="font-size: 0.76rem;">Escala 11 - 50 (%)</label>
+                  <label for="porcentaje50" class="form-label text-muted small mb-1" style="font-size: 0.76rem;">Porcentaje 10-50 <span class="text-danger">*</span></label>
                   <input type="number" step="0.01" id="porcentaje50" name="porcentaje50" class="form-control form-control-sm text-end" required>
                   <div class="invalid-feedback"></div>
                 </div>
                 <div class="col-6 col-md-3">
-                  <label for="porcentaje100" class="form-label text-muted small mb-1" style="font-size: 0.76rem;">Escala 50 - 100+ (%)</label>
+                  <label for="porcentaje100" class="form-label text-muted small mb-1" style="font-size: 0.76rem;">Porcentaje 50-100 <span class="text-danger">*</span></label>
                   <input type="number" step="0.01" id="porcentaje100" name="porcentaje100" class="form-control form-control-sm text-end" required>
                   <div class="invalid-feedback"></div>
                 </div>
@@ -168,7 +168,7 @@
             <div class="row g-3">
               <div class="col-md-3">
                 <label for="stock" class="form-label small fw-semibold text-dark mb-1">
-                  Stock Disponible <span class="text-danger">*</span>
+                  Stock <span class="text-danger">*</span>
                 </label>
                 <div class="input-group input-group-sm">
                   <span class="input-group-text bg-light text-muted"><i class="bi bi-stack"></i></span>

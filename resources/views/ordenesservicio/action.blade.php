@@ -48,7 +48,7 @@
                   </div>
 
                   <div class="mb-3">
-                    <label for="ot_codigo" class="form-label fw-semibold">Orden de trabajo <span class="text-danger">*</span></label>
+                    <label for="ot_codigo" class="form-label fw-semibold">Orden de Trabajo <span class="text-danger">*</span></label>
                     <select name="ot_codigo" id="ot_codigo" class="form-select" required>
                       <option value="">Primero selecciona un cliente</option>
                     </select>
@@ -70,7 +70,7 @@
                 <div class="card-body">
                   <div class="row g-3">
                     <div class="col-md-6">
-                      <label for="codigo_orden_servicio" class="form-label fw-semibold">Código OS del cliente <span class="text-danger">*</span></label>
+                      <label for="codigo_orden_servicio" class="form-label fw-semibold">Código OS. Cliente <span class="text-danger">*</span></label>
                       <input type="text" id="codigo_orden_servicio" name="codigo_orden_servicio" class="form-control" maxlength="50" placeholder="Ej. OS-2026-001" required>
                     </div>
                     <div class="col-md-6">
@@ -78,19 +78,19 @@
                       <div class="input-group"><span class="input-group-text">S/</span><input type="number" id="monto" name="monto" class="form-control" min="0" max="999999.99" step="0.01" placeholder="0.00" required></div>
                     </div>
                     <div class="col-12">
-                      <label for="descripcion" class="form-label fw-semibold">Descripción del servicio <span class="text-danger">*</span></label>
+                      <label for="descripcion" class="form-label fw-semibold">Descripción <span class="text-danger">*</span></label>
                       <textarea id="descripcion" name="descripcion" class="form-control" rows="3" maxlength="255" placeholder="Describe el alcance de la orden" required></textarea>
                     </div>
                     <div class="col-md-6">
-                      <label for="forma_pago" class="form-label fw-semibold">Forma de pago <span class="text-danger">*</span></label>
+                      <label for="forma_pago" class="form-label fw-semibold">Forma de Pago <span class="text-danger">*</span></label>
                       <select name="forma_pago" id="forma_pago" class="form-select" required><option value="contado">Contado</option><option value="credito">Crédito</option></select>
                     </div>
                     <div class="col-md-6">
-                      <label for="dias" class="form-label fw-semibold">Plazo de crédito</label>
+                      <label for="dias" class="form-label fw-semibold">Días</label>
                       <div class="input-group"><input type="number" id="dias" name="dias" class="form-control" min="0" value="0" disabled><span class="input-group-text">días</span></div>
                     </div>
                     <div class="col-12">
-                      <label for="archivo_pdf" class="form-label fw-semibold">Orden de servicio en PDF <span id="pdfRequired" class="text-danger">*</span></label>
+                      <label for="archivo_pdf" class="form-label fw-semibold">Adjuntar PDF <span id="pdfRequired" class="text-danger">*</span></label>
                       <input type="file" id="archivo_pdf" name="archivo_pdf" class="form-control" accept="application/pdf">
                       <div class="form-text">Máximo 5 MB. Al editar, déjalo vacío para conservar el documento actual.</div>
                       <a id="currentPdfLink" class="btn btn-sm btn-outline-danger mt-2 d-none" href="#" download><i class="bi bi-download"></i>Descargar PDF actual</a>
@@ -105,8 +105,8 @@
                 <div class="card-header bg-transparent border-bottom py-3"><h5 class="card-title mb-0"><i class="bi bi-truck me-2 text-primary"></i>Entrega y condiciones</h5></div>
                 <div class="card-body">
                   <div class="row g-3">
-                    <div class="col-md-5"><label for="lugar_entrega" class="form-label fw-semibold">Lugar de entrega <span class="text-danger">*</span></label><input type="text" id="lugar_entrega" name="lugar_entrega" class="form-control" maxlength="255" placeholder="Dirección o sede" required></div>
-                    <div class="col-md-3"><label for="fecha_entrega" class="form-label fw-semibold">Fecha de entrega <span class="text-danger">*</span></label><input type="date" id="fecha_entrega" name="fecha_entrega" class="form-control" min="{{ now()->format('Y-m-d') }}" required></div>
+                    <div class="col-md-5"><label for="lugar_entrega" class="form-label fw-semibold">Lugar de Entrega <span class="text-danger">*</span></label><input type="text" id="lugar_entrega" name="lugar_entrega" class="form-control" maxlength="255" placeholder="Dirección o sede" required></div>
+                    <div class="col-md-3"><label for="fecha_entrega" class="form-label fw-semibold">Fecha de Entrega <span class="text-danger">*</span></label><input type="date" id="fecha_entrega" name="fecha_entrega" class="form-control" min="{{ now()->format('Y-m-d') }}" required></div>
                     <div class="col-md-4"><label for="penalidad" class="form-label fw-semibold">Penalidad <span class="text-danger">*</span></label><input type="text" id="penalidad" name="penalidad" class="form-control" maxlength="255" placeholder="Ej. 0.10% por día" required></div>
                     <div class="col-md-3"><label for="estado" class="form-label fw-semibold">Estado</label><input type="text" id="estado" name="estado" class="form-control bg-body-tertiary" readonly value="Registrado"></div>
                     <div class="col-md-9"><label for="observaciones" class="form-label fw-semibold">Observaciones</label><textarea id="observaciones" name="observaciones" class="form-control" rows="2" maxlength="255" placeholder="Información adicional (opcional)"></textarea></div>

@@ -29,10 +29,10 @@
                     padding: 0.65rem 1rem;
                 }
                 #modalUpdate .card-header.aspecto-header {
-                    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-                    color: #ffffff;
-                    padding: 0.75rem 1rem;
-                    border-bottom: 1px solid #334155;
+                    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%) !important;
+                    color: #ffffff !important;
+                    padding: 0.75rem 1rem !important;
+                    border-bottom: 1px solid #334155 !important;
                 }
                 #modalUpdate .form-label {
                     color: #0f172a !important;
@@ -147,7 +147,7 @@
                 }
                 #modalUpdate .card-header.section-header,
                 #modalUpdate .card-header.aspecto-header {
-                    padding: 0.58rem 0.85rem;
+                    padding: 0.58rem 0.85rem !important;
                 }
                 #modalUpdate .card-body {
                     padding: 0.85rem !important;
@@ -309,7 +309,7 @@
                     <div class="d-flex align-items-center">
                         <i class="bi bi-file-earmark-text fs-4 me-2 text-white"></i>
                         <div>
-                            <h5 class="modal-title fw-bold text-white mb-0" id="modalTitle">Registrar Informe Técnico</h5>
+                            <h5 class="modal-title fw-bold text-white mb-0" id="modalTitle">Registrar Informe</h5>
                             <small class="text-white-50" style="font-size: 0.78rem;">Gestión de aspectos técnicos, observaciones y registro fotográfico</small>
                         </div>
                     </div>
@@ -330,7 +330,7 @@
                         <div class="card-body p-3">
                             <div class="position-relative">
                                 <label class="form-label">
-                                    Cliente / Empresa <span class="text-danger">*</span>
+                                    Cliente <span class="text-danger">*</span>
                                 </label>
                                 <input type="text" 
                                        id="cliente_razon_social" 
@@ -347,24 +347,24 @@
                     <div class="card mb-3 shadow-sm bg-white informe-ot-card">
                         <div class="card-header section-header d-flex align-items-center">
                             <i class="bi bi-clipboard-check me-2 text-primary fs-5"></i>
-                            <span>2. Orden de Trabajo Relacionada</span>
+                            <span>2. Orden de Trabajo</span>
                         </div>
                         <div class="card-body p-3">
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <label class="form-label">
-                                        Seleccione Orden de Trabajo <span class="text-danger">*</span>
+                                        Orden de Trabajo <span class="text-danger">*</span>
                                     </label>
                                     <select id="ot_codigo" name="ot_codigo" class="form-select" required>
                                         <option value="">Seleccione una OT...</option>
                                     </select>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="form-label">Estado Actual de la OT</label>
+                                    <label class="form-label">Estado</label>
                                     <input type="text" id="ot_estado" class="form-control" readonly placeholder="Se cargará al elegir OT">
                                 </div>
                                 <div class="col-md-12">
-                                    <label class="form-label">Descripción del Servicio</label>
+                                    <label class="form-label">Descripción</label>
                                     <textarea id="ot_descripcion" class="form-control" rows="2" readonly placeholder="Descripción de la orden de trabajo..."></textarea>
                                 </div>
                             </div>
@@ -375,29 +375,23 @@
                     <div class="card mb-3 shadow-sm bg-white informe-class-card">
                         <div class="card-header section-header d-flex align-items-center">
                             <i class="bi bi-info-circle me-2 text-primary fs-5"></i>
-                            <span>3. Clasificación del Informe</span>
+                            <span>3. Información del Informe</span>
                         </div>
                         <div class="card-body p-3">
                             <div class="row g-3">
                                 <div class="col-md-6">
-                                    <label class="form-label">Tipo de Informe Técnico</label>
+                                    <label class="form-label">Tipo de Informe</label>
                                     <input type="text" id="informe_tipo_text" class="form-control" readonly value="INFORME INICIAL">
                                     <input type="hidden" id="informe_tipo" name="informe_tipo" value="inicial">
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="form-label">Fecha de Registro</label>
+                                    <label class="form-label">Fecha de Creación</label>
                                     <input type="text" id="fecha_creacion" class="form-control" readonly>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    </div>
-
-                    <!-- SECCIÓN 4: ASPECTOS TÉCNICOS DINÁMICOS -->
-                    <div class="d-flex align-items-center mb-2 px-1">
-                        <i class="bi bi-layers-fill text-primary me-2"></i>
-                        <h6 class="fw-bold text-dark mb-0">4. Aspectos Técnicos y Evaluaciones</h6>
                     </div>
 
                     <div class="aspectos-grid">
@@ -410,16 +404,7 @@
 
                             <div class="card-header aspecto-header d-flex justify-content-between align-items-center">
                                 <div class="d-flex align-items-center">
-                                    <span class="badge bg-primary text-white me-2 px-2 py-1">Aspecto {{ $aspecto->orden }}</span>
-                                    <span class="fw-bold text-white fs-6">{{ $aspecto->nombre }}</span>
-                                </div>
-                                <div>
-                                    @if ($aspecto->aplica_inicial)
-                                        <span class="badge bg-info text-dark me-1" style="font-size: 0.7rem;">Inicial</span>
-                                    @endif
-                                    @if ($aspecto->aplica_final)
-                                        <span class="badge bg-success text-white" style="font-size: 0.7rem;">Final</span>
-                                    @endif
+                                    <span class="fw-bold text-white fs-6">{{ $aspecto->orden }}.- {{ $aspecto->nombre }}</span>
                                 </div>
                             </div>
 
@@ -429,12 +414,12 @@
                                 <div class="mb-3">
                                     <div class="d-flex justify-content-between align-items-center mb-2 pb-1 border-bottom">
                                         <div class="fw-bold text-dark d-flex align-items-center" style="font-size: 0.88rem;">
-                                            <i class="bi bi-list-check text-primary me-1"></i> Puntos y Observaciones
+                                            <i class="bi bi-list-check text-primary me-1"></i> Items
                                         </div>
                                         <button type="button"
                                                 class="btn btn-sm btn-primary btn-add-item fw-semibold shadow-sm px-3"
                                                 data-aspecto="{{ $aspecto->id }}">
-                                            <i class="bi bi-plus-lg me-1"></i> Agregar Punto
+                                            <i class="bi bi-plus-lg me-1"></i> Agregar item
                                         </button>
                                     </div>
                                     <div class="items-container" data-aspecto="{{ $aspecto->id }}"></div>
@@ -445,12 +430,12 @@
                                 <div class="mt-4 pt-2 border-top">
                                     <div class="d-flex justify-content-between align-items-center mb-2 pb-1">
                                         <div class="fw-bold text-dark d-flex align-items-center" style="font-size: 0.88rem;">
-                                            <i class="bi bi-camera-fill text-success me-1"></i> Registro Fotográfico
+                                            <i class="bi bi-camera-fill text-success me-1"></i> Imágenes
                                         </div>
                                         <button type="button"
                                                 class="btn btn-sm btn-success btn-add-grupo fw-semibold shadow-sm px-3"
                                                 data-aspecto="{{ $aspecto->id }}">
-                                            <i class="bi bi-folder-plus me-1"></i> Nuevo Grupo de Fotos
+                                            <i class="bi bi-folder-plus me-1"></i> Nuevo grupo
                                         </button>
                                     </div>
                                     <div class="grupos-container mt-2" id="grupo_container_{{ $aspecto->id }}"></div>
@@ -470,7 +455,7 @@
                         <i class="bi bi-x-circle me-1"></i> Cancelar
                     </button>
                     <button type="submit" id="btnSubmit" class="btn btn-primary px-4 fw-semibold shadow-sm">
-                        <i class="bi bi-check2-circle me-1"></i> Guardar Informe Técnico
+                        <i class="bi bi-check2-circle me-1"></i> Guardar Informe
                     </button>
                 </div>
 
@@ -495,7 +480,7 @@ function buildItemHTML(aspectoId, itemId, contenido = '', isNew = false) {
                    value="${isNew ? '' : itemId}">
             <textarea name="items[${aspectoId}][${itemId}][contenido]"
                       class="form-control" rows="2"
-                      placeholder="Escriba el detalle u observación..."
+                      placeholder="Escriba el item..."
                       ${isNew ? 'required' : ''}>${contenido}</textarea>
             <div class="input-group-text p-1 d-flex flex-column justify-content-center gap-1 bg-light border">
                 <button type="button"
@@ -505,7 +490,7 @@ function buildItemHTML(aspectoId, itemId, contenido = '', isNew = false) {
                         class="btn btn-sm btn-light border py-0 px-2 btn-item-down fw-bold text-dark"
                         title="Bajar">↓</button>
             </div>
-            <button type="button" class="btn btn-outline-danger px-3 btn-remove-item fw-bold" title="Eliminar este punto">✕</button>
+            <button type="button" class="btn btn-outline-danger px-3 btn-remove-item fw-bold">✕</button>
         </div>`;
 }
 

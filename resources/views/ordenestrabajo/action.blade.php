@@ -181,7 +181,7 @@
 
                                 <div class="col-lg-6 col-md-12 position-relative">
                                     <label class="form-label">
-                                        Cliente <span class="text-danger">*</span>
+                                        Buscar Cliente <span class="text-danger">*</span>
                                     </label>
                                     <input type="text"
                                            id="cliente_razon_social"
@@ -194,7 +194,7 @@
 
                                 <div class="col-lg-6 col-md-12">
                                     <label class="form-label">
-                                        Sede del Cliente <span class="text-danger">*</span>
+                                        Sede <span class="text-danger">*</span>
                                     </label>
                                     <select name="sede_id" id="sede_id" class="form-select" required>
                                         <option value="">Seleccione una sede</option>
@@ -217,7 +217,7 @@
 
                                 <div class="col-lg-6 col-md-12">
                                     <label class="form-label">
-                                        Solicitante (Contacto de Cliente) <span class="text-danger">*</span>
+                                        Solicitante <span class="text-danger">*</span>
                                     </label>
                                     <select name="responsable_id" id="responsable_id" class="form-select" required>
                                         <option value="">Seleccione un solicitante</option>
@@ -227,7 +227,7 @@
 
                                 <div class="col-lg-6 col-md-12 position-relative">
                                     <label class="form-label">
-                                        Técnico Asignado <span class="text-danger">*</span>
+                                        Técnico <span class="text-danger">*</span>
                                     </label>
                                     <input type="text"
                                            id="tecnico_nombre"
@@ -253,7 +253,7 @@
 
                                 <div class="col-lg-4 col-md-6 col-12">
                                     <label class="form-label">
-                                        Código OT Cliente <span class="text-danger">*</span>
+                                        Código OT <span class="text-danger">*</span>
                                     </label>
                                     <input type="text" 
                                            id="codigo_ot_cliente" 
@@ -264,7 +264,7 @@
 
                                 <div class="col-lg-4 col-md-6 col-12">
                                     <label class="form-label">
-                                        Motivo / Tipo de Servicio <span class="text-danger">*</span>
+                                        Motivo <span class="text-danger">*</span>
                                     </label>
                                     <input type="text" 
                                            id="motivo" 
@@ -275,7 +275,7 @@
 
                                 <div class="col-lg-4 col-md-6 col-12">
                                     <label class="form-label">
-                                        Estado de la OT
+                                        Estado
                                     </label>
                                     <input type="text" 
                                            id="estado" 
@@ -287,7 +287,7 @@
 
                                 <div class="col-lg-12 col-12">
                                     <label class="form-label">
-                                        Descripción del Trabajo <span class="text-danger">*</span>
+                                        Descripción <span class="text-danger">*</span>
                                     </label>
                                     <textarea id="descripcion" 
                                               name="descripcion" 
@@ -298,7 +298,7 @@
 
                                 <div class="col-lg-12 col-12">
                                     <label class="form-label">
-                                        Observaciones Adicionales
+                                        Observaciones
                                     </label>
                                     <input type="text" 
                                            id="observaciones" 

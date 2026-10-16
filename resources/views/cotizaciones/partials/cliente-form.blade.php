@@ -23,7 +23,7 @@
 
         <div class="col-12 mt-2">
             <label for="ot_codigo" class="form-label small fw-medium mb-1">
-                Orden de Trabajo (OT) <span class="text-danger">*</span>
+                Orden de Trabajo <span class="text-danger">*</span>
             </label>
             <select name="ot_codigo" id="ot_codigo" class="form-select form-select-sm w-100" required>
                 <option value="">Selecciona primero un cliente de la lista</option>

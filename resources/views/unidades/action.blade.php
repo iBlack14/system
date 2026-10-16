@@ -24,7 +24,7 @@
             <div class="row g-3">
               <div class="col-12">
                 <label for="codigo" class="form-label small fw-semibold text-dark mb-1">
-                  Código SUNAT / ISO <span class="text-danger">*</span>
+                  Código <span class="text-danger">*</span>
                 </label>
                 <div class="input-group">
                   <span class="input-group-text bg-light border-end-0 text-muted">
@@ -38,7 +38,7 @@
 
               <div class="col-12">
                 <label for="descripcion" class="form-label small fw-semibold text-dark mb-1">
-                  Descripción Oficial <span class="text-danger">*</span>
+                  Descripción <span class="text-danger">*</span>
                 </label>
                 <div class="input-group">
                   <span class="input-group-text bg-light border-end-0 text-muted">
