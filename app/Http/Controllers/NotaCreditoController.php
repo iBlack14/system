@@ -159,11 +159,7 @@ class NotaCreditoController extends Controller
 
     public function store(Request $request)
 {
-    DB::beginTransaction();
-
-    try {
-
-        $request->validate([
+    $request->validate([
             'serie'          => 'required|string|max:10',
             'correlativo'    => 'required|string|max:20',
             'archivo_nota'   => 'required|file|mimes:pdf|max:5120',
@@ -172,18 +168,21 @@ class NotaCreditoController extends Controller
             'monto_nota'     => 'nullable|numeric|min:0',
             'ots'   => 'required|array|min:1',
             'ots.*' => 'required|integer|exists:ordenes_trabajo,id'
-        ]);
-        
+    ]);
+         
+    if (NotaCredito::where('serie',$request->serie)
+        ->where('correlativo',$request->correlativo)
+        ->exists()) {
 
-        if (NotaCredito::where('serie',$request->serie)
-            ->where('correlativo',$request->correlativo)
-            ->exists()) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Ya existe la nota'
+        ], 422);
+    }
 
-            return response()->json([
-                'success' => false,
-                'message' => 'Ya existe la nota'
-            ], 422);
-        }
+    DB::beginTransaction();
+
+    try {
 
         /* archivos */
         $rutaNota = $request->file('archivo_nota')?->store('notas_credito','public');

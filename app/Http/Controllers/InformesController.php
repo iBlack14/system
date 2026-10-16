@@ -201,29 +201,29 @@ public function imprimir($id)
 
     public function store(Request $request)
 {
+    /* ================= VALIDACIÓN ================= */
+    $this->validateData($request);
+
+    /* ================= OT ================= */
+    $ordenTrabajo = OrdenTrabajo::findOrFail($request->ot_codigo);
+
+    if ($ordenTrabajo->estado != 1) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Solo se puede crear informe cuando la OT está en estado INICIAL.'
+        ], 422);
+    }
+
+    if (Informes::where('orden_trabajo_id', $ordenTrabajo->id)->exists()) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Ya existe un informe para esta OT.'
+        ], 422);
+    }
+
     DB::beginTransaction();
 
     try {
-
-        /* ================= VALIDACIÓN ================= */
-        $this->validateData($request);
-
-        /* ================= OT ================= */
-        $ordenTrabajo = OrdenTrabajo::findOrFail($request->ot_codigo);
-
-        if ($ordenTrabajo->estado != 1) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Solo se puede crear informe cuando la OT está en estado INICIAL.'
-            ], 422);
-        }
-
-        if (Informes::where('orden_trabajo_id', $ordenTrabajo->id)->exists()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Ya existe un informe para esta OT.'
-            ], 422);
-        }
 
         /* ================= CREAR INFORME ================= */
         $informe = Informes::create([

@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Yajra\DataTables\Facades\DataTables;
 
 
@@ -262,11 +263,14 @@ public function index(Request $request)
      */
 public function store(Request $request)
 {
+    // Validar antes de abrir la transacción y del bloque catch. De esta forma
+    // Laravel devuelve 422 con los errores de cada campo en vez de convertir
+    // una validación normal en un error 500 genérico.
+    $data = $this->validateData($request);
+
     DB::beginTransaction();
 
     try {
-
-        $data = $this->validateData($request);
         $data['estado'] = 1;
 
         $orden = new OrdenTrabajo($data);
@@ -368,7 +372,12 @@ public function store(Request $request)
     protected function validateData(Request $request, $id = null)
 {
     $validated = $request->validate([
-        'codigo_ot_cliente' => 'required|string|max:50',
+        'codigo_ot_cliente' => [
+            'required',
+            'string',
+            'max:50',
+            Rule::unique('ordenes_trabajo', 'codigo_ot_cliente')->ignore($id),
+        ],
         'cliente_id'        => 'required|exists:clientes,id',
         'sede_id'           => 'required|exists:sedes,id',
         'responsable_id'    => 'required|exists:responsables,id',
@@ -377,6 +386,8 @@ public function store(Request $request)
         'descripcion'       => 'required|string',
         'estado'            => 'required|string|max:50',
         'observaciones'     => 'nullable|string|min:3'
+    ], [
+        'codigo_ot_cliente.unique' => 'El código de OT ya está registrado. Ingrese uno diferente.',
     ]);
 
     // ✅ SOLO en creación

@@ -316,11 +316,11 @@ public function update(Request $request, $id)
 
 public function store(Request $request)
 {
+    $data = $this->validateData($request);
+
     DB::beginTransaction();
 
     try {
-
-        $data = $this->validateData($request);
 
         /*
         =====================================

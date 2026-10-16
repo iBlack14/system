@@ -178,7 +178,7 @@
                                     <label class="form-label">
                                         Sede del Cliente <span class="text-danger">*</span>
                                     </label>
-                                    <select name="sede_id" id="sede_id" class="form-select">
+                                    <select name="sede_id" id="sede_id" class="form-select" required>
                                         <option value="">Seleccione una sede</option>
                                     </select>
                                     <small class="text-muted" style="font-size: 0.75rem;">Se listan las sedes asociadas al cliente seleccionado</small>
@@ -201,7 +201,7 @@
                                     <label class="form-label">
                                         Solicitante (Contacto de Cliente) <span class="text-danger">*</span>
                                     </label>
-                                    <select name="responsable_id" id="responsable_id" class="form-select">
+                                    <select name="responsable_id" id="responsable_id" class="form-select" required>
                                         <option value="">Seleccione un solicitante</option>
                                     </select>
                                     <small class="text-muted" style="font-size: 0.75rem;">Responsable o solicitante por parte del cliente</small>
@@ -241,7 +241,7 @@
                                            id="codigo_ot_cliente" 
                                            name="codigo_ot_cliente" 
                                            class="form-control"
-                                           placeholder="Ej: OT-2026-001">
+                                           placeholder="Ej: OT-2026-001" required>
                                 </div>
 
                                 <div class="col-lg-4 col-md-6 col-12">
@@ -252,7 +252,7 @@
                                            id="motivo" 
                                            name="motivo" 
                                            class="form-control"
-                                           placeholder="Ej: Mantenimiento Correctivo">
+                                           placeholder="Ej: Mantenimiento Correctivo" required>
                                 </div>
 
                                 <div class="col-lg-4 col-md-6 col-12">
@@ -275,7 +275,7 @@
                                               name="descripcion" 
                                               class="form-control" 
                                               rows="3"
-                                              placeholder="Detalle el trabajo o servicio a realizar..."></textarea>
+                                              placeholder="Detalle el trabajo o servicio a realizar..." required></textarea>
                                 </div>
 
                                 <div class="col-lg-12 col-12">
@@ -286,6 +286,7 @@
                                            id="observaciones" 
                                            name="observaciones" 
                                            class="form-control"
+                                           minlength="3"
                                            placeholder="Observaciones o notas especiales...">
                                 </div>
 

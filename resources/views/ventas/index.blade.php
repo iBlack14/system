@@ -424,8 +424,13 @@ class VentasManager extends CrudManager {
             </option>
             `;
 
-            // 🔥 CLAVE: guardar en hidden
-            document.getElementById('ot_codigo_hidden').value = otCodigo;
+            // Algunas versiones del formulario incluían un campo oculto
+            // adicional. El select ya conserva el valor; solo sincronizamos el
+            // campo legado cuando realmente existe.
+            const otCodigoHidden = document.getElementById('ot_codigo_hidden');
+            if (otCodigoHidden) {
+                otCodigoHidden.value = otCodigo;
+            }
         }
 
         // =========================

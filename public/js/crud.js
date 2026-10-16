@@ -283,21 +283,31 @@ class CrudManager {
      */
     handleFormErrors(error) {
         if (error.status === 422 && error.data.errors) {
-            Object.entries(error.data.errors).forEach(([field, messages]) => {
-                let input = document.getElementById(field);
-                let feedback = input?.nextElementSibling;
+            let firstMessage = null;
 
-                // Solo buscar alternativa si no tiene feedback válido
-                if (!input || !feedback?.classList.contains('invalid-feedback')) {
+            Object.entries(error.data.errors).forEach(([field, messages]) => {
+                firstMessage ??= messages[0];
+
+                let input = document.getElementById(field) ||
+                    document.querySelector(`[name="${field}"]`);
+                let feedback = input?.parentElement?.querySelector('.invalid-feedback');
+
+                if (!input) {
                     input = document.querySelector(`[data-error-field="${field}"]`);
-                    feedback = input?.nextElementSibling;
                 }
-                
-                if (input && feedback && feedback.classList.contains('invalid-feedback')) {
+
+                if (input) {
                     input.classList.add('is-invalid');
+                    if (!feedback) {
+                        feedback = document.createElement('div');
+                        feedback.className = 'invalid-feedback d-block';
+                        input.insertAdjacentElement('afterend', feedback);
+                    }
                     feedback.textContent = messages[0];
                 }
             });
+
+            this.showNotification('error', firstMessage || 'Revise los campos indicados');
         } else {
             const message = error.data?.message || 'Error al procesar la solicitud';
             this.showNotification('error', message);

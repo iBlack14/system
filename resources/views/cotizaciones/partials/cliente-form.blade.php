@@ -30,5 +30,18 @@
             </select>
             <div class="invalid-feedback"></div>
         </div>
+
+        {{--
+            Compatibilidad con el flujo original. Estos controles formaban parte
+            del formulario inicial y todavía son utilizados por el JavaScript de
+            registro rápido de clientes. Se mantienen fuera de la vista hasta que
+            dicho flujo sea habilitado desde su pestaña correspondiente.
+        --}}
+        <div class="d-none" aria-hidden="true">
+            <select name="documento_tipo_codigo" id="documento_tipo_codigo" tabindex="-1"></select>
+            <input type="text" id="numero_documento" name="numero_documento" tabindex="-1">
+            <input type="text" id="razon_social" name="razon_social" tabindex="-1">
+            <button type="button" id="btnRegistrarCliente" tabindex="-1">Guardar Cliente</button>
+        </div>
     </div>
 </div>

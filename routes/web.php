@@ -124,7 +124,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/manoobra/buscar', [ManoObraController::class, 'buscar'])->name('manoobra.buscar');
     Route::get('/cotizaciones/select', [CotizacionesController::class, 'cotizaciones'])->name('cotizaciones.select');
     Route::get('/ordenestrabajo/select', [OrdenTrabajoController::class, 'ordenestrabajo'])->name('ordenestrabajo.select');
-    Route::get('/ordenestrabajo/por-cliente/{id}', [OrdenTrabajoController::class, 'porCliente'])->name('ordenestrabajo.porCliente');
     Route::get('/provincias/por-departamento/{department_id}', [ProvinciaController::class, 'porDepartamento'])
     ->name('provincias.por-departamento');
     Route::get('distritos/por-provincia/{provinceId}', [DistritoController::class, 'porProvincia'])

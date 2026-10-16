@@ -126,7 +126,25 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
     refreshTables();
-    window.jQuery?.(document).on('draw.dt init.dt', refreshTables);
+
+    // DataTables dispara estos eventos antes de terminar de liberar su estado
+    // interno de dibujo. Modificar columnas dentro del mismo callback puede dejar
+    // activo indefinidamente el indicador "Procesando...". Ejecutamos la mejora
+    // móvil en el siguiente frame, una vez finalizado el dibujo.
+    let tableRefreshPending = false;
+    const scheduleTableRefresh = () => {
+        if (tableRefreshPending) return;
+        tableRefreshPending = true;
+        requestAnimationFrame(() => {
+            tableRefreshPending = false;
+            try {
+                refreshTables();
+            } catch (error) {
+                console.error('No se pudo adaptar la tabla:', error);
+            }
+        });
+    };
+    window.jQuery?.(document).on('draw.dt init.dt', scheduleTableRefresh);
     // Form detail rows are added dynamically without DataTables.
     const content = document.querySelector('.app-content');
     if (content) {

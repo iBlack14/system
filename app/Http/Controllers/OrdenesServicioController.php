@@ -113,14 +113,13 @@ class OrdenesServicioController extends Controller
      */
     public function store(Request $request)
 {
+    // La validación debe conservar la respuesta 422 de Laravel para que el
+    // formulario pueda señalar los campos incorrectos.
+    $data = $this->validateData($request);
+
     DB::beginTransaction();
 
     try {
-
-        // ============================
-        // VALIDAR DATOS
-        // ============================
-        $data = $this->validateData($request);
 
         \Log::info('FILES RECIBIDOS', [
     'files' => $request->allFiles()
