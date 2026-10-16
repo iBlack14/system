@@ -169,7 +169,7 @@ class NotaCreditoController extends Controller
             'ots'   => 'required|array|min:1',
             'ots.*' => 'required|integer|exists:ordenes_trabajo,id'
     ]);
-         
+
     if (NotaCredito::where('serie',$request->serie)
         ->where('correlativo',$request->correlativo)
         ->exists()) {

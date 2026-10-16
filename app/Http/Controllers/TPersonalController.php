@@ -31,7 +31,7 @@ class TPersonalController extends Controller
 
     return DataTables::of($data)
         ->filter(function ($query) use ($request) {
-            if ($search = $request->get('search')['value']) {
+            if ($search = $request->input('search.value')) {
                 $search = strtolower($search);
                 $query->where(function ($q) use ($search) {
                     $q->whereRaw('LOWER(ubigeo_peru_departments.name) LIKE ?', ["%{$search}%"])
