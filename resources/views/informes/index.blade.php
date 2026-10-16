@@ -232,7 +232,17 @@ class InformesManager extends CrudManager {
             serverSide: true,
             ajax: {
                 url: this.baseUrl,
-                type: 'GET'
+                type: 'GET',
+                timeout: 30000,
+                error: (xhr) => {
+                    console.error('Error al cargar informes:', xhr.responseText || xhr.statusText);
+                    this.showNotification('error', 'No se pudo cargar la lista de informes');
+                },
+                complete: () => {
+                    if ($.fn.dataTable.isDataTable(this.elements.table)) {
+                        $(this.elements.table).DataTable().processing(false);
+                    }
+                }
             },
             columns: [
                 { data: 'action', orderable: false, searchable: false },
@@ -250,9 +260,10 @@ class InformesManager extends CrudManager {
             autoWidth: true,
             columnDefs: [
                 { targets: 0, width: '132px', className: 'text-center' },
+                { targets: [1, 3, 4, 5, 6], orderable: false },
                 { targets: [2, 6, 7, 8], className: 'text-center' }
             ],
-            order: [[1, 'asc']]
+            order: [[2, 'desc']]
         });
     }
 
