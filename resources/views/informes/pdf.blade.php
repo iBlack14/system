@@ -64,13 +64,21 @@
     }
 
     .photo-group {
-        margin: 5px 0 7px;
+        margin: 8px 0 10px;
+        page-break-inside: auto;
     }
 
     .photo-group-title {
+        background: #f4f5f7;
+        border: none;
+        color: #374151;
         font-weight: bold;
+        font-size: 11px;
+        line-height: 1.3;
+        letter-spacing: .2px;
+        padding: 5px 8px 10px;
         text-align: center;
-        margin: 3px 0 4px;
+        page-break-after: avoid;
     }
 
     .photo-row { page-break-inside: avoid; }
@@ -78,27 +86,38 @@
     .photo-table {
         width: 100%;
         table-layout: fixed;
-        border-collapse: separate;
-        border-spacing: 6px 4px;
+        border-collapse: collapse;
+        border-spacing: 0;
+        border: none !important;
+        outline: none !important;
         margin: 0;
     }
 
+    .photo-table tr,
+    .photo-table td {
+        border: none !important;
+        outline: none !important;
+        box-shadow: none !important;
+    }
+
     .photo-card {
-        width: 50%;
-        height: 205px;
         text-align: center;
         vertical-align: middle;
-        padding: 4px;
-        border: 1px solid #ccc;
-        background: #fff;
+        padding: 3px 2px;
+        border: none !important;
+        outline: none !important;
+        background: transparent !important;
+        box-shadow: none !important;
     }
 
     .photo-card img {
-        width: 100%;
-        height: 197px;
-        object-fit: contain;
         display: block;
         margin: 0 auto;
+        padding: 2px;
+        border: 1px solid #d2d6da !important;
+        outline: none !important;
+        background: #fff !important;
+        box-shadow: none !important;
     }
 
     .photo-card-empty { border: 0; background: transparent; }
@@ -182,25 +201,82 @@
             @php
                 $descripcion = $imagenes->first()->grupo_descripcion;
                 $imagenesOrdenadas = $imagenes->sortBy('orden')->values();
-                $filas = $imagenesOrdenadas->chunk(2);
+                $filas = [];
+                $filaActual = [];
+                $espacioOcupado = 0;
+
+                foreach ($imagenesOrdenadas as $imagen) {
+                    $rutaFoto = storage_path('app/public/'.$imagen->ruta_imagen);
+                    $dimensiones = is_file($rutaFoto) ? @getimagesize($rutaFoto) : false;
+                    $esVertical = $dimensiones && $dimensiones[1] > $dimensiones[0];
+                    $columnas = $esVertical ? 3 : 5;
+
+                    if ($espacioOcupado + $columnas > 15) {
+                        $filas[] = $filaActual;
+                        $filaActual = [];
+                        $espacioOcupado = 0;
+                    }
+
+                    $anchoMaximo = $esVertical ? 120 : 205;
+                    $anchoFoto = $anchoMaximo;
+                    $altoFoto = 180;
+
+                    if ($dimensiones && $dimensiones[0] > 0 && $dimensiones[1] > 0) {
+                        $escala = min($anchoMaximo / $dimensiones[0], 180 / $dimensiones[1], 1);
+                        $anchoFoto = round($dimensiones[0] * $escala, 1);
+                        $altoFoto = round($dimensiones[1] * $escala, 1);
+                    }
+
+                    $filaActual[] = [
+                        'imagen' => $imagen,
+                        'ruta' => $rutaFoto,
+                        'ancho' => $anchoFoto,
+                        'alto' => $altoFoto,
+                        'columnas' => $columnas,
+                        'vertical' => $esVertical,
+                    ];
+                    $espacioOcupado += $columnas;
+                }
+
+                if (count($filaActual)) {
+                    $filas[] = $filaActual;
+                }
             @endphp
 
             <div class="photo-group">
-                @if($descripcion)
-                    <div class="photo-group-title">{{ $descripcion }}</div>
-                @endif
-
-                <table class="photo-table">
+                <table class="photo-table" border="0" cellspacing="0" cellpadding="0">
+                    <colgroup>
+                        @for($columna = 0; $columna < 15; $columna++)
+                            <col style="width: 6.666%;">
+                        @endfor
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th colspan="15" class="photo-group-title">
+                                {{ $descripcion ?: 'Evidencia del trabajo realizado' }}
+                            </th>
+                        </tr>
+                    </thead>
                     @foreach($filas as $fila)
                         <tr class="photo-row">
-                            @foreach($fila as $img)
-                                <td class="photo-card">
-                                    <img src="{{ storage_path('app/public/'.$img->ruta_imagen) }}" alt="Evidencia fotográfica">
+                            @php $columnasUsadas = 0; @endphp
+                            @foreach($fila as $foto)
+                                <td class="photo-card" colspan="{{ $foto['columnas'] }}" style="border: 0; outline: 0; background: transparent;">
+                                    @if($foto['vertical'])
+                                        <img src="{{ $foto['ruta'] }}"
+                                             height="{{ $foto['alto'] }}"
+                                             alt="Evidencia fotogr&aacute;fica">
+                                    @else
+                                        <img src="{{ $foto['ruta'] }}"
+                                             width="{{ $foto['ancho'] }}"
+                                             alt="Evidencia fotogr&aacute;fica">
+                                    @endif
                                 </td>
+                                @php $columnasUsadas += $foto['columnas']; @endphp
                             @endforeach
 
-                            @if(count($fila) < 2)
-                                <td class="photo-card photo-card-empty"></td>
+                            @if($columnasUsadas < 15)
+                                <td class="photo-card photo-card-empty" colspan="{{ 15 - $columnasUsadas }}"></td>
                             @endif
                         </tr>
                     @endforeach
