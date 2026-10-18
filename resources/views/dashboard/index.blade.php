@@ -2,23 +2,9 @@
 
 @section('contenido')
 <div class="container-fluid py-2 acotec-dashboard">
-    <!-- Header de Bienvenida / Control Operativo -->
-    <div class="dashboard-hero d-flex align-items-center justify-content-between flex-wrap gap-3 mb-3">
-        <div>
-            <div class="d-flex align-items-center gap-2 mb-1">
-                <span class="badge bg-warning-subtle text-warning-emphasis px-2 py-1 rounded-pill small fw-semibold">
-                    <i class="bi bi-shield-check me-1"></i> Control Operativo
-                </span>
-                <span class="text-muted small">• Actualizado en tiempo real</span>
-            </div>
-            <h1 class="dashboard-page-title mb-0">Vista General del Sistema</h1>
-            <p class="text-muted small mb-0 mt-1">Supervisión integral de órdenes de trabajo, operaciones y flujo de taller.</p>
-        </div>
-        <div class="d-flex align-items-center gap-2">
-            <a href="{{ route('ordenestrabajo.index') }}" class="btn btn-primary btn-sm rounded-pill px-3 shadow-sm">
-                <i class="bi bi-list-task me-1"></i> Ver Órdenes de Trabajo
-            </a>
-        </div>
+    <!-- Accesos Directos Principales en la Cabecera -->
+    <div class="mb-3">
+        @include('dashboard.quick-links')
     </div>
 
     <!-- Grid de Métricas / Estados -->
@@ -56,11 +42,6 @@
             </section>
             @endforeach
         </div>
-    </div>
-
-    <!-- Accesos Rápidos -->
-    <div class="mt-4 pt-2">
-        @include('dashboard.quick-links')
     </div>
 </div>
 @endsection
