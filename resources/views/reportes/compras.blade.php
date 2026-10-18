@@ -7,6 +7,10 @@
 <style>
 .card { border-radius: 10px; }
 
+.report-detail-row[hidden] {
+    display: none !important;
+}
+
 .table thead {
     background: #343a40;
     color: white;
@@ -195,17 +199,20 @@
                             </td>
 
                             <td>
-                                <button class="btn btn-sm btn-outline-danger"
-                                        data-bs-toggle="collapse"
-                                        data-bs-target="#detalle-{{ $compra->id }}">
-                                    <i class="bi bi-eye"></i>
+                                <button type="button"
+                                        class="btn btn-sm btn-outline-danger report-detail-toggle"
+                                        data-detail-target="detalle-{{ $compra->id }}"
+                                        aria-controls="detalle-{{ $compra->id }}"
+                                        aria-expanded="false"
+                                        title="Ver detalle">
+                                    <i class="bi bi-eye" aria-hidden="true"></i>
                                 </button>
                             </td>
 
                         </tr>
 
                         {{-- DETALLE --}}
-                        <tr class="collapse bg-light" id="detalle-{{ $compra->id }}">
+                        <tr class="report-detail-row bg-light" id="detalle-{{ $compra->id }}" hidden>
                             <td colspan="7">
 
                                 <div class="p-3 border rounded bg-white shadow-sm">
@@ -300,8 +307,6 @@
 
 @push('scripts')
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
 <script>
@@ -310,6 +315,24 @@ $(document).ready(function () {
         width: '100%',
         placeholder: 'Seleccione una opción',
         allowClear: true
+    });
+
+    document.querySelectorAll('.report-detail-toggle').forEach(button => {
+        button.addEventListener('click', event => {
+            event.preventDefault();
+            event.stopPropagation();
+
+            const detailRow = document.getElementById(button.dataset.detailTarget);
+            if (!detailRow) return;
+
+            const willOpen = detailRow.hidden;
+            detailRow.hidden = !willOpen;
+            button.setAttribute('aria-expanded', String(willOpen));
+            button.setAttribute('title', willOpen ? 'Ocultar detalle' : 'Ver detalle');
+
+            const icon = button.querySelector('i');
+            if (icon) icon.className = willOpen ? 'bi bi-eye-slash' : 'bi bi-eye';
+        });
     });
 });
 </script>

@@ -175,7 +175,7 @@ class ProductoController extends Controller
             'codigo' => 'required|string|max:50',
             'nombre' => 'required|string|max:200',
             'descripcion' => 'nullable|string|max:255',
-            'imagen' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'imagen' => 'nullable|image|mimes:jpg,jpeg,png|max:102400',
             'costo_unitario' => 'required|numeric|between:0,9999.99',
             'utilidad' => 'required|numeric',
             'stock' => 'required|numeric',

@@ -793,7 +793,7 @@ protected function validateData(Request $request, $isUpdate = false)
         'imagenes' => ['nullable', 'array'],
         'imagenes.*' => ['nullable', 'array'], // aspecto
         'imagenes.*.*' => ['nullable', 'array'], // grupo
-        'imagenes.*.*.*' => ['file', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'], // imagen real
+        'imagenes.*.*.*' => ['file', 'image', 'mimes:jpg,jpeg,png,webp', 'max:102400'], // máximo 100 MB por imagen
 
         'descripcion_grupo' => ['nullable', 'array'],
         'descripcion_grupo.*' => ['nullable', 'string'],

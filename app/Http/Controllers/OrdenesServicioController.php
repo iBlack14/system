@@ -325,7 +325,7 @@ class OrdenesServicioController extends Controller
         'cliente_id' => 'required|exists:clientes,id',
 
         // archivo_pdf
-        'archivo_pdf' => 'nullable|mimes:pdf|max:5120',
+        'archivo_pdf' => 'nullable|mimes:pdf|max:102400',
 
     ]);
 

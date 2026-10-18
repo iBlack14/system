@@ -162,9 +162,9 @@ class NotaCreditoController extends Controller
     $request->validate([
             'serie'          => 'required|string|max:10',
             'correlativo'    => 'required|string|max:20',
-            'archivo_nota'   => 'required|file|mimes:pdf|max:5120',
-            'valida_nota'    => 'required|file|mimes:pdf|max:5120',
-            'detalles_nota'  => 'required|file|mimes:pdf|max:5120',
+            'archivo_nota'   => 'required|file|mimes:pdf|max:102400',
+            'valida_nota'    => 'required|file|mimes:pdf|max:102400',
+            'detalles_nota'  => 'required|file|mimes:pdf|max:102400',
             'monto_nota'     => 'nullable|numeric|min:0',
             'ots'   => 'required|array|min:1',
             'ots.*' => 'required|integer|exists:ordenes_trabajo,id'
@@ -294,9 +294,9 @@ public function update(Request $request, $id)
             // 🔥 NUEVO
             'ots'            => 'required|array|min:1',
             'ots.*'          => 'exists:ordenes_trabajo,id',
-            'archivo_nota'   => 'nullable|mimes:pdf|max:5120',
-            'valida_nota'    => 'nullable|mimes:pdf|max:5120',
-            'detalles_nota'  => 'nullable|mimes:pdf|max:5120',
+            'archivo_nota'   => 'nullable|mimes:pdf|max:102400',
+            'valida_nota'    => 'nullable|mimes:pdf|max:102400',
+            'detalles_nota'  => 'nullable|mimes:pdf|max:102400',
         ]);
 
         // ✅ DATOS BÁSICOS

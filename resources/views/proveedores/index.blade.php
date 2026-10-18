@@ -1,5 +1,71 @@
 @extends('plantilla.app')
 @push('estilos')
+<style>
+/* La tabla contiene muchas columnas: es preferible desplazarla horizontalmente
+   antes que comprimir direcciones y teléfonos hasta volverlos ilegibles. */
+.proveedores-table-wrap {
+    overflow-x: auto;
+    scrollbar-gutter: stable;
+}
+
+.proveedores-scroll-top {
+    display: none;
+    height: 15px;
+    margin-bottom: 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-color: #94a3b8 #eef2f7;
+    scrollbar-width: thin;
+}
+
+.proveedores-scroll-top.is-scrollable {
+    display: block;
+}
+
+.proveedores-scroll-top-content {
+    height: 1px;
+}
+
+#listadoTable {
+    width: 100% !important;
+    min-width: 1000px;
+}
+
+#listadoTable th {
+    white-space: nowrap;
+}
+
+#listadoTable th,
+#listadoTable td {
+    padding: .7rem .65rem;
+    vertical-align: middle;
+}
+
+#listadoTable td:nth-child(1),
+#listadoTable td:nth-child(2),
+#listadoTable td:nth-child(3),
+#listadoTable td:nth-child(7) {
+    white-space: nowrap;
+}
+
+#listadoTable td:nth-child(4),
+#listadoTable td:nth-child(5),
+#listadoTable td:nth-child(6),
+#listadoTable td:nth-child(9) {
+    line-height: 1.45;
+    overflow-wrap: break-word;
+}
+
+#listadoTable td:nth-child(8) {
+    overflow-wrap: anywhere;
+}
+
+@media (min-width: 1500px) {
+    #listadoTable {
+        min-width: 1380px;
+    }
+}
+</style>
 
 @endpush
 @section('contenido')
@@ -23,7 +89,10 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <div class="table-responsive">
+                    <div id="proveedoresScrollTop" class="proveedores-scroll-top" aria-hidden="true">
+                        <div class="proveedores-scroll-top-content"></div>
+                    </div>
+                    <div class="table-responsive proveedores-table-wrap">
                         <table id="listadoTable" class="table table-striped table-hover table-sm">
                             <thead>
                                 <tr>
@@ -64,12 +133,15 @@ class ProveedorManager extends CrudManager {
     constructor() {
         super("{{ url('proveedores') }}");
         this.initializeDataTable();
+        this.setupSynchronizedScrollbars();
         this.populateSelect('documento_tipo_codigo', '{{ route("documento-tipos.select") }}', item =>
             `<option value="${item.codigo}">${item.codigo} - ${item.descripcion}</option>`
         );
     }
 
     initializeDataTable() {
+        const compactLayout = window.matchMedia('(max-width: 1499px)').matches;
+
         this.tabla = $(this.elements.table).DataTable({
             processing: true,
             serverSide: true,
@@ -89,18 +161,60 @@ class ProveedorManager extends CrudManager {
                 { data: 'rubro', name: 'rubro' }
             ],
             columnDefs: [
-                { targets: 0, width: '08%', className: 'text-center' },
-                { targets: 1, width: '05%' , className: 'text-center'},
-                { targets: 2, width: '15%' , className: 'text-center'},
-                { targets: 3, width: '20%' },
-                { targets: 4, width: '20%' },
-                { targets: 5, width: '10%' },
-                { targets: 6, width: '10%' },
-                { targets: 6, width: '11%' }
+                { targets: 0, width: '80px', className: 'text-center' },
+                { targets: 1, width: '105px', className: 'text-center' },
+                { targets: 2, width: '125px', className: 'text-center' },
+                { targets: 3, width: '180px' },
+                { targets: 4, width: '230px' },
+                { targets: 5, width: '145px' },
+                { targets: 6, width: '130px' },
+                { targets: 7, width: '210px', visible: !compactLayout },
+                { targets: 8, width: '175px', visible: !compactLayout }
             ],
-            responsive: true,
+            autoWidth: false,
+            responsive: false,
             order: [[1, 'asc']]
         });
+    }
+
+    setupSynchronizedScrollbars() {
+        const topScroll = document.getElementById('proveedoresScrollTop');
+        const topContent = topScroll?.querySelector('.proveedores-scroll-top-content');
+        const bottomScroll = document.querySelector('.proveedores-table-wrap');
+
+        if (!topScroll || !topContent || !bottomScroll) return;
+
+        let syncing = false;
+
+        const updateScrollbar = () => {
+            const contentWidth = bottomScroll.scrollWidth;
+            topContent.style.width = `${contentWidth}px`;
+            topScroll.classList.toggle('is-scrollable', contentWidth > bottomScroll.clientWidth + 1);
+            topScroll.scrollLeft = bottomScroll.scrollLeft;
+        };
+
+        topScroll.addEventListener('scroll', () => {
+            if (syncing) return;
+            syncing = true;
+            bottomScroll.scrollLeft = topScroll.scrollLeft;
+            syncing = false;
+        });
+
+        bottomScroll.addEventListener('scroll', () => {
+            if (syncing) return;
+            syncing = true;
+            topScroll.scrollLeft = bottomScroll.scrollLeft;
+            syncing = false;
+        });
+
+        this.tabla.on('draw.dt column-visibility.dt', () => requestAnimationFrame(updateScrollbar));
+        window.addEventListener('resize', updateScrollbar);
+
+        if ('ResizeObserver' in window) {
+            new ResizeObserver(updateScrollbar).observe(bottomScroll);
+        }
+
+        requestAnimationFrame(updateScrollbar);
     }
 
     async showEditModal(id) {

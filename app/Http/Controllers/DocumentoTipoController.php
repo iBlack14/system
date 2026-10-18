@@ -6,6 +6,7 @@ use App\Models\DocumentoTipo;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Log;
 
 class DocumentoTipoController extends Controller
 {
@@ -58,12 +59,22 @@ class DocumentoTipoController extends Controller
     public function store(Request $request)
     {
         $data = $this->validateData($request);
-        DocumentoTipo::create($data);
-        
-        return response()->json([
-            'success'=> true,
-            'message'=>'Registro creado satisfactoriamente'
-        ]);
+
+        try {
+            DocumentoTipo::create($data);
+
+            return response()->json([
+                'success'=> true,
+                'message'=>'Registro creado satisfactoriamente'
+            ]);
+        } catch (\Throwable $e) {
+            Log::error('Error al crear un tipo de documento', ['error' => $e->getMessage()]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'No se pudo crear el tipo de documento.'
+            ], 500);
+        }
     }
 
     /**
@@ -93,13 +104,25 @@ class DocumentoTipoController extends Controller
     public function update(Request $request, $id)
     {
         $data = $this->validateData($request, $id);
-        $registro = DocumentoTipo::where('codigo', $id)->firstOrFail();
-        $registro->update($data);
+        try {
+            $registro = DocumentoTipo::where('codigo', $id)->firstOrFail();
+            $registro->update($data);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Registro actualizado correctamente'
-        ]);
+            return response()->json([
+                'success' => true,
+                'message' => 'Registro actualizado correctamente'
+            ]);
+        } catch (\Throwable $e) {
+            Log::error('Error al actualizar un tipo de documento', [
+                'codigo' => $id,
+                'error' => $e->getMessage(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'No se pudo actualizar el tipo de documento.'
+            ], 500);
+        }
 
     }
 
@@ -129,10 +152,14 @@ class DocumentoTipoController extends Controller
             'codigo' => [
                 'required',
                 'string',
-                'max:3',
+                'max:2',
                 Rule::unique('documento_tipos', 'codigo')->ignore($id, 'codigo')  // usar Rule para mayor claridad
             ],
             'descripcion' => 'required|string|max:50',
+        ], [
+            'codigo.required' => 'Ingresa el código del tipo de documento.',
+            'codigo.max' => 'El código debe tener como máximo 2 caracteres, por ejemplo 01.',
+            'codigo.unique' => 'Ese código ya está registrado.',
         ]);
     }
 

@@ -18,7 +18,8 @@
 
         <div class="col-md-6">
             <label for="serie" class="form-label">Serie <span class="text-danger">*</span></label>
-            <input type="text" id="serie" name="serie" class="form-control form-control-sm" required>
+            <input type="text" id="serie" name="serie" class="form-control form-control-sm text-uppercase"
+                maxlength="4" placeholder="Ej. F001" autocomplete="off" autocapitalize="characters" required>
             <div class="invalid-feedback"></div>
         </div>
 

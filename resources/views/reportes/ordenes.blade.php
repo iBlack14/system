@@ -47,6 +47,10 @@
 .select2-container--default .select2-selection--single .select2-selection__arrow {
     height: 38px !important;
 }
+
+.report-detail-panel[hidden] {
+    display: none !important;
+}
 </style>
 @endpush
 
@@ -220,12 +224,12 @@
                             <td>
                                 <button
                                     type="button"
-                                    class="btn btn-sm btn-outline-primary"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#detalle-{{ $ot->id }}"
+                                    class="btn btn-sm btn-outline-primary report-detail-toggle"
+                                    data-detail-target="detalle-{{ $ot->id }}"
                                     aria-expanded="false"
-                                    aria-controls="detalle-{{ $ot->id }}">
-                                    <i class="bi bi-eye"></i>
+                                    aria-controls="detalle-{{ $ot->id }}"
+                                    title="Ver detalle">
+                                    <i class="bi bi-eye" aria-hidden="true"></i>
                                 </button>
                             </td>
 
@@ -237,7 +241,8 @@
 
                                 <div
                                     id="detalle-{{ $ot->id }}"
-                                    class="collapse">
+                                    class="report-detail-panel"
+                                    hidden>
 
                                     <div class="p-3 bg-light border rounded shadow-sm">
 
@@ -532,7 +537,6 @@
 
 @push('scripts')
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
 <script>
@@ -542,6 +546,24 @@ $(document).ready(function () {
         width: '100%',
         placeholder: 'Seleccione una opción',
         allowClear: true
+    });
+
+    document.querySelectorAll('.report-detail-toggle').forEach(button => {
+        button.addEventListener('click', event => {
+            event.preventDefault();
+            event.stopPropagation();
+
+            const detailPanel = document.getElementById(button.dataset.detailTarget);
+            if (!detailPanel) return;
+
+            const willOpen = detailPanel.hidden;
+            detailPanel.hidden = !willOpen;
+            button.setAttribute('aria-expanded', String(willOpen));
+            button.setAttribute('title', willOpen ? 'Ocultar detalle' : 'Ver detalle');
+
+            const icon = button.querySelector('i');
+            if (icon) icon.className = willOpen ? 'bi bi-eye-slash' : 'bi bi-eye';
+        });
     });
 
 });

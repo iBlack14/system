@@ -14,7 +14,8 @@
             <div class="col-lg-6">
               <div class="form-group mb-3">
                 <label for="codigo" class="form-label">Código <span class="text-danger">*</span></label>
-                <input type="text" id="codigo" name="codigo" class="form-control" required>
+                <input type="text" id="codigo" name="codigo" class="form-control" maxlength="2"
+                  placeholder="Ej. 01" autocomplete="off" required>
                 <div class="invalid-feedback"></div>
               </div>
             </div>

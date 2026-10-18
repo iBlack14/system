@@ -693,7 +693,7 @@ public function porEstado($estado)
 public function ejecutar(Request $request, $id)
 {
     $request->validate([
-        'archivo' => 'required|mimes:pdf|max:5120'
+        'archivo' => 'required|mimes:pdf|max:102400'
     ]);
 
     DB::beginTransaction();
@@ -752,7 +752,7 @@ public function ejecutar(Request $request, $id)
 public function documentacion(Request $request, $id)
 {
     $request->validate([
-        'archivo' => 'required|mimes:jpeg,jpg,png|max:5120'
+        'archivo' => 'required|mimes:jpeg,jpg,png|max:102400'
     ]);
 
     DB::beginTransaction();
@@ -841,8 +841,8 @@ public function detalle($id)
 public function facturacion(Request $request, $id)
 {
     $request->validate([
-        'archivo_factura'  => 'required|mimes:pdf|max:5120',
-        'archivo_sustento' => 'required|mimes:pdf|max:5120',
+        'archivo_factura'  => 'required|mimes:pdf|max:102400',
+        'archivo_sustento' => 'required|mimes:pdf|max:102400',
     ]);
 
     DB::beginTransaction();
@@ -926,9 +926,9 @@ public function facturacion(Request $request, $id)
 public function notacredito(Request $request, $id)
 {
     $request->validate([
-        'archivo_nota'  => 'required|mimes:pdf|max:5120',
-        'valida_nota' => 'required|mimes:pdf|max:5120',
-        'detalles_nota' => 'required|mimes:pdf|max:5120',
+        'archivo_nota'  => 'required|mimes:pdf|max:102400',
+        'valida_nota' => 'required|mimes:pdf|max:102400',
+        'detalles_nota' => 'required|mimes:pdf|max:102400',
     ]);
 
     DB::beginTransaction();
@@ -1034,7 +1034,7 @@ public function cancelado(Request $request, $id)
         'fecha_pago'     => 'required|date',
         'num_operacion' => 'nullable|string|max:100',
         'monto_detraccion' => 'required|numeric|min:0.00',
-        'voucher_pago' => 'required|file|mimes:jpg,jpeg,png|max:5120',
+        'voucher_pago' => 'required|file|mimes:jpg,jpeg,png|max:102400',
     ]);
 
     DB::beginTransaction();
@@ -1102,7 +1102,7 @@ public function cancelado(Request $request, $id)
 public function procesopago(Request $request, $id)
 {
     $request->validate([
-        'archivo' => 'required|mimes:jpeg,jpg,png|max:5120'
+        'archivo' => 'required|mimes:jpeg,jpg,png|max:102400'
     ]);
 
     DB::beginTransaction();

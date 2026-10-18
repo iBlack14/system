@@ -199,9 +199,9 @@
 
 
                 {{-- ================= REPORTES ================= --}}
-                @canany(['reporteventas_list','reportecompras_list'])
-                <li class="nav-item" id="mnuReporte">
-                    <a href="#" class="nav-link">
+                @canany(['reporteventas_list','reportecompras_list','reportepagos_list','reporteordenes_list'])
+                <li class="nav-item {{ request()->routeIs('reportes.*') ? 'menu-open' : '' }}" id="mnuReporte">
+                    <a href="#" class="nav-link {{ request()->routeIs('reportes.*') ? 'active' : '' }}">
                         <i class="nav-icon bi bi-bar-chart-line"></i>
                         <p>
                             Reportes
@@ -214,7 +214,7 @@
                         @can('reporteventas_list')
                         <li class="nav-item">
                             <a href="{{ route('reportes.ventas') }}" 
-                            class="nav-link" 
+                            class="nav-link {{ request()->routeIs('reportes.ventas') ? 'active' : '' }}"
                             id="itemReporteVentas">
                                 <i class="nav-icon bi bi-cash-coin"></i>
                                 <p>Ventas</p>
@@ -224,7 +224,7 @@
 
                         @can('reportecompras_list')
                         <li class="nav-item">
-                            <a href="{{ route('reportes.compras') }}" class="nav-link">
+                            <a href="{{ route('reportes.compras') }}" class="nav-link {{ request()->routeIs('reportes.compras') ? 'active' : '' }}" id="itemReporteCompras">
                                 <i class="nav-icon bi bi-bag"></i>
                                 <p>Compras</p>
                             </a>
@@ -233,7 +233,7 @@
 
                         @can('reportepagos_list')
                         <li class="nav-item">
-                            <a href="{{ route('reportes.pagos') }}" class="nav-link">
+                            <a href="{{ route('reportes.pagos') }}" class="nav-link {{ request()->routeIs('reportes.pagos') ? 'active' : '' }}" id="itemReportePagos">
                                 <i class="nav-icon bi bi-cash"></i>
                                 <p>Pagos</p>
                             </a>
@@ -243,7 +243,7 @@
                         @can('reporteordenes_list')
                         <li class="nav-item">
                             <a href="{{ route('reportes.ordenes') }}" 
-                            class="nav-link" 
+                            class="nav-link {{ request()->routeIs('reportes.ordenes') ? 'active' : '' }}"
                             id="itemReporteOrdenes">
                                 <i class="nav-icon bi bi-list-task"></i>
                                 <p>OTs</p>

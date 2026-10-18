@@ -8,6 +8,7 @@
         .ticket { width: 240px; margin: 0 auto; }
         .center { text-align: center; }
         .bold { font-weight: bold; }
+        .company-logo { display: block; width: 210px; height: auto; margin: 0 auto 7px; }
         table { width: 100%; border-collapse: collapse; }
         td { padding: 2px 0; vertical-align: top; }
         .line { border-top: 1px dashed #000; margin: 5px 0; }
@@ -15,11 +16,21 @@
     </style>
 </head>
 <body>
+@php
+    $logoPath = public_path('assets/branding/acotec-logo.png');
+    $logoDataUri = is_file($logoPath)
+        ? 'data:image/png;base64,' . base64_encode(file_get_contents($logoPath))
+        : null;
+@endphp
 <div class="ticket">
 
     {{-- ENCABEZADO --}}
     <div class="center">
-        <h3 class="bold">{{ $empresa->razon_social }}</h3>
+        @if($logoDataUri)
+            <img class="company-logo" src="{{ $logoDataUri }}" alt="{{ $empresa->razon_social }}">
+        @else
+            <h3 class="bold">{{ $empresa->razon_social }}</h3>
+        @endif
         <p>{{ $empresa->direccion }}</p>
         <p>RUC: {{ $empresa->ruc }}</p>
         <p class="bold">

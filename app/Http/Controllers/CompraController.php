@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Models\Producto;
 use App\Models\ComprobanteSerie;
 
@@ -122,9 +123,14 @@ class CompraController extends Controller
     } catch (\Exception $e) {
         DB::rollBack();
 
+        Log::error('Error al crear una compra', [
+            'error' => $e->getMessage(),
+            'user_id' => auth()->id(),
+        ]);
+
         return response()->json([
             'success' => false,
-            'message' => 'Error al crear el registro: ' . $e->getMessage()
+            'message' => 'No se pudo crear la compra. Revisa los datos e inténtalo nuevamente.'
         ], 500);
     }
 }
@@ -269,7 +275,7 @@ private function processCompraData(array $data, bool $isNew = true)
     $compraData = [
         'proveedor_id' => $data['proveedor_id'],
         'comprobante_tipo_codigo' => $data['comprobante_tipo_codigo'],
-        'serie' => $data['serie'],
+        'serie' => strtoupper(trim($data['serie'])),
         'correlativo' => $data['correlativo'],
         'forma_pago' => $data['forma_pago'],
         'op_gravada' => round($totales['op_gravada'], 2),
@@ -336,7 +342,7 @@ private function processCompraData(array $data, bool $isNew = true)
             // Cabecera de la Compra
             'proveedor_id' => 'required|exists:proveedores,id',
             'comprobante_tipo_codigo' => 'required|exists:comprobante_tipos,codigo',
-            'serie' => 'required|string',
+            'serie' => 'required|string|max:4',
             'correlativo' => 'required|integer|min:1',
             'forma_pago' => 'required|string|in:contado,credito',
 
@@ -347,6 +353,9 @@ private function processCompraData(array $data, bool $isNew = true)
             'detalles.*.costo_unitario' => 'required|numeric|between:0,9999.99'
             //'detalles.*.costo_unitario' => 'required|numeric|between:0,9999.99'
             //'detalles.*.costo_unitario' => ['required','regex:/^\d+(\.\d{1,2})?$/']
+        ], [
+            'serie.required' => 'Ingresa la serie del comprobante.',
+            'serie.max' => 'La serie debe tener como máximo 4 caracteres, por ejemplo F001.',
         ]);
     }
 
