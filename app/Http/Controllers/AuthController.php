@@ -14,7 +14,10 @@ class AuthController extends Controller
             'password' => 'required'
         ]);
         // Verificar si el usuario existe y está activo
-        $credentials = $request->only('email', 'password');
+        $credentials = [
+            'email' => trim(strtolower($request->input('email'))),
+            'password' => $request->input('password'),
+        ];
 
         if (Auth::attempt($credentials)) {            
             $request->session()->regenerate();
