@@ -1,6 +1,17 @@
 @extends('plantilla.app')
 @push('estilos')
+<style>
+    .productos-scroll-top {
+        overflow-x: auto;
+        overflow-y: hidden;
+        height: 14px;
+        margin-bottom: 6px;
+    }
 
+    .productos-scroll-top-content {
+        height: 1px;
+    }
+</style>
 @endpush
 
 @php
@@ -113,7 +124,10 @@
                 </div>
 
                 <div class="card-body p-4">
-                    <div class="table-responsive rounded-3 border">
+                    <div id="productosScrollTop" class="productos-scroll-top" aria-label="Desplazamiento horizontal superior">
+                        <div class="productos-scroll-top-content"></div>
+                    </div>
+                    <div id="productosTableScroll" class="table-responsive rounded-3 border">
                         <table id="listadoTable" class="table table-hover align-middle mb-0 w-100 table-sticky-header mobile-records">
                             <thead>
                                 <tr>
@@ -342,6 +356,44 @@ class ProductoManager extends CrudManager {
             order: [[1, 'desc']],
             responsive: true
         });
+
+        this.initializeHorizontalScroll();
+        this.tabla.on('draw.dt responsive-resize.dt', () => this.updateHorizontalScrollWidth());
+    }
+
+    initializeHorizontalScroll() {
+        this.topScroll = document.getElementById('productosScrollTop');
+        this.tableScroll = document.getElementById('productosTableScroll');
+
+        if (!this.topScroll || !this.tableScroll) return;
+
+        let syncingTop = false;
+        let syncingBottom = false;
+
+        this.topScroll.addEventListener('scroll', () => {
+            if (syncingBottom) return;
+            syncingTop = true;
+            this.tableScroll.scrollLeft = this.topScroll.scrollLeft;
+            syncingTop = false;
+        });
+
+        this.tableScroll.addEventListener('scroll', () => {
+            if (syncingTop) return;
+            syncingBottom = true;
+            this.topScroll.scrollLeft = this.tableScroll.scrollLeft;
+            syncingBottom = false;
+        });
+
+        window.addEventListener('resize', () => this.updateHorizontalScrollWidth());
+        requestAnimationFrame(() => this.updateHorizontalScrollWidth());
+    }
+
+    updateHorizontalScrollWidth() {
+        if (!this.topScroll || !this.tableScroll) return;
+
+        const content = this.topScroll.querySelector('.productos-scroll-top-content');
+        content.style.width = `${this.tableScroll.scrollWidth}px`;
+        this.topScroll.style.display = this.tableScroll.scrollWidth > this.tableScroll.clientWidth ? 'block' : 'none';
     }
 
     async showEditModal(id) {
