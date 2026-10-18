@@ -349,6 +349,28 @@ public function show($id)
 {
     try {
 
+        /*
+         * Servir las fotografías desde Laravel. Esto evita depender del
+         * enlace simbólico public/storage, que algunos hostings bloquean
+         * con HTTP 403.
+         */
+        if (request()->filled('imagen')) {
+            $imagen = InformeAspectoImagen::whereKey(request()->integer('imagen'))
+                ->whereHas('informeAspecto', function ($query) use ($id) {
+                    $query->where('informe_id', $id);
+                })
+                ->firstOrFail();
+
+            abort_unless(
+                $imagen->ruta_imagen && Storage::disk('public')->exists($imagen->ruta_imagen),
+                404
+            );
+
+            return response()->file(Storage::disk('public')->path($imagen->ruta_imagen), [
+                'Cache-Control' => 'private, max-age=3600',
+            ]);
+        }
+
         $informe = Informes::with([
             'ordenTrabajo.cliente',
             'ordenTrabajo.estadoCatalogo',

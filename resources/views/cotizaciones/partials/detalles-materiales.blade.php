@@ -1,5 +1,17 @@
-<div class="table-responsive">
+<div class="table-responsive materiales-table-wrap">
     <table class="table table-bordered table-sm" id="tablaDetallesMateriales">
+        <colgroup>
+            <col style="width: 8%;">
+            <col style="width: 4%;">
+            <col style="width: 22%;">
+            <col style="width: 8%;">
+            <col style="width: 10%;">
+            <col style="width: 10%;">
+            <col style="width: 10%;">
+            <col style="width: 10%;">
+            <col style="width: 10%;">
+            <col style="width: 8%;">
+        </colgroup>
         <thead class="table-light text-center">
             <tr>
                 <th>Acción</th>

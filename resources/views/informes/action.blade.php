@@ -644,7 +644,7 @@ function cargarAspectosInforme(data) {
                 col.classList.add('col-md-3', 'mb-2', 'imagen-item');
                 col.innerHTML = `
                     <div class="border rounded p-1 position-relative shadow-sm bg-white">
-                        <img src="{{ asset('storage') }}/${img.ruta_imagen}" class="img-fluid rounded" style="max-height:120px; width:100%; object-fit:cover;">
+                        <img src="{{ url('informes') }}/${data.id}?imagen=${img.id}" class="img-fluid rounded" style="max-height:120px; width:100%; object-fit:cover;" alt="Fotografía del informe">
                         <button type="button"
                                 class="btn btn-sm btn-danger position-absolute top-0 end-0 btn-remove-imagen rounded-circle m-1"
                                 data-id="${img.id}" title="Eliminar foto">✕</button>

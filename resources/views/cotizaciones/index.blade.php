@@ -184,7 +184,6 @@ class CotizacionesManager extends CrudManager {
     
     constructor() {
         super("{{ url('cotizaciones') }}");
-        this.selectedCondicion = null;
         this.afterSuccess = this.handleCotizacionSuccess.bind(this);
         this.initializeDataTable();        
 
@@ -252,28 +251,10 @@ class CotizacionesManager extends CrudManager {
             },
         getId: item => item.id,
         onSelect: (item) => {
-            this.selectedCondicion = item;
+            // La selección ya es una confirmación: agregarla inmediatamente
+            // para que no se pierda si el usuario guarda sin pulsar "Agregar".
+            this.addCondicionesToTable(item);
         }
-        });
-
-        const condicionInput = document.getElementById('condicion_descripcion');
-        condicionInput?.addEventListener('input', () => {
-            this.selectedCondicion = null;
-            const condicionId = document.getElementById('condicion_id');
-            if (condicionId) condicionId.value = '';
-        });
-
-        document.getElementById('btnAgregarCondicion')?.addEventListener('click', () => {
-            const condicionId = document.getElementById('condicion_id')?.value;
-
-            if (!this.selectedCondicion || String(this.selectedCondicion.id) !== String(condicionId)) {
-                this.showNotification('warning', 'Seleccione una condición de la lista de resultados');
-                condicionInput?.focus();
-                return;
-            }
-
-            this.addCondicionesToTable(this.selectedCondicion);
-            this.selectedCondicion = null;
         });
 
         this.setupLiveSearchSelect({
@@ -1256,7 +1237,7 @@ async showEditModal(id) {
          this.isEditing = true;
 
         const response = await this.fetchData(`${this.baseUrl}/${id}`);
-        const data = response.data;
+        const data = response.data ?? response;
 
         if (!data) {
             this.showNotification('error', 'No se encontraron datos para esta cotización.');
@@ -1468,7 +1449,8 @@ async showEditModal(id) {
         
     } catch (error) {
         console.error('❌ Error completo showEditModal:', error);
-        this.showNotification('error', 'Error al cargar los datos de la cotización');
+        const detalle = error?.message ? ` (${error.message})` : '';
+        this.showNotification('error', `Error al cargar los datos de la cotización${detalle}`);
     }
     }
 

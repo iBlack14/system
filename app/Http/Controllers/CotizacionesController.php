@@ -316,12 +316,17 @@ public function show($id)
         $cotizacion = Cotizaciones::with([
             'cliente',
             'user',
-            'ordentrabajo',
+            'ordenTrabajo',
             'servicios.servicio',
-            //'tpersonal.tpersonal',
+            'tpersonal.tpersonal.departamento',
+            'tpersonal.tpersonal.provincia',
+            'tpersonal.tpersonal.distrito',
             'transportes.transporte',
-            'productos.producto'
-            //'condiciones.condiciones'
+            'transportes.transporte.departamento',
+            'transportes.transporte.provincia',
+            'transportes.transporte.distrito',
+            'productos.producto',
+            'condiciones.condiciones'
         ])->findOrFail($id);
 
         \Log::info('PRODUCTO RELACIONADO:', [
@@ -452,8 +457,13 @@ public function show($id)
             'data' => $response
         ], 200);
 
-    } catch (\Exception $e) {
-        \Log::error("❌ Error al mostrar cotización: {$e->getMessage()}");
+    } catch (\Throwable $e) {
+        \Log::error('Error al mostrar cotización', [
+            'cotizacion_id' => $id,
+            'error' => $e->getMessage(),
+            'archivo' => $e->getFile(),
+            'linea' => $e->getLine(),
+        ]);
         return response()->json([
             'success' => false,
             'message' => 'Error al obtener los datos de la cotización.'

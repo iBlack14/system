@@ -21,6 +21,16 @@
     #modalUpdate .search-list { z-index:2000 !important; margin-top:.3rem; border-radius:.65rem !important; overflow-y:auto !important; overflow-x:hidden !important; min-width:100%; }
     #modalUpdate .client-form-card .search-list { top:calc(100% + .25rem) !important; left:0 !important; right:0 !important; width:100% !important; max-height:260px !important; }
     #modalUpdate .selection-help { display:flex; align-items:flex-start; gap:.35rem; color:#64748b; font-size:.74rem; margin-top:.4rem; line-height:1.35; }
+    #modalUpdate .materiales-table-wrap { overflow-x: hidden; }
+    #modalUpdate #tablaDetallesMateriales { width: 100%; min-width: 0 !important; table-layout: fixed; font-size: .68rem; }
+    #modalUpdate #tablaDetallesMateriales th { padding: .35rem .25rem; font-size: .64rem; white-space: normal; line-height: 1.15; vertical-align: middle; }
+    #modalUpdate #tablaDetallesMateriales td { padding: .3rem .25rem; line-height: 1.25; vertical-align: middle; }
+    #modalUpdate #tablaDetallesMateriales .form-control { min-height: 27px; height: 27px; padding: .15rem .3rem; font-size: .72rem; }
+    #modalUpdate #tablaDetallesMateriales .badge { font-size: .57rem; padding: .18rem .35rem; margin-top: 2px; }
+    #modalUpdate #tablaDetallesMateriales td:first-child { white-space: normal; }
+    #modalUpdate #tablaDetallesMateriales td:first-child .btn { width: 24px; height: 24px; padding: 0; margin: 1px !important; font-size: .66rem; line-height: 22px; }
+    #modalUpdate #tablaDetallesMateriales td:nth-child(3) { overflow-wrap: anywhere; word-break: break-word; }
+    #modalUpdate #tablaDetallesMateriales tfoot td { padding-top: .35rem; padding-bottom: .35rem; }
     #modalUpdate .modal-footer { position:sticky; bottom:0; z-index:5; padding:.85rem 1.4rem; box-shadow:0 -4px 14px rgba(15,23,42,.05); }
     @media (max-width: 991.98px) { #modalUpdate .module-options { grid-template-columns:repeat(2,minmax(0,1fr)); } }
     @media (max-width: 575.98px) {
@@ -203,11 +213,8 @@
                                 <div class="input-group input-group-sm mb-3">
                                     <span class="input-group-text bg-white"><i class="bi bi-search text-muted"></i></span>
                                     <input type="text" id="condicion_descripcion" class="form-control"
-                                        placeholder="Buscar condición estándar..." autocomplete="off">
+                                        placeholder="Buscar y seleccionar una condición..." autocomplete="off">
                                     <input type="hidden" id="condicion_id" name="condicion_id">
-                                    <button type="button" id="btnAgregarCondicion" class="btn btn-primary btn-sm ms-2 rounded-2">
-                                        <i class="bi bi-plus-lg me-1"></i> Agregar
-                                    </button>
                                 </div>
                                 @include('cotizaciones.partials.detalles-condiciones')
                             </div>
@@ -281,4 +288,3 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 @endpush
-
