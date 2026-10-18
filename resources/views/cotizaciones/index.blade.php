@@ -184,6 +184,7 @@ class CotizacionesManager extends CrudManager {
     
     constructor() {
         super("{{ url('cotizaciones') }}");
+        this.selectedCondicion = null;
         this.afterSuccess = this.handleCotizacionSuccess.bind(this);
         this.initializeDataTable();        
 
@@ -250,7 +251,29 @@ class CotizacionesManager extends CrudManager {
                 return `${item.id} - ${item.descripcion}`;
             },
         getId: item => item.id,
-        onSelect: (item) => this.addCondicionesToTable(item)
+        onSelect: (item) => {
+            this.selectedCondicion = item;
+        }
+        });
+
+        const condicionInput = document.getElementById('condicion_descripcion');
+        condicionInput?.addEventListener('input', () => {
+            this.selectedCondicion = null;
+            const condicionId = document.getElementById('condicion_id');
+            if (condicionId) condicionId.value = '';
+        });
+
+        document.getElementById('btnAgregarCondicion')?.addEventListener('click', () => {
+            const condicionId = document.getElementById('condicion_id')?.value;
+
+            if (!this.selectedCondicion || String(this.selectedCondicion.id) !== String(condicionId)) {
+                this.showNotification('warning', 'Seleccione una condición de la lista de resultados');
+                condicionInput?.focus();
+                return;
+            }
+
+            this.addCondicionesToTable(this.selectedCondicion);
+            this.selectedCondicion = null;
         });
 
         this.setupLiveSearchSelect({
@@ -278,6 +301,19 @@ class CotizacionesManager extends CrudManager {
         //document.getElementById('btnRegistrarCliente').addEventListener('click', () => this.registerClient());
  
     } 
+
+    validateBeforeSubmit() {
+        const condiciones = document.querySelectorAll('#tablaDetallesCondiciones tbody tr');
+
+        if (condiciones.length === 0) {
+            this.showNotification('warning', 'Debe seleccionar y agregar al menos una condición comercial');
+            document.getElementById('condicion_descripcion')?.focus();
+            document.getElementById('seccionCondiciones')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return false;
+        }
+
+        return true;
+    }
    
 
     evaluarVisibilidadModulo({ wrapId, tableId, chkId = null }) {
@@ -569,11 +605,12 @@ addCondicionesToTable(item) {
 
         <td class="text-center">${index + 1}</td>
 
-        <td>${item.descripcion}</td>
-
-        <input type="hidden"
-               name="condicion_detalles[${index}][condicion_id]"
-               value="${item.id}">
+        <td>
+            ${item.descripcion}
+            <input type="hidden"
+                   name="condicion_detalles[${index}][condicion_id]"
+                   value="${item.id}">
+        </td>
     `;
 
     tr.querySelector('.btnEliminarFila').addEventListener('click', () => {
@@ -1584,11 +1621,30 @@ document.addEventListener('DOMContentLoaded', function () {
             headers: {
                 'X-CSRF-TOKEN': document
                     .querySelector('meta[name="csrf-token"]')
-                    .getAttribute('content')
+                    .getAttribute('content'),
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
             },
             body: formData
         })
-        .then(response => response.json())
+        .then(async response => {
+            const contentType = response.headers.get('content-type') || '';
+
+            if (!contentType.includes('application/json')) {
+                throw new Error(`El servidor devolvió una respuesta no válida (HTTP ${response.status})`);
+            }
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                const validationMessage = data.errors
+                    ? Object.values(data.errors).flat()[0]
+                    : null;
+                throw new Error(validationMessage || data.message || `Error HTTP ${response.status}`);
+            }
+
+            return data;
+        })
         .then(data => {
 
             if (data.success) {
@@ -1609,7 +1665,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('Error inesperado');
+            alert(error.message || 'No se pudo guardar el registro');
         });
 
     });

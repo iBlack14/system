@@ -169,7 +169,7 @@ class InformesManager extends CrudManager {
             onSelect: (cliente) => {
                 this.populateSelect(
                     'ot_codigo',
-                    `{{ url('ordenestrabajo/por-cliente') }}/${cliente.id}`,
+                    `{{ url('ordenestrabajo/por-cliente') }}/${cliente.id}?estado=1`,
                     item => `<option value="${item.id}">${item.codigo_ot_cliente} — ${item.descripcion ?? ''}</option>`,
                     { placeholder: 'Seleccione una Orden de Trabajo' }
                 );

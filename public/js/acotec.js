@@ -96,8 +96,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if (api) {
             const settings = api.settings()[0];
+            const columns = settings?.aoColumns;
+            if (!Array.isArray(columns)) return;
+
             labels.forEach((label, index) => {
-                if (!settings.aoColumns[index].bSortable) return;
+                const column = columns[index];
+                if (!column?.bSortable) return;
                 select.add(new Option(label + ' ↑', index + ':asc'));
                 select.add(new Option(label + ' ↓', index + ':desc'));
             });
@@ -152,7 +156,10 @@ document.addEventListener('DOMContentLoaded', () => {
         new MutationObserver(() => {
             if (pending) return;
             pending = true;
-            requestAnimationFrame(() => { pending = false; refreshTables(); });
+            requestAnimationFrame(() => {
+                pending = false;
+                scheduleTableRefresh();
+            });
         }).observe(content, {childList: true, subtree: true});
     }
     document.querySelectorAll('.sidebar-menu a[href], .mobile-bottom-nav a[href]').forEach(link => {

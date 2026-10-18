@@ -120,6 +120,10 @@ class CrudManager {
      */
     async handleSubmit(e) {
         e.preventDefault();
+
+        if (typeof this.validateBeforeSubmit === 'function' && !this.validateBeforeSubmit()) {
+            return;
+        }
         
         const formData = new FormData(this.form);
         this.setSubmitButtonState(true);
@@ -173,12 +177,38 @@ class CrudManager {
             }
         });
 
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw { status: response.status, data: errorData };
+        const contentType = response.headers.get('content-type') || '';
+        let responseData = null;
+
+        if (contentType.includes('application/json')) {
+            responseData = await response.json();
+        } else {
+            await response.text();
         }
 
-        return await response.json();
+        if (!response.ok) {
+            const fallbackMessages = {
+                413: 'La carga es demasiado grande. Reduzca la cantidad o el tamaño de las fotografías.',
+                419: 'La sesión expiró. Actualice la página e intente nuevamente.',
+                403: 'No tiene permisos para realizar esta operación.'
+            };
+
+            throw {
+                status: response.status,
+                data: responseData || {
+                    message: fallbackMessages[response.status] || `Error del servidor (HTTP ${response.status})`
+                }
+            };
+        }
+
+        if (!responseData) {
+            throw {
+                status: response.status,
+                data: { message: 'El servidor devolvió una respuesta no válida.' }
+            };
+        }
+
+        return responseData;
     }
 
     /**

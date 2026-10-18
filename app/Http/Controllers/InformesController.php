@@ -694,15 +694,18 @@ public function show($id)
                             $nuevoAncho, $nuevoAlto, $ancho, $alto);
 
                         $nombre = uniqid() . '.jpg';
-                        $ruta   = storage_path("app/public/informes/{$informe->id}/aspectos/{$aspectoId}");
-
-                        if (!file_exists($ruta)) {
-                            mkdir($ruta, 0755, true);
-                        }
-
-                        imagejpeg($img, $ruta . '/' . $nombre, 75);
-
                         $rutaFinal = "informes/{$informe->id}/aspectos/{$aspectoId}/{$nombre}";
+
+                        ob_start();
+                        $imagenCodificada = imagejpeg($img, null, 75);
+                        $contenidoImagen = ob_get_clean();
+
+                        if (!$imagenCodificada || !$contenidoImagen ||
+                            !\Illuminate\Support\Facades\Storage::disk('public')->put($rutaFinal, $contenidoImagen)) {
+                            imagedestroy($imgOriginal);
+                            imagedestroy($img);
+                            throw new \RuntimeException('No se pudo guardar la fotografía del informe.');
+                        }
 
                         imagedestroy($imgOriginal);
                         imagedestroy($img);

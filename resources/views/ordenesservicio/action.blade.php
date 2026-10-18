@@ -1,8 +1,18 @@
 <div class="modal fade" id="modalUpdate" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
   <style>
     #modalUpdate .modal-dialog { max-width: 1080px; }
+    #modalUpdate .modal-content > form {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      max-height: calc(100dvh - 3.5rem);
+    }
     #modalUpdate .modal-header { padding: .9rem 1.25rem !important; }
-    #modalUpdate .modal-body { padding: 1.1rem 1.25rem !important; }
+    #modalUpdate .modal-body {
+      min-height: 0;
+      overflow-y: auto;
+      padding: 1.1rem 1.25rem !important;
+    }
     #modalUpdate .modal-body > .row { --bs-gutter-x: 1rem; --bs-gutter-y: 1rem; }
     #modalUpdate .card-header { padding: .75rem 1rem !important; }
     #modalUpdate .card-body { padding: 1rem; }
@@ -12,6 +22,9 @@
     #modalUpdate .modal-footer { padding: .75rem 1.25rem !important; }
     #modalUpdate #currentPdfLink { align-items: center; gap: .25rem; }
     #modalUpdate #currentPdfLink:not(.d-none) { display: inline-flex !important; }
+    @media (max-width: 575.98px) {
+      #modalUpdate .modal-content > form { max-height: 100dvh; }
+    }
   </style>
   <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content border-0 shadow-lg">

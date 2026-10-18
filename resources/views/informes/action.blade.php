@@ -689,7 +689,7 @@ function crearGrupo(aspectoId, grupoId) {
                        class="form-control form-control-sm input-imagen-grupo"
                        data-aspecto="${aspectoId}"
                        data-grupo="${grupoId}"
-                       accept="image/*"
+                       accept="image/*,.heic,.heif,image/heic,image/heif"
                        multiple>
             </div>
             <div class="row g-2 grupo-preview mt-2" id="preview_${grupoId}"></div>
@@ -799,11 +799,50 @@ document.addEventListener('click', function (e) {
 /* =========================
    PREVIEW IMÁGENES NUEVAS
 ========================= */
-document.addEventListener('change', function (e) {
+document.addEventListener('change', async function (e) {
     if (!e.target.classList.contains('input-imagen-grupo')) return;
     const aspectoId = e.target.dataset.aspecto;
     const grupoId = e.target.dataset.grupo;
-    Array.from(e.target.files).forEach(file => {
+
+    for (const originalFile of Array.from(e.target.files)) {
+        let file = originalFile;
+        const isHeic = /\.(heic|heif)$/i.test(originalFile.name)
+            || ['image/heic', 'image/heif', 'image/heic-sequence', 'image/heif-sequence'].includes(originalFile.type);
+
+        if (isHeic) {
+            try {
+                if (typeof window.convertHeicToJpeg !== 'function') {
+                    throw new Error('El conversor HEIC no está disponible');
+                }
+
+                let converted = await window.convertHeicToJpeg({
+                    blob: originalFile,
+                    toType: 'image/jpeg',
+                    quality: 0.85
+                });
+
+                if (Array.isArray(converted)) converted = converted[0];
+
+                const jpegName = originalFile.name.replace(/\.(heic|heif)$/i, '') + '.jpg';
+                file = new File([converted], jpegName, {
+                    type: 'image/jpeg',
+                    lastModified: originalFile.lastModified
+                });
+            } catch (error) {
+                console.error('No se pudo convertir la imagen HEIC:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: `No se pudo convertir ${originalFile.name}`,
+                    text: 'Pruebe con otra fotografía HEIC o conviértala a JPG.',
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 5000
+                });
+                continue;
+            }
+        }
+
         const reader = new FileReader();
         reader.onload = function (ev) {
             const preview = document.getElementById('preview_' + grupoId);
@@ -824,7 +863,7 @@ document.addEventListener('change', function (e) {
             preview.appendChild(col);
         };
         reader.readAsDataURL(file);
-    });
+    }
 });
 
 /* =========================
