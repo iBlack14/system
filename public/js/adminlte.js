@@ -359,14 +359,19 @@
         button.forEach(btn => {
             btn.addEventListener('click', event => {
                 const target = event.target;
-                const targetItem = target.closest(SELECTOR_NAV_ITEM);
                 const targetLink = target.closest(SELECTOR_NAV_LINK);
-                if ((target === null || target === void 0 ? void 0 : target.getAttribute('href')) === '#' || (targetLink === null || targetLink === void 0 ? void 0 : targetLink.getAttribute('href')) === '#') {
+                if (!targetLink) return;
+
+                const href = targetLink.getAttribute('href');
+                const isToggleLink = !href || href === '#' || href.startsWith('javascript:');
+
+                if (isToggleLink) {
                     event.preventDefault();
-                }
-                if (targetItem) {
-                    const data = new Treeview(targetItem, Default$1);
-                    data.toggle();
+                    const targetItem = targetLink.closest(SELECTOR_NAV_ITEM);
+                    if (targetItem && targetItem.querySelector(SELECTOR_TREEVIEW_MENU)) {
+                        const data = new Treeview(targetItem, Default$1);
+                        data.toggle();
+                    }
                 }
             });
         });

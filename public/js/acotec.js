@@ -163,8 +163,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }).observe(content, {childList: true, subtree: true});
     }
     document.querySelectorAll('.sidebar-menu a[href], .mobile-bottom-nav a[href]').forEach(link => {
+        const rawHref = link.getAttribute('href');
+        if (!rawHref || rawHref === '#' || rawHref.startsWith('javascript:')) return;
         const url = new URL(link.href, location.origin);
-        if (url.hash || link.getAttribute('href') === '#' || url.origin !== location.origin) return;
+        if (url.hash || url.origin !== location.origin) return;
         const target = url.pathname.replace(/\/$/, '');
         if (target && (path === target || path.startsWith(target + '/'))) {
             link.classList.add('active');
