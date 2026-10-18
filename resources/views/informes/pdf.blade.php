@@ -337,7 +337,7 @@
 
         @if($items->count())
             <div class="item">
-                <strong>{{ $numeroAspecto }}.1.</strong> {{ $items->first()->contenido }}
+                <strong>{{ $numeroAspecto }}.1.</strong> {!! nl2br(e($items->first()->contenido)) !!}
             </div>
         @endif
     </div>
@@ -346,7 +346,7 @@
     @php $numeroItem = 2; @endphp
     @foreach($items->slice(1) as $item)
         <div class="item">
-            <strong>{{ $numeroAspecto }}.{{ $numeroItem }}.</strong> {{ $item->contenido }}
+            <strong>{{ $numeroAspecto }}.{{ $numeroItem }}.</strong> {!! nl2br(e($item->contenido)) !!}
         </div>
         @php $numeroItem++; @endphp
     @endforeach
@@ -373,7 +373,7 @@
                     <tr>
                         @foreach($row as $img)
                             <td class="photo-card">
-                                <img src="{{ public_path('storage/'.$img->ruta_imagen) }}" alt="Evidencia fotográfica">
+                                <img src="{{ storage_path('app/public/'.$img->ruta_imagen) }}" alt="Evidencia fotográfica">
                             </td>
                         @endforeach
 
