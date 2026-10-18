@@ -223,6 +223,13 @@ class InformesManager extends CrudManager {
         if (typeof aplicarAspectosPorEstado === 'function') {
             aplicarAspectosPorEstado(1);
         }
+
+        if (typeof setResumenCollapsed === 'function') {
+            setResumenCollapsed(false);
+        }
+        if (typeof actualizarBadgesResumen === 'function') {
+            actualizarBadgesResumen();
+        }
     }
 
     initializeDataTable() {
@@ -316,6 +323,13 @@ class InformesManager extends CrudManager {
 
             // cargar data
             cargarAspectosInforme(data);
+
+            if (typeof actualizarBadgesResumen === 'function') {
+                actualizarBadgesResumen();
+            }
+            if (typeof setResumenCollapsed === 'function') {
+                setResumenCollapsed(true);
+            }
 
             this.modal.show();
 

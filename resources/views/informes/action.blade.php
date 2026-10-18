@@ -10,76 +10,27 @@
         <div class="modal-content shadow-lg border-0">
 
             <style>
-                #modalUpdate .modal-header {
-                    background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
-                    color: #ffffff;
-                    border-bottom: none;
-                }
-                #modalUpdate .card {
-                    border: 1px solid #cbd5e1;
-                    border-radius: 0.5rem;
-                    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-                }
-                #modalUpdate .card-header.section-header {
-                    background: #f8fafc;
-                    border-bottom: 1px solid #e2e8f0;
-                    color: #0f172a;
-                    font-size: 0.95rem;
-                    font-weight: 700;
-                    padding: 0.65rem 1rem;
-                }
-                #modalUpdate .card-header.aspecto-header {
-                    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%) !important;
-                    color: #ffffff !important;
-                    padding: 0.75rem 1rem !important;
-                    border-bottom: 1px solid #334155 !important;
-                }
-                #modalUpdate .form-label {
-                    color: #0f172a !important;
-                    font-weight: 600 !important;
-                    font-size: 0.85rem !important;
-                    margin-bottom: 0.35rem !important;
-                    display: block;
-                }
-                #modalUpdate .form-control, 
-                #modalUpdate .form-select {
-                    color: #0f172a !important;
-                    border-color: #cbd5e1 !important;
-                    font-size: 0.875rem !important;
-                    font-weight: 500 !important;
-                    background-color: #ffffff;
-                }
-                #modalUpdate .form-control:focus, 
-                #modalUpdate .form-select:focus {
-                    border-color: #2563eb !important;
-                    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15) !important;
-                }
-                #modalUpdate .form-control[readonly],
-                #modalUpdate .form-control:disabled {
-                    background-color: #f1f5f9 !important;
-                    color: #0f172a !important;
-                    font-weight: 600 !important;
-                    border-color: #cbd5e1 !important;
-                    opacity: 1 !important;
-                }
-                #modalUpdate .item-row .input-group-text {
-                    background-color: #f8fafc;
-                    border-color: #cbd5e1;
-                }
-                #modalUpdate .item-row textarea {
-                    font-weight: 500;
-                    color: #0f172a;
-                    line-height: 1.4;
-                }
                 #modalUpdate .modal-dialog {
-                    width: min(1480px, calc(100vw - 2rem));
-                    max-width: none;
+                    width: min(1250px, calc(100vw - 2.5rem));
+                    max-width: 1250px;
                     margin: 1rem auto;
                     height: calc(100vh - 2rem);
+                    transition: all 0.2s ease-in-out;
+                }
+                #modalUpdate .modal-dialog.modal-fullscreen {
+                    width: 100vw !important;
+                    max-width: 100vw !important;
+                    height: 100vh !important;
+                    margin: 0 !important;
+                    border-radius: 0 !important;
+                }
+                #modalUpdate .modal-dialog.modal-fullscreen .modal-content {
+                    border-radius: 0 !important;
+                    height: 100vh !important;
                 }
                 #modalUpdate .modal-content {
                     height: 100%;
-                    border-radius: 0.85rem;
+                    border-radius: 0.75rem;
                     overflow: hidden;
                 }
                 #modalUpdate form {
@@ -89,139 +40,212 @@
                     min-height: 0;
                 }
                 #modalUpdate .modal-header {
-                    padding: 0.85rem 1.25rem !important;
+                    background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
+                    color: #ffffff;
+                    border-bottom: none;
+                    padding: 0.45rem 1rem !important;
+                    flex-shrink: 0;
                 }
                 #modalUpdate .modal-body {
-                    padding: 1.1rem 1.25rem !important;
+                    padding: 0.65rem 0.85rem !important;
                     overflow-y: auto;
                     min-height: 0;
+                    background-color: #f8fafc;
+                    scrollbar-width: thin;
+                    scrollbar-color: #94a3b8 #f1f5f9;
                 }
-                #modalUpdate .informe-summary-grid {
-                    display: grid;
-                    grid-template-columns: minmax(330px, 0.8fr) minmax(570px, 1.35fr);
-                    grid-template-areas:
-                        "cliente orden"
-                        "clasificacion orden";
-                    gap: 0.85rem;
-                    margin-bottom: 1rem;
+                #modalUpdate .modal-body::-webkit-scrollbar {
+                    width: 7px;
+                    height: 7px;
                 }
-                #modalUpdate .aspectos-grid {
-                    display: grid;
-                    grid-template-columns: repeat(2, minmax(0, 1fr));
-                    gap: 1rem;
-                    align-items: start;
+                #modalUpdate .modal-body::-webkit-scrollbar-track {
+                    background: #f1f5f9;
                 }
-                #modalUpdate .informe-summary-grid > .card {
-                    margin-bottom: 0 !important;
+                #modalUpdate .modal-body::-webkit-scrollbar-thumb {
+                    background: #cbd5e1;
+                    border-radius: 4px;
                 }
-                #modalUpdate .informe-client-card {
-                    grid-area: cliente;
+                #modalUpdate .modal-body::-webkit-scrollbar-thumb:hover {
+                    background: #94a3b8;
+                }
+                #modalUpdate .modal-footer {
+                    padding: 0.45rem 1rem !important;
+                    position: relative;
+                    z-index: 20;
+                    box-shadow: 0 -4px 10px rgba(15, 23, 42, 0.05);
+                    flex-shrink: 0;
+                }
+
+                /* Panel Cabecera Colapsable */
+                #modalUpdate .informe-header-panel {
+                    border: 1px solid #cbd5e1;
+                    border-radius: 0.5rem;
                     position: relative;
                     z-index: 40;
                     overflow: visible !important;
                 }
-                #modalUpdate .informe-client-card .card-body,
-                #modalUpdate .informe-client-card .position-relative {
+                #modalUpdate .informe-header-panel .card-body {
+                    padding: 0.6rem 0.85rem !important;
                     overflow: visible !important;
                 }
-                #modalUpdate .informe-client-card .search-list {
+                #modalUpdate .informe-header-panel .position-relative {
+                    overflow: visible !important;
+                }
+                #modalUpdate .informe-header-panel .search-list,
+                #modalUpdate .search-list {
                     z-index: 2200 !important;
                     width: 100% !important;
-                    max-height: 240px !important;
+                    max-height: 220px !important;
                     overflow-x: hidden !important;
                     overflow-y: auto !important;
                     background: #ffffff !important;
                     border: 1px solid #cbd5e1 !important;
-                    border-radius: 0.5rem !important;
-                    box-shadow: 0 14px 30px rgba(15, 23, 42, 0.2) !important;
+                    border-radius: 0.45rem !important;
+                    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.18) !important;
                 }
-                #modalUpdate .informe-ot-card {
-                    grid-area: orden;
-                    position: relative;
-                    z-index: 10;
+
+                /* Formularios compactos */
+                #modalUpdate .form-label.compact-label {
+                    color: #0f172a !important;
+                    font-weight: 600 !important;
+                    font-size: 0.78rem !important;
+                    margin-bottom: 0.15rem !important;
+                    display: block;
                 }
-                #modalUpdate .informe-class-card {
-                    grid-area: clasificacion;
-                    position: relative;
-                    z-index: 1;
+                #modalUpdate .form-control-sm, 
+                #modalUpdate .form-select-sm {
+                    color: #0f172a !important;
+                    border-color: #cbd5e1 !important;
+                    font-size: 0.82rem !important;
+                    font-weight: 500 !important;
+                    padding: 0.25rem 0.5rem !important;
+                    min-height: 31px;
+                    border-radius: 0.35rem;
                 }
-                #modalUpdate .card-header.section-header,
-                #modalUpdate .card-header.aspecto-header {
-                    padding: 0.58rem 0.85rem !important;
+                #modalUpdate .form-control:focus, 
+                #modalUpdate .form-select:focus {
+                    border-color: #2563eb !important;
+                    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15) !important;
                 }
-                #modalUpdate .card-body {
-                    padding: 0.85rem !important;
+                #modalUpdate .form-control[readonly],
+                #modalUpdate .form-control:disabled {
+                    background-color: #f1f5f9 !important;
+                    color: #1e293b !important;
+                    font-weight: 600 !important;
+                    border-color: #cbd5e1 !important;
+                    opacity: 1 !important;
+                }
+
+                /* Aspectos */
+                #modalUpdate .aspectos-grid {
+                    display: grid;
+                    grid-template-columns: repeat(2, minmax(0, 1fr));
+                    gap: 0.65rem;
+                    align-items: start;
                 }
                 #modalUpdate .aspecto-card {
                     margin-bottom: 0 !important;
+                    border: 1px solid #cbd5e1;
+                    border-radius: 0.45rem;
+                    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04) !important;
                     overflow: hidden;
-                    border-color: #dbe3ee;
-                    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06) !important;
+                    background: #ffffff;
+                }
+                #modalUpdate .card-header.aspecto-header {
+                    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%) !important;
+                    color: #ffffff !important;
+                    padding: 0.38rem 0.75rem !important;
+                    border-bottom: 1px solid #334155 !important;
+                    user-select: none;
+                }
+                #modalUpdate .aspecto-header .aspecto-toggle-icon {
+                    transition: transform 0.2s ease;
+                }
+                #modalUpdate .aspecto-card.collapsed .aspecto-toggle-icon {
+                    transform: rotate(-90deg);
+                }
+                #modalUpdate .aspecto-card.collapsed .aspecto-body {
+                    display: none;
                 }
                 #modalUpdate .aspecto-card .card-body {
-                    min-height: 82px;
+                    padding: 0.55rem 0.75rem !important;
                 }
-                #modalUpdate .aspecto-header > div:first-child {
-                    min-width: 0;
+
+                /* Item Row */
+                #modalUpdate .item-row {
+                    margin-bottom: 0.45rem !important;
                 }
-                #modalUpdate .aspecto-header > div:first-child > span:last-child {
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
+                #modalUpdate .item-row textarea {
+                    font-weight: 500;
+                    color: #0f172a;
+                    line-height: 1.35;
+                    font-size: 0.83rem;
+                    padding: 0.3rem 0.5rem;
+                    min-height: 44px;
+                    border-color: #cbd5e1;
                 }
-                #modalUpdate .aspecto-card .btn-add-item,
-                #modalUpdate .aspecto-card .btn-add-grupo {
-                    padding: 0.3rem 0.65rem !important;
-                    box-shadow: none !important;
+                #modalUpdate .item-row .input-group-text {
+                    background-color: #f8fafc;
+                    border-color: #cbd5e1;
+                    padding: 2px 3px;
                 }
+                #modalUpdate .item-row .btn-item-up,
+                #modalUpdate .item-row .btn-item-down {
+                    padding: 1px 5px !important;
+                    font-size: 0.72rem !important;
+                    line-height: 1.2;
+                }
+                #modalUpdate .item-row .btn-remove-item {
+                    padding: 0 10px !important;
+                    font-size: 0.82rem !important;
+                    font-weight: 700;
+                }
+
+                /* Grupos de Imágenes */
                 #modalUpdate .grupo-imagen {
-                    margin-bottom: 0.75rem !important;
+                    margin-bottom: 0.5rem !important;
+                    border-color: #cbd5e1;
+                    border-radius: 0.4rem;
+                }
+                #modalUpdate .grupo-imagen .card-header {
+                    padding: 0.3rem 0.65rem !important;
+                    font-size: 0.8rem !important;
+                    background: #f8fafc;
+                }
+                #modalUpdate .grupo-imagen .card-body {
+                    padding: 0.5rem 0.65rem !important;
                 }
                 #modalUpdate .grupo-preview {
                     display: flex;
                     flex-wrap: wrap;
-                    gap: 0.55rem;
+                    gap: 0.45rem;
                     margin-left: 0;
                     margin-right: 0;
                 }
                 #modalUpdate .grupo-preview .imagen-item {
-                    flex: 0 0 112px;
-                    width: 112px;
-                    max-width: 112px;
+                    flex: 0 0 95px;
+                    width: 95px;
+                    max-width: 95px;
                     margin: 0 !important;
                     padding: 0;
                 }
                 #modalUpdate .grupo-preview .imagen-item img {
                     width: 100% !important;
-                    height: 82px !important;
-                    max-height: 82px !important;
+                    height: 72px !important;
+                    max-height: 72px !important;
                     object-fit: cover;
                 }
                 #modalUpdate .btn-remove-imagen,
                 #modalUpdate .btn-remove-img {
-                    width: 25px;
-                    height: 25px;
+                    width: 22px;
+                    height: 22px;
                     padding: 0 !important;
-                    font-size: 0.72rem;
+                    font-size: 0.68rem;
                 }
-                #modalUpdate .modal-footer {
-                    padding: 0.75rem 1.25rem !important;
-                    position: relative;
-                    z-index: 20;
-                    box-shadow: 0 -5px 14px rgba(15, 23, 42, 0.08);
-                    flex-shrink: 0;
-                }
+
                 @media (max-width: 1199.98px) {
                     #modalUpdate .aspectos-grid {
                         grid-template-columns: 1fr;
-                    }
-                }
-                @media (max-width: 991.98px) {
-                    #modalUpdate .informe-summary-grid {
-                        display: block;
-                    }
-                    #modalUpdate .informe-summary-grid > .card {
-                        margin-bottom: 0.75rem !important;
                     }
                 }
                 @media (max-width: 767.98px) {
@@ -231,71 +255,13 @@
                         height: 100dvh;
                     }
                     #modalUpdate .modal-header {
-                        padding: 0.75rem 0.9rem !important;
+                        padding: 0.4rem 0.65rem !important;
                     }
-                    #modalUpdate .modal-header small { display: none; }
                     #modalUpdate .modal-body {
-                        padding: 0.75rem !important;
-                    }
-                    #modalUpdate .card-header.aspecto-header {
-                        align-items: flex-start !important;
-                        flex-direction: column;
-                        gap: 0.45rem;
-                    }
-                    #modalUpdate .aspectos-grid { gap: .75rem; }
-                    #modalUpdate .aspecto-header > div:first-child > span:last-child {
-                        white-space: normal;
-                    }
-                    #modalUpdate .aspecto-card .card-body > .mb-3 > .d-flex,
-                    #modalUpdate .aspecto-card .card-body > .mt-4 > .d-flex {
-                        align-items: stretch !important;
-                        flex-direction: column;
-                        gap: 0.55rem;
-                    }
-                    #modalUpdate .btn-add-item,
-                    #modalUpdate .btn-add-grupo {
-                        width: 100%;
-                    }
-                    #modalUpdate .item-row .input-group-text {
-                        flex-direction: row !important;
-                        order: 3;
-                        width: 100%;
-                    }
-                    #modalUpdate .item-row {
-                        display: flex;
-                        flex-wrap: wrap;
-                    }
-                    #modalUpdate .item-row textarea {
-                        flex: 1 0 100%;
-                        width: 100%;
-                        border-radius: .375rem .375rem 0 0 !important;
-                    }
-                    #modalUpdate .item-row .btn-remove-item {
-                        flex: 1;
-                    }
-                    #modalUpdate .grupo-imagen .card-header {
-                        align-items: flex-start !important;
-                        gap: .5rem;
-                    }
-                    #modalUpdate .grupo-preview .imagen-item {
-                        flex: 0 0 calc(50% - .3rem);
-                        width: calc(50% - .3rem);
-                        max-width: calc(50% - .3rem);
-                    }
-                    #modalUpdate .grupo-preview .imagen-item img {
-                        height: 105px !important;
-                        max-height: 105px !important;
+                        padding: 0.5rem !important;
                     }
                     #modalUpdate .modal-footer {
-                        display: grid !important;
-                        grid-template-columns: 1fr 1fr;
-                        gap: .5rem;
-                        padding: .65rem .75rem !important;
-                    }
-                    #modalUpdate .modal-footer .btn {
-                        width: 100%;
-                        padding-left: .5rem !important;
-                        padding-right: .5rem !important;
+                        padding: 0.45rem 0.65rem !important;
                     }
                 }
             </style>
@@ -305,120 +271,183 @@
                 <input type="hidden" name="_method" id="method_field">
 
                 <!-- MODAL HEADER -->
-                <div class="modal-header py-3 px-4">
+                <div class="modal-header d-flex justify-content-between align-items-center">
                     <div class="d-flex align-items-center">
-                        <i class="bi bi-file-earmark-text fs-4 me-2 text-white"></i>
+                        <i class="bi bi-file-earmark-text fs-5 me-2 text-white"></i>
                         <div>
-                            <h5 class="modal-title fw-bold text-white mb-0" id="modalTitle">Registrar Informe</h5>
-                            <small class="text-white-50" style="font-size: 0.78rem;">Gestión de aspectos técnicos, observaciones y registro fotográfico</small>
+                            <h5 class="modal-title fw-bold text-white mb-0" id="modalTitle" style="font-size: 0.95rem;">Registrar Informe</h5>
+                            <small class="text-white-50 d-none d-sm-inline" style="font-size: 0.72rem;">Gestión de aspectos técnicos, observaciones y registro fotográfico</small>
                         </div>
                     </div>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    <div class="d-flex align-items-center gap-2">
+                        <button type="button" class="btn btn-sm btn-outline-light py-0 px-2 fw-medium d-inline-flex align-items-center gap-1" id="btnToggleFullscreen" title="Pantalla completa / Restaurar tamaño" style="font-size: 0.78rem; height: 28px;">
+                            <i class="bi bi-arrows-fullscreen" id="iconFullscreen"></i>
+                            <span class="d-none d-md-inline" id="textFullscreen">Pantalla Completa</span>
+                        </button>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" style="font-size: 0.8rem;"></button>
+                    </div>
                 </div>
 
                 <!-- MODAL BODY -->
-                <div class="modal-body p-4 bg-light">
+                <div class="modal-body">
 
-                    <div class="informe-summary-grid">
+                    <!-- PANEL DE CABECERA COLAPSABLE: CLIENTE / OT / INFORME -->
+                    <div class="card mb-2 shadow-sm bg-white informe-header-panel">
+                        <!-- BARRA SUPERIOR RESUMEN / CONTROL COLAPSABLE -->
+                        <div class="card-header py-1 px-3 bg-light d-flex justify-content-between align-items-center flex-wrap gap-2" style="min-height: 38px;">
+                            <div class="d-flex align-items-center flex-wrap gap-2">
+                                <span class="fw-bold text-primary d-flex align-items-center" style="font-size: 0.82rem;">
+                                    <i class="bi bi-briefcase-fill me-1"></i> Datos de la Orden
+                                </span>
 
-                    <!-- SECCIÓN 1: DATOS DEL CLIENTE -->
-                    <div class="card mb-3 shadow-sm bg-white informe-client-card">
-                        <div class="card-header section-header d-flex align-items-center">
-                            <i class="bi bi-building me-2 text-primary fs-5"></i>
-                            <span>1. Datos del Cliente</span>
-                        </div>
-                        <div class="card-body p-3">
-                            <div class="position-relative">
-                                <label class="form-label">
-                                    Cliente <span class="text-danger">*</span>
-                                </label>
-                                <input type="text" 
-                                       id="cliente_razon_social" 
-                                       class="form-control" 
-                                       placeholder="Escriba RUC o Razón Social del cliente..."
-                                       autocomplete="off">
-                                <input type="hidden" name="cliente_id" id="cliente_id">
-                                <small class="text-muted" style="font-size: 0.75rem;">Busque el cliente para desplegar sus órdenes de trabajo asociadas</small>
+                                <!-- BADGES RESUMEN EN VIVO -->
+                                <div class="d-flex align-items-center flex-wrap gap-1" id="resumenBadgesContainer">
+                                    <span class="badge bg-white text-dark border text-truncate" style="max-width: 280px; font-weight: 500;" title="Cliente">
+                                        <i class="bi bi-building text-primary me-1"></i><span id="badgeCliente">Sin cliente</span>
+                                    </span>
+                                    <span class="badge bg-white text-dark border" style="font-weight: 500;" title="Orden de Trabajo">
+                                        <i class="bi bi-clipboard-check text-success me-1"></i>OT: <span id="badgeOT">Sin OT</span>
+                                    </span>
+                                    <span class="badge bg-white text-dark border" style="font-weight: 500;" title="Estado OT">
+                                        <i class="bi bi-shield-check text-info me-1"></i><span id="badgeEstado">--</span>
+                                    </span>
+                                    <span class="badge bg-white text-primary border" style="font-weight: 600;" title="Tipo de Informe">
+                                        <i class="bi bi-file-earmark-text me-1"></i><span id="badgeTipo">INFORME INICIAL</span>
+                                    </span>
+                                    <span class="badge bg-white text-secondary border" style="font-weight: 500;" title="Fecha">
+                                        <i class="bi bi-calendar3 me-1"></i><span id="badgeFecha">--</span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div>
+                                <button type="button" class="btn btn-xs btn-outline-primary py-0 px-2 fw-semibold d-inline-flex align-items-center gap-1" id="btnToggleResumen" style="font-size: 0.76rem; height: 26px;">
+                                    <i class="bi bi-chevron-up" id="iconToggleResumen"></i>
+                                    <span id="textToggleResumen">Ocultar campos</span>
+                                </button>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- SECCIÓN 2: ORDEN DE TRABAJO -->
-                    <div class="card mb-3 shadow-sm bg-white informe-ot-card">
-                        <div class="card-header section-header d-flex align-items-center">
-                            <i class="bi bi-clipboard-check me-2 text-primary fs-5"></i>
-                            <span>2. Orden de Trabajo</span>
-                        </div>
-                        <div class="card-body p-3">
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <label class="form-label">
+                        <!-- CUERPO COLAPSABLE CON LOS CAMPOS -->
+                        <div class="card-body" id="resumenCamposBody">
+                            <div class="row g-2 align-items-start">
+                                <!-- 1. Cliente -->
+                                <div class="col-12 col-md-4 position-relative">
+                                    <label class="form-label compact-label">
+                                        Cliente <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" 
+                                           id="cliente_razon_social" 
+                                           class="form-control form-control-sm" 
+                                           placeholder="Buscar RUC o Razón Social..."
+                                           autocomplete="off">
+                                    <input type="hidden" name="cliente_id" id="cliente_id">
+                                </div>
+
+                                <!-- 2. Orden de Trabajo -->
+                                <div class="col-12 col-md-3">
+                                    <label class="form-label compact-label">
                                         Orden de Trabajo <span class="text-danger">*</span>
                                     </label>
-                                    <select id="ot_codigo" name="ot_codigo" class="form-select" required>
+                                    <select id="ot_codigo" name="ot_codigo" class="form-select form-select-sm" required>
                                         <option value="">Seleccione una OT...</option>
                                     </select>
                                 </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">Estado</label>
-                                    <input type="text" id="ot_estado" class="form-control" readonly placeholder="Se cargará al elegir OT">
-                                </div>
-                                <div class="col-md-12">
-                                    <label class="form-label">Descripción</label>
-                                    <textarea id="ot_descripcion" class="form-control" rows="2" readonly placeholder="Descripción de la orden de trabajo..."></textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- SECCIÓN 3: INFORMACIÓN DEL INFORME -->
-                    <div class="card mb-3 shadow-sm bg-white informe-class-card">
-                        <div class="card-header section-header d-flex align-items-center">
-                            <i class="bi bi-info-circle me-2 text-primary fs-5"></i>
-                            <span>3. Información del Informe</span>
-                        </div>
-                        <div class="card-body p-3">
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <label class="form-label">Tipo de Informe</label>
-                                    <input type="text" id="informe_tipo_text" class="form-control" readonly value="INFORME INICIAL">
+                                <!-- 3. Estado OT -->
+                                <div class="col-6 col-md-2">
+                                    <label class="form-label compact-label">Estado OT</label>
+                                    <input type="text" id="ot_estado" class="form-control form-control-sm" readonly placeholder="Al elegir OT">
+                                </div>
+
+                                <!-- 4. Tipo de Informe -->
+                                <div class="col-6 col-md-1">
+                                    <label class="form-label compact-label">Tipo</label>
+                                    <input type="text" id="informe_tipo_text" class="form-control form-control-sm" readonly value="INFORME INICIAL">
                                     <input type="hidden" id="informe_tipo" name="informe_tipo" value="inicial">
                                 </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">Fecha de Creación</label>
-                                    <input type="text" id="fecha_creacion" class="form-control" readonly>
+
+                                <!-- 5. Fecha -->
+                                <div class="col-12 col-md-2">
+                                    <label class="form-label compact-label">Fecha Creación</label>
+                                    <input type="text" id="fecha_creacion" class="form-control form-control-sm" readonly>
+                                </div>
+
+                                <!-- 6. Descripción de OT -->
+                                <div class="col-12 mt-1">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <label class="form-label compact-label mb-0 text-nowrap" style="min-width: 85px;">Desc. OT:</label>
+                                        <input type="text" id="ot_descripcion" class="form-control form-control-sm py-0" readonly placeholder="Descripción de la orden de trabajo...">
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
+                    <!-- BARRA DE CONTROL DE ASPECTOS TÉCNICOS -->
+                    <div class="d-flex justify-content-between align-items-center mb-2 px-1 flex-wrap gap-2">
+                        <span class="fw-bold text-dark d-flex align-items-center" style="font-size: 0.84rem;">
+                            <i class="bi bi-card-checklist text-primary me-1"></i> Aspectos Técnicos del Informe
+                        </span>
+                        <div class="d-flex align-items-center gap-1">
+                            <button type="button" class="btn btn-xs btn-light border py-0 px-2 fw-medium text-secondary" id="btnExpandAllAspectos" style="font-size: 0.74rem; height: 25px;">
+                                <i class="bi bi-arrows-expand me-1"></i>Expandir todos
+                            </button>
+                            <button type="button" class="btn btn-xs btn-light border py-0 px-2 fw-medium text-secondary" id="btnCollapseAllAspectos" style="font-size: 0.74rem; height: 25px;">
+                                <i class="bi bi-arrows-collapse me-1"></i>Colapsar todos
+                            </button>
+                        </div>
                     </div>
 
+                    <!-- GRID DE ASPECTOS -->
                     <div class="aspectos-grid">
                     @foreach ($aspectosCatalogo as $aspecto)
-                        <div class="card mb-3 shadow-sm aspecto-card bg-white"
+                        <div class="card mb-2 shadow-sm aspecto-card bg-white"
                              data-aspecto-id="{{ $aspecto->id }}"
                              data-aplica-inicial="{{ $aspecto->aplica_inicial }}"
                              data-aplica-final="{{ $aspecto->aplica_final }}"
                              style="display:none">
 
-                            <div class="card-header aspecto-header d-flex justify-content-between align-items-center">
-                                <div class="d-flex align-items-center">
-                                    <span class="fw-bold text-white fs-6">{{ $aspecto->orden }}.- {{ $aspecto->nombre }}</span>
+                            <div class="card-header aspecto-header d-flex justify-content-between align-items-center"
+                                 role="button"
+                                 title="Clic para plegar / desplegar aspecto"
+                                 onclick="toggleAspectoCard(this)">
+                                <div class="d-flex align-items-center text-truncate pe-2">
+                                    <i class="bi bi-chevron-down me-2 aspecto-toggle-icon" style="font-size: 0.75rem;"></i>
+                                    <span class="fw-bold text-white text-truncate" style="font-size: 0.86rem;">{{ $aspecto->orden }}.- {{ $aspecto->nombre }}</span>
+                                </div>
+
+                                <div class="d-flex align-items-center gap-1 flex-shrink-0" onclick="event.stopPropagation();">
+                                    <button type="button"
+                                            class="btn btn-xs btn-primary btn-add-item fw-semibold py-0 px-2 shadow-sm"
+                                            data-aspecto="{{ $aspecto->id }}"
+                                            style="font-size: 0.74rem; height: 24px;">
+                                        <i class="bi bi-plus-lg me-1"></i> Item
+                                    </button>
+
+                                    @if ($aspecto->permite_imagenes)
+                                    <button type="button"
+                                            class="btn btn-xs btn-success btn-add-grupo fw-semibold py-0 px-2 shadow-sm"
+                                            data-aspecto="{{ $aspecto->id }}"
+                                            style="font-size: 0.74rem; height: 24px;">
+                                        <i class="bi bi-folder-plus me-1"></i> Fotos
+                                    </button>
+                                    @endif
                                 </div>
                             </div>
 
-                            <div class="card-body p-3">
+                            <div class="card-body aspecto-body">
 
                                 <!-- ITEMS DEL ASPECTO -->
-                                <div class="mb-3">
-                                    <div class="d-flex justify-content-between align-items-center mb-2 pb-1 border-bottom">
-                                        <div class="fw-bold text-dark d-flex align-items-center" style="font-size: 0.88rem;">
+                                <div class="mb-2">
+                                    <div class="d-flex justify-content-between align-items-center mb-1 pb-1 border-bottom">
+                                        <div class="fw-bold text-dark d-flex align-items-center" style="font-size: 0.8rem;">
                                             <i class="bi bi-list-check text-primary me-1"></i> Items
                                         </div>
                                         <button type="button"
-                                                class="btn btn-sm btn-primary btn-add-item fw-semibold shadow-sm px-3"
-                                                data-aspecto="{{ $aspecto->id }}">
+                                                class="btn btn-xs btn-outline-primary btn-add-item fw-semibold py-0 px-2"
+                                                data-aspecto="{{ $aspecto->id }}"
+                                                style="font-size: 0.72rem; height: 22px;">
                                             <i class="bi bi-plus-lg me-1"></i> Agregar item
                                         </button>
                                     </div>
@@ -427,18 +456,19 @@
 
                                 <!-- IMÁGENES DEL ASPECTO -->
                                 @if ($aspecto->permite_imagenes)
-                                <div class="mt-4 pt-2 border-top">
-                                    <div class="d-flex justify-content-between align-items-center mb-2 pb-1">
-                                        <div class="fw-bold text-dark d-flex align-items-center" style="font-size: 0.88rem;">
+                                <div class="mt-3 pt-2 border-top">
+                                    <div class="d-flex justify-content-between align-items-center mb-1 pb-1">
+                                        <div class="fw-bold text-dark d-flex align-items-center" style="font-size: 0.8rem;">
                                             <i class="bi bi-camera-fill text-success me-1"></i> Imágenes
                                         </div>
                                         <button type="button"
-                                                class="btn btn-sm btn-success btn-add-grupo fw-semibold shadow-sm px-3"
-                                                data-aspecto="{{ $aspecto->id }}">
+                                                class="btn btn-xs btn-outline-success btn-add-grupo fw-semibold py-0 px-2"
+                                                data-aspecto="{{ $aspecto->id }}"
+                                                style="font-size: 0.72rem; height: 22px;">
                                             <i class="bi bi-folder-plus me-1"></i> Nuevo grupo
                                         </button>
                                     </div>
-                                    <div class="grupos-container mt-2" id="grupo_container_{{ $aspecto->id }}"></div>
+                                    <div class="grupos-container mt-1" id="grupo_container_{{ $aspecto->id }}"></div>
                                 </div>
                                 @endif
 
@@ -450,11 +480,11 @@
                 </div>
 
                 <!-- MODAL FOOTER -->
-                <div class="modal-footer bg-white border-top py-3 px-4 d-flex justify-content-between">
-                    <button type="button" class="btn btn-outline-secondary px-4 fw-medium" data-bs-dismiss="modal">
+                <div class="modal-footer bg-white border-top d-flex justify-content-between">
+                    <button type="button" class="btn btn-sm btn-outline-secondary px-3 fw-medium" data-bs-dismiss="modal">
                         <i class="bi bi-x-circle me-1"></i> Cancelar
                     </button>
-                    <button type="submit" id="btnSubmit" class="btn btn-primary px-4 fw-semibold shadow-sm">
+                    <button type="submit" id="btnSubmit" class="btn btn-sm btn-primary px-4 fw-semibold shadow-sm">
                         <i class="bi bi-check2-circle me-1"></i> Guardar Informe
                     </button>
                 </div>
@@ -468,6 +498,133 @@
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 
 <script>
+
+/* =========================================================
+   PANTALLA COMPLETA / FULLSCREEN TOGGLE
+========================================================= */
+function toggleFullscreenModal() {
+    const modalDialog = document.querySelector('#modalUpdate .modal-dialog');
+    const btn = document.getElementById('btnToggleFullscreen');
+    const icon = document.getElementById('iconFullscreen');
+    const text = document.getElementById('textFullscreen');
+
+    if (!modalDialog) return;
+
+    const isFullscreen = modalDialog.classList.toggle('modal-fullscreen');
+
+    if (isFullscreen) {
+        if (icon) icon.className = 'bi bi-fullscreen-exit';
+        if (text) text.textContent = 'Restaurar';
+        btn?.setAttribute('title', 'Restaurar tamaño normal');
+        localStorage.setItem('informe_modal_fullscreen', '1');
+    } else {
+        if (icon) icon.className = 'bi bi-arrows-fullscreen';
+        if (text) text.textContent = 'Pantalla Completa';
+        btn?.setAttribute('title', 'Pantalla completa');
+        localStorage.setItem('informe_modal_fullscreen', '0');
+    }
+}
+
+document.getElementById('btnToggleFullscreen')?.addEventListener('click', toggleFullscreenModal);
+
+// Restaurar preferencia guardada al abrir el modal
+document.getElementById('modalUpdate')?.addEventListener('show.bs.modal', function () {
+    const prefersFullscreen = localStorage.getItem('informe_modal_fullscreen') === '1';
+    const modalDialog = document.querySelector('#modalUpdate .modal-dialog');
+    const icon = document.getElementById('iconFullscreen');
+    const text = document.getElementById('textFullscreen');
+
+    if (modalDialog && prefersFullscreen) {
+        modalDialog.classList.add('modal-fullscreen');
+        if (icon) icon.className = 'bi bi-fullscreen-exit';
+        if (text) text.textContent = 'Restaurar';
+    }
+    actualizarBadgesResumen();
+});
+
+/* =========================================================
+   COLAPSAR / EXPANDIR CABECERA (DATOS DE LA ORDEN)
+========================================================= */
+function setResumenCollapsed(collapsed) {
+    const body = document.getElementById('resumenCamposBody');
+    const icon = document.getElementById('iconToggleResumen');
+    const text = document.getElementById('textToggleResumen');
+    const btn = document.getElementById('btnToggleResumen');
+
+    if (!body) return;
+
+    if (collapsed) {
+        body.style.display = 'none';
+        if (icon) icon.className = 'bi bi-chevron-down';
+        if (text) text.textContent = 'Mostrar campos';
+        btn?.classList.remove('btn-outline-primary');
+        btn?.classList.add('btn-primary');
+    } else {
+        body.style.display = '';
+        if (icon) icon.className = 'bi bi-chevron-up';
+        if (text) text.textContent = 'Ocultar campos';
+        btn?.classList.add('btn-outline-primary');
+        btn?.classList.remove('btn-primary');
+    }
+}
+
+document.getElementById('btnToggleResumen')?.addEventListener('click', function () {
+    const body = document.getElementById('resumenCamposBody');
+    const isHidden = body && body.style.display === 'none';
+    setResumenCollapsed(!isHidden);
+});
+
+/* =========================================================
+   ACTUALIZAR BADGES RESUMEN EN TIEMPO REAL
+========================================================= */
+function actualizarBadgesResumen() {
+    const cliente = document.getElementById('cliente_razon_social')?.value?.trim();
+    const otSelect = document.getElementById('ot_codigo');
+    let otText = '';
+    if (otSelect && otSelect.selectedIndex >= 0 && otSelect.options[otSelect.selectedIndex]) {
+        otText = otSelect.options[otSelect.selectedIndex].text;
+    }
+    const estado = document.getElementById('ot_estado')?.value?.trim();
+    const tipo = document.getElementById('informe_tipo_text')?.value?.trim();
+    const fecha = document.getElementById('fecha_creacion')?.value?.trim();
+
+    const badgeCliente = document.getElementById('badgeCliente');
+    if (badgeCliente) badgeCliente.textContent = cliente || 'Sin cliente';
+
+    const badgeOT = document.getElementById('badgeOT');
+    if (badgeOT) badgeOT.textContent = (otText && !otText.includes('Seleccione')) ? otText : 'Sin OT';
+
+    const badgeEstado = document.getElementById('badgeEstado');
+    if (badgeEstado) badgeEstado.textContent = estado || '--';
+
+    const badgeTipo = document.getElementById('badgeTipo');
+    if (badgeTipo) badgeTipo.textContent = tipo || 'INFORME';
+
+    const badgeFecha = document.getElementById('badgeFecha');
+    if (badgeFecha) badgeFecha.textContent = fecha || '--';
+}
+
+// Escuchar cambios en cliente y fecha
+document.getElementById('cliente_razon_social')?.addEventListener('input', actualizarBadgesResumen);
+document.getElementById('fecha_creacion')?.addEventListener('change', actualizarBadgesResumen);
+
+/* =========================================================
+   ACORDEÓN DE ASPECTOS TÉCNICOS
+========================================================= */
+function toggleAspectoCard(headerEl) {
+    const card = headerEl.closest('.aspecto-card');
+    if (card) {
+        card.classList.toggle('collapsed');
+    }
+}
+
+document.getElementById('btnExpandAllAspectos')?.addEventListener('click', function () {
+    document.querySelectorAll('.aspecto-card').forEach(card => card.classList.remove('collapsed'));
+});
+
+document.getElementById('btnCollapseAllAspectos')?.addEventListener('click', function () {
+    document.querySelectorAll('.aspecto-card').forEach(card => card.classList.add('collapsed'));
+});
 
 /* ===========================
    HELPER: HTML DE UN ITEM
@@ -544,6 +701,7 @@ document.addEventListener('change', async function (e) {
         document.getElementById('informe_tipo_text').value = tipoTexto;
 
         aplicarAspectosPorEstado(data.estado);
+        actualizarBadgesResumen();
 
     } catch (error) {
         console.error('Error al cargar OT', error);

@@ -1,151 +1,201 @@
 <div class="modal fade" id="modalUpdate" data-bs-backdrop="static" tabindex="-1">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable modal-fullscreen-sm-down">
+    <div class="modal-dialog modal-dialog-scrollable modal-fullscreen-sm-down">
         <div class="modal-content shadow-lg border-0">
 
             <style>
-                #modalUpdate .modal-header {
-                    background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
-                    color: #ffffff;
-                    border-bottom: none;
+                #modalUpdate .modal-dialog {
+                    width: min(980px, calc(100vw - 2rem));
+                    max-width: 980px;
+                    margin: 1.5rem auto;
+                    transition: all 0.2s ease-in-out;
+                }
+                #modalUpdate .modal-dialog.modal-fullscreen {
+                    width: 100vw !important;
+                    max-width: 100vw !important;
+                    height: 100vh !important;
+                    margin: 0 !important;
+                    border-radius: 0 !important;
+                }
+                #modalUpdate .modal-dialog.modal-fullscreen .modal-content {
+                    border-radius: 0 !important;
+                    height: 100vh !important;
+                }
+                #modalUpdate .modal-content {
+                    border-radius: 0.65rem;
+                    overflow: hidden;
+                    box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.25) !important;
                 }
                 #modalUpdate #formUpdate {
                     display: flex;
                     flex-direction: column;
-                    flex: 1 1 auto;
-                    min-height: 0;
-                    max-height: 100%;
-                    overflow: hidden;
+                    margin-bottom: 0;
+                }
+                #modalUpdate .modal-header {
+                    background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
+                    color: #ffffff;
+                    border-bottom: none;
+                    padding: 0.5rem 1.15rem !important;
+                    flex-shrink: 0;
                 }
                 #modalUpdate .modal-body {
-                    flex: 1 1 auto;
-                    min-height: 0;
+                    padding: 0.75rem 1rem !important;
                     overflow-y: auto;
-                    overscroll-behavior: contain;
+                    max-height: calc(100vh - 140px);
+                    background-color: #f8fafc;
+                    scrollbar-width: thin;
+                    scrollbar-color: #94a3b8 #f1f5f9;
                 }
-                #modalUpdate .modal-header,
+                #modalUpdate .modal-body::-webkit-scrollbar {
+                    width: 6px;
+                    height: 6px;
+                }
+                #modalUpdate .modal-body::-webkit-scrollbar-thumb {
+                    background: #cbd5e1;
+                    border-radius: 4px;
+                }
                 #modalUpdate .modal-footer {
-                    flex: 0 0 auto;
+                    padding: 0.5rem 1.15rem !important;
+                    background-color: #ffffff;
+                    border-top: 1px solid #e2e8f0;
+                    flex-shrink: 0;
                 }
                 #modalUpdate .card {
                     border: 1px solid #cbd5e1;
-                    border-radius: 0.5rem;
-                    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+                    border-radius: 0.45rem;
+                    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+                    background: #ffffff;
                 }
                 #modalUpdate .card-header {
                     background: #f8fafc;
                     border-bottom: 1px solid #e2e8f0;
                     color: #0f172a;
-                    font-size: 0.95rem;
+                    font-size: 0.82rem;
                     font-weight: 700;
-                    padding: 0.65rem 1rem;
+                    padding: 0.4rem 0.75rem !important;
                 }
-                #modalUpdate .form-label {
+                #modalUpdate .card-body {
+                    padding: 0.65rem 0.8rem !important;
+                    overflow: visible !important;
+                }
+                #modalUpdate .form-label.compact-label {
                     color: #0f172a !important;
                     font-weight: 600 !important;
-                    font-size: 0.85rem !important;
-                    margin-bottom: 0.35rem !important;
+                    font-size: 0.78rem !important;
+                    margin-bottom: 0.2rem !important;
                     display: block;
                 }
-                #modalUpdate .form-control, 
+                #modalUpdate .form-control-sm, 
+                #modalUpdate .form-select-sm,
+                #modalUpdate .form-control,
                 #modalUpdate .form-select {
                     color: #0f172a !important;
                     border-color: #cbd5e1 !important;
-                    font-size: 0.875rem !important;
+                    font-size: 0.82rem !important;
                     font-weight: 500 !important;
                     background-color: #ffffff;
+                    padding: 0.28rem 0.55rem !important;
+                    min-height: 32px;
+                    border-radius: 0.35rem;
                 }
                 #modalUpdate .form-control:focus, 
                 #modalUpdate .form-select:focus {
                     border-color: #2563eb !important;
-                    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15) !important;
+                    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15) !important;
                 }
                 #modalUpdate .form-control[readonly],
                 #modalUpdate .form-control:disabled {
                     background-color: #f1f5f9 !important;
-                    color: #0f172a !important;
+                    color: #1e293b !important;
                     font-weight: 600 !important;
                     border-color: #cbd5e1 !important;
                     opacity: 1 !important;
                 }
+                #modalUpdate textarea.form-control {
+                    min-height: 60px;
+                    line-height: 1.35;
+                    font-size: 0.82rem !important;
+                    padding: 0.35rem 0.55rem;
+                }
                 #modalUpdate .select2-container .select2-selection--single {
-                    height: 38px !important;
+                    height: 32px !important;
                     border: 1px solid #cbd5e1 !important;
-                    border-radius: 0.375rem !important;
+                    border-radius: 0.35rem !important;
                     background-color: #ffffff !important;
                     display: flex !important;
                     align-items: center !important;
                 }
                 #modalUpdate .select2-container .select2-selection--single .select2-selection__rendered {
                     color: #0f172a !important;
-                    font-size: 0.875rem !important;
-                    font-weight: 600 !important;
-                    padding-left: 8px !important;
-                    line-height: 36px !important;
+                    font-size: 0.82rem !important;
+                    font-weight: 500 !important;
+                    padding-left: 6px !important;
+                    line-height: 30px !important;
                 }
                 #modalUpdate .select2-container .select2-selection--single .select2-selection__placeholder {
                     color: #64748b !important;
                     font-weight: 500 !important;
+                    font-size: 0.82rem !important;
                 }
                 #modalUpdate .select2-container .select2-selection--single .select2-selection__arrow {
-                    height: 36px !important;
-                    right: 8px !important;
+                    height: 30px !important;
+                    right: 6px !important;
                 }
                 .select2-dropdown {
                     border: 1px solid #cbd5e1 !important;
                     border-radius: 0.375rem !important;
                     box-shadow: 0 10px 25px -5px rgba(0,0,0,0.15) !important;
-                    z-index: 1065 !important;
+                    z-index: 2200 !important;
                 }
                 .select2-results__option {
                     color: #1e293b !important;
-                    font-size: 0.875rem !important;
-                    padding: 8px 12px !important;
+                    font-size: 0.82rem !important;
+                    padding: 6px 10px !important;
                     font-weight: 500 !important;
                 }
                 .select2-results__option--highlighted[aria-selected] {
                     background-color: #2563eb !important;
                     color: #ffffff !important;
                 }
-                /* El autocompletado del cliente debe flotar sobre las tarjetas siguientes. */
                 #modalUpdate .ot-client-card {
                     position: relative;
-                    z-index: 30;
+                    z-index: 40;
                     overflow: visible !important;
                 }
                 #modalUpdate .ot-client-card .card-body,
-                #modalUpdate .ot-client-card .row,
                 #modalUpdate .ot-client-card .position-relative {
                     overflow: visible !important;
                 }
-                #modalUpdate .ot-client-card .search-list {
-                    z-index: 2100 !important;
+                #modalUpdate .ot-client-card .search-list,
+                #modalUpdate .search-list {
+                    z-index: 2200 !important;
                     width: 100% !important;
-                    max-height: 240px !important;
+                    max-height: 200px !important;
                     overflow-x: hidden !important;
                     overflow-y: auto !important;
-                    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.18) !important;
-                }
-                #modalUpdate .ot-personnel-card {
-                    position: relative;
-                    z-index: 20;
-                    overflow: visible !important;
-                }
-                #modalUpdate .ot-personnel-card .card-body,
-                #modalUpdate .ot-personnel-card .row,
-                #modalUpdate .ot-personnel-card .position-relative {
-                    overflow: visible !important;
-                }
-                #modalUpdate .ot-personnel-card .search-list {
-                    z-index: 2100 !important;
-                    width: 100% !important;
-                    max-height: 240px !important;
-                    overflow-x: hidden !important;
-                    overflow-y: auto !important;
+                    background: #ffffff !important;
+                    border: 1px solid #cbd5e1 !important;
+                    border-radius: 0.45rem !important;
                     box-shadow: 0 10px 25px rgba(15, 23, 42, 0.18) !important;
                 }
                 #modalUpdate .ot-details-card {
                     position: relative;
-                    z-index: 1;
+                    z-index: 10;
+                }
+                @media (max-width: 991.98px) {
+                    #modalUpdate .modal-dialog {
+                        width: calc(100vw - 1rem);
+                        margin: 0.5rem auto;
+                    }
+                }
+                @media (max-width: 767.98px) {
+                    #modalUpdate .modal-dialog {
+                        width: 100%;
+                        margin: 0;
+                        height: 100dvh;
+                    }
+                    #modalUpdate .modal-body {
+                        max-height: none;
+                    }
                 }
             </style>
 
@@ -154,172 +204,168 @@
                 <input type="hidden" id="method_field" name="_method">
 
                 <!-- HEADER -->
-                <div class="modal-header py-3 px-4">
+                <div class="modal-header d-flex justify-content-between align-items-center">
                     <div class="d-flex align-items-center">
-                        <i class="bi bi-clipboard-plus fs-4 me-2 text-white"></i>
+                        <i class="bi bi-clipboard-plus fs-5 me-2 text-white"></i>
                         <div>
-                            <h5 class="modal-title fw-bold text-white mb-0" id="modalTitle">
+                            <h5 class="modal-title fw-bold text-white mb-0" id="modalTitle" style="font-size: 0.95rem;">
                                 Nueva Orden de Trabajo
                             </h5>
-                            <small class="text-white-50" style="font-size: 0.78rem;">Complete los datos del servicio y asigne el personal responsable</small>
+                            <small class="text-white-50 d-none d-sm-inline" style="font-size: 0.72rem;">Complete los datos del servicio y asigne el personal responsable</small>
                         </div>
                     </div>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    <div class="d-flex align-items-center gap-2">
+                        <button type="button" class="btn btn-sm btn-outline-light py-0 px-2 fw-medium d-inline-flex align-items-center gap-1" id="btnToggleFullscreenOT" title="Pantalla completa / Restaurar tamaño" style="font-size: 0.78rem; height: 28px;">
+                            <i class="bi bi-arrows-fullscreen" id="iconFullscreenOT"></i>
+                            <span class="d-none d-md-inline" id="textFullscreenOT">Pantalla Completa</span>
+                        </button>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" style="font-size: 0.8rem;"></button>
+                    </div>
                 </div>
 
-                <!-- BODY -->
-                <div class="modal-body p-4 bg-light">
+                <!-- BODY: DISEÑO EN 2 COLUMNAS SIN ESPACIO MUERTO -->
+                <div class="modal-body">
+                    <div class="row g-2 align-items-stretch">
 
-                    <!-- ================= CLIENTE Y SEDE ================= -->
-                    <div class="card mb-3 shadow-sm bg-white ot-client-card">
-                        <div class="card-header d-flex align-items-center">
-                            <i class="bi bi-building me-2 text-primary fs-5"></i>
-                            <span>1. Cliente y Sede</span>
-                        </div>
-                        <div class="card-body p-3">
-                            <div class="row g-3">
-
-                                <div class="col-lg-6 col-md-12 position-relative">
-                                    <label class="form-label">
-                                        Buscar Cliente <span class="text-danger">*</span>
-                                    </label>
-                                    <input type="text"
-                                           id="cliente_razon_social"
-                                           class="form-control"
-                                           placeholder="Escriba RUC o Razón Social..."
-                                           autocomplete="off">
-                                    <input type="hidden" id="cliente_id" name="cliente_id">
-                                    <small class="text-muted" style="font-size: 0.75rem;">Busque y seleccione el cliente de la lista</small>
+                        <!-- COLUMNA 1: CLIENTE Y PERSONAL ASIGNADO -->
+                        <div class="col-lg-6 col-12 d-flex">
+                            <div class="card w-100 shadow-sm bg-white ot-client-card">
+                                <div class="card-header d-flex align-items-center">
+                                    <i class="bi bi-building me-2 text-primary"></i>
+                                    <span>1. Cliente y Personal Asignado</span>
                                 </div>
+                                <div class="card-body d-flex flex-column gap-2">
 
-                                <div class="col-lg-6 col-md-12">
-                                    <label class="form-label">
-                                        Sede <span class="text-danger">*</span>
-                                    </label>
-                                    <select name="sede_id" id="sede_id" class="form-select" required>
-                                        <option value="">Seleccione una sede</option>
-                                    </select>
-                                    <small class="text-muted" style="font-size: 0.75rem;">Se listan las sedes asociadas al cliente seleccionado</small>
+                                    <!-- Cliente -->
+                                    <div class="position-relative">
+                                        <label class="form-label compact-label">
+                                            Buscar Cliente <span class="text-danger">*</span>
+                                        </label>
+                                        <input type="text"
+                                               id="cliente_razon_social"
+                                               class="form-control form-control-sm"
+                                               placeholder="Escriba RUC o Razón Social..."
+                                               autocomplete="off">
+                                        <input type="hidden" id="cliente_id" name="cliente_id">
+                                    </div>
+
+                                    <!-- Sede -->
+                                    <div>
+                                        <label class="form-label compact-label">
+                                            Sede <span class="text-danger">*</span>
+                                        </label>
+                                        <select name="sede_id" id="sede_id" class="form-select form-select-sm" required>
+                                            <option value="">Seleccione una sede</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Solicitante -->
+                                    <div>
+                                        <label class="form-label compact-label">
+                                            Solicitante <span class="text-danger">*</span>
+                                        </label>
+                                        <select name="responsable_id" id="responsable_id" class="form-select form-select-sm" required>
+                                            <option value="">Seleccione un solicitante</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Técnico -->
+                                    <div class="position-relative">
+                                        <label class="form-label compact-label">
+                                            Técnico <span class="text-danger">*</span>
+                                        </label>
+                                        <input type="text"
+                                               id="tecnico_nombre"
+                                               class="form-control form-control-sm"
+                                               placeholder="Buscar técnico por nombre o DNI..."
+                                               autocomplete="off">
+                                        <input type="hidden" id="tecnico_id" name="tecnico_id">
+                                    </div>
+
                                 </div>
-
                             </div>
                         </div>
-                    </div>
 
-                    <!-- ================= SOLICITANTE Y PERSONAL ================= -->
-                    <div class="card mb-3 shadow-sm bg-white ot-personnel-card">
-                        <div class="card-header d-flex align-items-center">
-                            <i class="bi bi-person-lines-fill me-2 text-primary fs-5"></i>
-                            <span>2. Solicitante y Personal Asignado</span>
-                        </div>
-                        <div class="card-body p-3">
-                            <div class="row g-3">
-
-                                <div class="col-lg-6 col-md-12">
-                                    <label class="form-label">
-                                        Solicitante <span class="text-danger">*</span>
-                                    </label>
-                                    <select name="responsable_id" id="responsable_id" class="form-select" required>
-                                        <option value="">Seleccione un solicitante</option>
-                                    </select>
-                                    <small class="text-muted" style="font-size: 0.75rem;">Responsable o solicitante por parte del cliente</small>
+                        <!-- COLUMNA 2: DETALLES OPERATIVOS DE LA OT -->
+                        <div class="col-lg-6 col-12 d-flex">
+                            <div class="card w-100 shadow-sm bg-white ot-details-card">
+                                <div class="card-header d-flex align-items-center">
+                                    <i class="bi bi-clipboard-check me-2 text-primary"></i>
+                                    <span>2. Detalles de la Orden de Trabajo</span>
                                 </div>
+                                <div class="card-body d-flex flex-column gap-2">
 
-                                <div class="col-lg-6 col-md-12 position-relative">
-                                    <label class="form-label">
-                                        Técnico <span class="text-danger">*</span>
-                                    </label>
-                                    <input type="text"
-                                           id="tecnico_nombre"
-                                           class="form-control"
-                                           placeholder="Buscar técnico por nombre o DNI..."
-                                           autocomplete="off">
-                                    <input type="hidden" id="tecnico_id" name="tecnico_id">
-                                    <small class="text-muted" style="font-size: 0.75rem;">Escriba para buscar técnico de ACOTEC</small>
+                                    <!-- Código OT y Motivo -->
+                                    <div class="row g-2">
+                                        <div class="col-6">
+                                            <label class="form-label compact-label">
+                                                Código OT <span class="text-danger">*</span>
+                                            </label>
+                                            <input type="text" 
+                                                   id="codigo_ot_cliente" 
+                                                   name="codigo_ot_cliente" 
+                                                   class="form-control form-control-sm"
+                                                   placeholder="Ej: OT-2026-001" required>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="form-label compact-label">
+                                                Motivo <span class="text-danger">*</span>
+                                            </label>
+                                            <input type="text" 
+                                                   id="motivo" 
+                                                   name="motivo" 
+                                                   class="form-control form-control-sm"
+                                                   placeholder="Ej: Mantenimiento" required>
+                                        </div>
+                                    </div>
+
+                                    <!-- Estado -->
+                                    <div>
+                                        <label class="form-label compact-label">Estado</label>
+                                        <input type="text" 
+                                               id="estado" 
+                                               name="estado"
+                                               class="form-control form-control-sm"
+                                               readonly
+                                               value="Registrado">
+                                    </div>
+
+                                    <!-- Descripción -->
+                                    <div class="flex-grow-1">
+                                        <label class="form-label compact-label">
+                                            Descripción <span class="text-danger">*</span>
+                                        </label>
+                                        <textarea id="descripcion" 
+                                                  name="descripcion" 
+                                                  class="form-control form-control-sm" 
+                                                  rows="2"
+                                                  placeholder="Detalle el trabajo o servicio a realizar..." required></textarea>
+                                    </div>
+
+                                    <!-- Observaciones -->
+                                    <div>
+                                        <label class="form-label compact-label">Observaciones</label>
+                                        <input type="text" 
+                                               id="observaciones" 
+                                               name="observaciones" 
+                                               class="form-control form-control-sm"
+                                               minlength="3"
+                                               placeholder="Observaciones o notas especiales...">
+                                    </div>
+
                                 </div>
-
                             </div>
                         </div>
+
                     </div>
-
-                    <!-- ================= DATOS DE LA OT ================= -->
-                    <div class="card shadow-sm bg-white ot-details-card">
-                        <div class="card-header d-flex align-items-center">
-                            <i class="bi bi-clipboard-check me-2 text-primary fs-5"></i>
-                            <span>3. Detalles Operativos de la Orden de Trabajo</span>
-                        </div>
-                        <div class="card-body p-3">
-                            <div class="row g-3">
-
-                                <div class="col-lg-4 col-md-6 col-12">
-                                    <label class="form-label">
-                                        Código OT <span class="text-danger">*</span>
-                                    </label>
-                                    <input type="text" 
-                                           id="codigo_ot_cliente" 
-                                           name="codigo_ot_cliente" 
-                                           class="form-control"
-                                           placeholder="Ej: OT-2026-001" required>
-                                </div>
-
-                                <div class="col-lg-4 col-md-6 col-12">
-                                    <label class="form-label">
-                                        Motivo <span class="text-danger">*</span>
-                                    </label>
-                                    <input type="text" 
-                                           id="motivo" 
-                                           name="motivo" 
-                                           class="form-control"
-                                           placeholder="Ej: Mantenimiento Correctivo" required>
-                                </div>
-
-                                <div class="col-lg-4 col-md-6 col-12">
-                                    <label class="form-label">
-                                        Estado
-                                    </label>
-                                    <input type="text" 
-                                           id="estado" 
-                                           name="estado"
-                                           class="form-control"
-                                           readonly
-                                           value="Registrado">
-                                </div>
-
-                                <div class="col-lg-12 col-12">
-                                    <label class="form-label">
-                                        Descripción <span class="text-danger">*</span>
-                                    </label>
-                                    <textarea id="descripcion" 
-                                              name="descripcion" 
-                                              class="form-control" 
-                                              rows="3"
-                                              placeholder="Detalle el trabajo o servicio a realizar..." required></textarea>
-                                </div>
-
-                                <div class="col-lg-12 col-12">
-                                    <label class="form-label">
-                                        Observaciones
-                                    </label>
-                                    <input type="text" 
-                                           id="observaciones" 
-                                           name="observaciones" 
-                                           class="form-control"
-                                           minlength="3"
-                                           placeholder="Observaciones o notas especiales...">
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
 
                 <!-- FOOTER -->
-                <div class="modal-footer bg-white border-top py-3 px-4 d-flex justify-content-between">
-                    <button type="button" class="btn btn-outline-secondary px-4 fw-medium" data-bs-dismiss="modal">
+                <div class="modal-footer bg-white border-top d-flex justify-content-between">
+                    <button type="button" class="btn btn-sm btn-outline-secondary px-3 fw-medium" data-bs-dismiss="modal">
                         <i class="bi bi-x-circle me-1"></i> Cancelar
                     </button>
-                    <button type="submit" id="btnSubmit" class="btn btn-primary px-4 fw-semibold shadow-sm">
+                    <button type="submit" id="btnSubmit" class="btn btn-sm btn-primary px-4 fw-semibold shadow-sm">
                         <i class="bi bi-check2-circle me-1"></i> Guardar Orden de Trabajo
                     </button>
                 </div>
@@ -328,3 +374,22 @@
         </div>
     </div>
 </div>
+
+<script>
+document.getElementById('btnToggleFullscreenOT')?.addEventListener('click', function() {
+    const modalDialog = document.querySelector('#modalUpdate .modal-dialog');
+    const icon = document.getElementById('iconFullscreenOT');
+    const text = document.getElementById('textFullscreenOT');
+    if (!modalDialog) return;
+    const isFullscreen = modalDialog.classList.toggle('modal-fullscreen');
+    if (isFullscreen) {
+        if (icon) icon.className = 'bi bi-fullscreen-exit';
+        if (text) text.textContent = 'Restaurar';
+        this.setAttribute('title', 'Restaurar tamaño normal');
+    } else {
+        if (icon) icon.className = 'bi bi-arrows-fullscreen';
+        if (text) text.textContent = 'Pantalla Completa';
+        this.setAttribute('title', 'Pantalla completa');
+    }
+});
+</script>
