@@ -42,7 +42,7 @@
                 </td>
             </tr>
             <tr class="border-top">
-                <td class="text-end fw-bold text-dark pe-3 py-2">TOTAL COTIZACIÓN:</td>
+                <td class="text-end fw-bold text-dark pe-3 py-2">TOTAL COTIZACI&Oacute;N:</td>
                 <td class="py-2">
                     <div class="input-group input-group-sm">
                         <span class="input-group-text bg-primary-subtle text-primary border-primary-subtle fw-bold">S/</span>

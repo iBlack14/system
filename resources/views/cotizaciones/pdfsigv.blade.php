@@ -151,21 +151,20 @@
         width: 40%;
         margin-left: auto;
         margin-top: 20px;
+        border-collapse: collapse;
     }
 
     .resumen-fiscal td {
         border: none;
-        padding: 4px;
+        padding: 5px 8px;
+        font-size: 11px;
+        font-weight: bold;
     }
 
-    .resumen-total {
+    .resumen-fiscal .importe-total td {
         background: #ff7300;
         color: #fff;
-        text-align: right;
-        font-size: 14px;
-        padding: 8px;
-        font-weight: bold;
-        margin-top: 10px;
+        border-top: 2px solid #e76700;
     }
 
     /* ==========================
@@ -194,8 +193,7 @@
 }
 
 .bloque-final table,
-.bloque-final .resumen-fiscal,
-.bloque-final .resumen-total {
+.bloque-final .resumen-fiscal {
     page-break-inside: avoid;
 }
 
@@ -427,12 +425,12 @@
     <tr>
         <td><strong>IGV (18%)</strong></td>
         <td class="text-right"><strong>S/ {{ number_format($igv, 2) }}</strong></td>
-    </tr>  
+    </tr>
+    <tr class="importe-total">
+        <td>IMPORTE TOTAL</td>
+        <td class="text-right">S/ {{ number_format($totalGeneral, 2) }}</td>
+    </tr>
 </table>
-
-<div class="resumen-total">
-    TOTAL GENERAL: S/ {{ number_format($totalGeneral, 2) }}
-</div>
 </div>
 
 {{-- ==========================

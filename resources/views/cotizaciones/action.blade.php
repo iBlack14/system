@@ -57,7 +57,7 @@
                             <i class="bi bi-file-earmark-ruled fs-6"></i>
                         </span>
                         <div>
-                            <h5 class="modal-title fw-bold text-dark mb-0" id="modalTitle">Nueva cotización</h5>
+                            <h5 class="modal-title fw-bold text-dark mb-0" id="modalTitle">Nueva cotizaci&oacute;n</h5>
                             <small class="text-muted">Selecciona el cliente, la OT y los conceptos que deseas cotizar</small>
                         </div>
                     </div>
@@ -80,7 +80,7 @@
                         <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
                             <div>
                                 <span class="fw-bold text-dark small text-uppercase letter-spacing-1">
-                                    <span class="quote-step">2</span> Módulos a incluir
+                                    <span class="quote-step">2</span> M&oacute;dulos a incluir
                                 </span>
                                 <p class="text-muted small mb-0">Active las secciones que aplican a esta propuesta comercial:</p>
                             </div>
@@ -117,7 +117,7 @@
                             <div class="card quote-panel overflow-hidden bg-white">
                             <div class="card-header bg-white border-bottom py-2 px-3 d-flex align-items-center justify-content-between">
                                 <span class="fw-bold text-primary small d-flex align-items-center gap-2">
-                                    <i class="bi bi-gear-fill"></i> Módulo de Servicios
+                                    <i class="bi bi-gear-fill"></i> M&oacute;dulo de Servicios
                                 </span>
                             </div>
                             <div class="card-body p-3">
@@ -139,7 +139,7 @@
                             <div class="card quote-panel overflow-hidden bg-white">
                             <div class="card-header bg-white border-bottom py-2 px-3 d-flex align-items-center justify-content-between">
                                 <span class="fw-bold text-secondary small d-flex align-items-center gap-2">
-                                    <i class="bi bi-truck"></i> Módulo de Transporte de Herramientas
+                                    <i class="bi bi-truck"></i> M&oacute;dulo de Transporte de Herramientas
                                 </span>
                             </div>
                             <div class="card-body p-3">
@@ -161,7 +161,7 @@
                             <div class="card quote-panel overflow-hidden bg-white">
                             <div class="card-header bg-white border-bottom py-2 px-3 d-flex align-items-center justify-content-between">
                                 <span class="fw-bold text-warning-emphasis small d-flex align-items-center gap-2">
-                                    <i class="bi bi-box-seam"></i> Módulo de Materiales
+                                    <i class="bi bi-box-seam"></i> M&oacute;dulo de Materiales
                                 </span>
                             </div>
                             <div class="card-body p-3">
@@ -183,7 +183,7 @@
                             <div class="card quote-panel overflow-hidden bg-white">
                             <div class="card-header bg-white border-bottom py-2 px-3 d-flex align-items-center justify-content-between">
                                 <span class="fw-bold text-success small d-flex align-items-center gap-2">
-                                    <i class="bi bi-people-fill"></i> Módulo Transporte de Personal
+                                    <i class="bi bi-people-fill"></i> M&oacute;dulo Transporte de Personal
                                 </span>
                             </div>
                             <div class="card-body p-3">
@@ -213,7 +213,7 @@
                                 <div class="input-group input-group-sm mb-3">
                                     <span class="input-group-text bg-white"><i class="bi bi-search text-muted"></i></span>
                                     <input type="text" id="condicion_descripcion" class="form-control"
-                                        placeholder="Buscar y seleccionar una condición..." autocomplete="off">
+                                        placeholder="Buscar y seleccionar una condici&oacute;n..." autocomplete="off">
                                     <input type="hidden" id="condicion_id" name="condicion_id">
                                 </div>
                                 @include('cotizaciones.partials.detalles-condiciones')
@@ -226,10 +226,10 @@
                         <div class="col-lg-5">
                             <div class="card quote-panel p-3 bg-white h-100">
                                 <div class="d-flex align-items-center gap-2 text-muted small fw-semibold mb-2">
-                                    <i class="bi bi-info-circle text-primary"></i> Información del Cálculo
+                                    <i class="bi bi-info-circle text-primary"></i> Informaci&oacute;n del C&aacute;lculo
                                 </div>
                                 <p class="text-muted small mb-0" style="line-height: 1.5;">
-                                    Los subtotales de cada módulo se consolidan automáticamente. Las operaciones gravadas calcularán el 18% de IGV correspondiente al valor de venta.
+                                    Los subtotales de cada m&oacute;dulo se consolidan autom&aacute;ticamente. Las operaciones gravadas calcular&aacute;n el 18% de IGV correspondiente al valor de venta.
                                 </p>
                             </div>
                         </div>
@@ -246,7 +246,7 @@
                         Cancelar
                     </button>
                     <button type="submit" id="btnSubmit" class="btn btn-primary rounded-pill px-4 shadow-sm">
-                        <i class="bi bi-check-circle me-1"></i> Guardar Cotización
+                                <i class="bi bi-check-circle me-1"></i> Guardar Cotizaci&oacute;n
                     </button>
                 </div>
             </form>

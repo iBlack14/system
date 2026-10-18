@@ -14,9 +14,9 @@
             <div class="input-group input-group-sm">
                 <span class="input-group-text bg-light text-muted"><i class="bi bi-search"></i></span>
                 <input type="text" id="cliente_razon_social" class="form-control form-control-sm"
-                    autocomplete="off" placeholder="Escribe RUC o razón social..." data-error-field="cliente_id">
+                           autocomplete="off" placeholder="Escribe RUC o raz&oacute;n social..." data-error-field="cliente_id">
             </div>
-            <div class="selection-help"><i class="bi bi-cursor-fill text-primary"></i><span>Escribe al menos 3 caracteres y <strong>selecciona un resultado de la lista</strong>. Solo escribir el número no selecciona al cliente.</span></div>
+                <div class="selection-help"><i class="bi bi-cursor-fill text-primary"></i><span>Escribe al menos 3 caracteres y <strong>selecciona un resultado de la lista</strong>. Solo escribir el n&uacute;mero no selecciona al cliente.</span></div>
             <div class="invalid-feedback"></div>
             <input type="hidden" id="cliente_id" name="cliente_id">
         </div>

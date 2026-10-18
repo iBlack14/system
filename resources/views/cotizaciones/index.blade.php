@@ -163,9 +163,9 @@
         </div>
     </div>
 </div>
-@canany(['cotizaciones_create', 'cotizaciones_edit'])
-    @include('cotizaciones.action')    
-@endcanany
+{{-- El modal debe existir siempre que la pantalla cargue. Los botones y las
+     acciones del servidor continúan protegidos por sus permisos. --}}
+@include('cotizaciones.action')
 @include('servicios.addservices')
 @include('transporte.addtransporte')
 @include('tpersonal.addtpersonal')
@@ -187,7 +187,7 @@ class CotizacionesManager extends CrudManager {
         this.afterSuccess = this.handleCotizacionSuccess.bind(this);
         this.initializeDataTable();        
 
-        this.elements.modal.addEventListener('hidden.bs.modal', () => {
+        this.elements.modal?.addEventListener('hidden.bs.modal', () => {
             this.resetForm();
         });
         
@@ -333,8 +333,15 @@ resetForm() {
     /* ===========================
      * 1️⃣ Reset formulario base
      * =========================== */
-    if (this.form) this.form.reset();
-    this.clearFormErrors?.();
+    if (this.form) {
+        this.form.reset();
+        this.form.querySelectorAll?.('.is-invalid').forEach(el => {
+            el.classList.remove('is-invalid');
+        });
+        this.form.querySelectorAll?.('.invalid-feedback').forEach(el => {
+            el.textContent = '';
+        });
+    }
 
     /* ===========================
      * 2️⃣ Configuración módulos
@@ -1192,13 +1199,22 @@ calculateTotals() {
     }
 
     showCreateModal(){
-        super.showCreateModal();
+        if (!this.elements.modal || !this.form || !this.modal) {
+            this.showNotification('error', 'No se pudo cargar el formulario de cotización. Actualice la página.');
+            return;
+        }
+
+        this.isEditing = false;
         this.resetForm();
-        //document.querySelector('#tablaDetalles tbody').innerHTML = '';
-        //document.getElementById('documento_tipo_codigo').value = '01';
-        this.elements.methodField.value = 'POST';
-        document.getElementById('ot_codigo').value = '';
-        //this.getSerie('01');
+        const modalTitle = this.elements.modalTitle || document.getElementById('modalTitle');
+        if (modalTitle) modalTitle.textContent = 'Nueva cotización';
+        if (this.elements.methodField) this.elements.methodField.value = 'POST';
+        this.form.action = this.baseUrl;
+
+        const otSelect = document.getElementById('ot_codigo');
+        if (otSelect) otSelect.value = '';
+
+        this.modal.show();
     }
 
     activarModulo({ wrapId, tableId = null, chkId = null }) {
@@ -1234,6 +1250,11 @@ calculateTotals() {
 async showEditModal(id) {
     try {
 
+        if (!this.elements.modal || !this.form || !this.modal) {
+            this.showNotification('error', 'No se pudo cargar el formulario de cotización. Verifique action.blade.php.');
+            return;
+        }
+
          this.isEditing = true;
 
         const response = await this.fetchData(`${this.baseUrl}/${id}`);
@@ -1252,8 +1273,10 @@ async showEditModal(id) {
 
 
         // 🔹 Configuración del modal
-        this.elements.modalTitle.textContent = 'Editar Cotización';
-        this.elements.methodField.value = 'PUT';
+        const modalTitle = this.elements.modalTitle || document.getElementById('modalTitle');
+        if (modalTitle) modalTitle.textContent = 'Editar Cotización';
+
+        if (this.elements.methodField) this.elements.methodField.value = 'PUT';
         this.form.action = `${this.baseUrl}/${id}`;
 
         // 🔹 Campos principales

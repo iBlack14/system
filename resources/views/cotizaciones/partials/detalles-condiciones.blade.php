@@ -2,9 +2,9 @@
     <table class="table table-bordered table-sm" id="tablaDetallesCondiciones">
         <thead class="table-light text-center">
             <tr>
-                <th>Acción</th>
+                <th>Acci&oacute;n</th>
                 <th>#</th>
-                <th>Condición</th>                
+                <th>Condici&oacute;n</th>
             </tr>
         </thead>
         <tbody>

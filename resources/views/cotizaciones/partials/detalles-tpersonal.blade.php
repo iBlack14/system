@@ -3,7 +3,7 @@
     <table class="table table-bordered table-sm" id="tablaDetallesTPersonal">
         <thead class="table-light text-center">
             <tr>
-                <th>Acción</th>
+                <th>Acci&oacute;n</th>
                 <th>#</th>
                 <th>Destino</th>
                 <th>Cantidad</th>

@@ -11,7 +11,7 @@
             <label for="forma_pago" class="form-label small fw-medium mb-1">Forma de pago <span class="text-danger">*</span></label>
             <select name="forma_pago" id="forma_pago" class="form-select form-select-sm" required>
                 <option value="contado">Contado</option>
-                <option value="credito">Crédito</option>
+                        <option value="credito">Cr&eacute;dito</option>
             </select>
         </div>
 
