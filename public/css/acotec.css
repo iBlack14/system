@@ -1078,28 +1078,48 @@ body.acotec-app:not(.sidebar-collapse) .sidebar-menu .nav-treeview .nav-link.act
 }
 
 /* ================= QUICK ACCESS MODULE CARDS ================= */
+.quick-access-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 10px;
+}
+
+@media (min-width: 1400px) {
+  .quick-access-grid {
+    grid-template-columns: repeat(7, 1fr);
+  }
+}
+
 .quick-access-card {
   background: #ffffff;
   border: 1px solid #e2e8f0 !important;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
   overflow: hidden;
   position: relative;
+  text-decoration: none !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
 }
 
 .quick-access-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.08) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08) !important;
   border-color: #cbd5e1 !important;
 }
 
 .quick-icon-wrapper {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
+  width: 38px;
+  height: 38px;
+  border-radius: 9px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.25rem;
+  font-size: 1.15rem;
+  flex-shrink: 0;
   transition: transform 0.2s ease;
 }
 
@@ -1107,7 +1127,44 @@ body.acotec-app:not(.sidebar-collapse) .sidebar-menu .nav-treeview .nav-link.act
   transform: scale(1.08);
 }
 
+.quick-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+.quick-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+}
+
+.quick-label {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #1e293b;
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.quick-desc {
+  font-size: 11px;
+  color: #64748b;
+  line-height: 1.2;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .quick-card-arrow {
+  color: #94a3b8;
+  font-size: 11px;
+  flex-shrink: 0;
   transition: transform 0.2s ease, color 0.2s ease;
 }
 
@@ -1233,9 +1290,6 @@ body.acotec-app:not(.sidebar-collapse) .sidebar-menu .nav-treeview .nav-link.act
 .workflow-state strong { color: var(--ac-ink); font-size: 18px; line-height: 1; font-variant-numeric: tabular-nums; }
 .workflow-state > .bi { color: var(--ac-light-muted); font-size: 10px; }
 
-.dashboard-quick-links .quick-access-card {
-  min-height: 132px;
-}
 
 @media (max-width: 1199.98px) {
   .workflow-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
