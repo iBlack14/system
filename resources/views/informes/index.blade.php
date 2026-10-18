@@ -29,18 +29,18 @@
 }
 
 .informes-table-wrap .dt-scroll-body {
-    max-height: calc(100vh - 355px);
-    overflow-y: auto !important;
-    scrollbar-width: thin;
-    scrollbar-color: #94a3b8 #eef2f7;
+    max-height: none !important;
+    overflow-y: visible !important;
 }
 
-.informes-table-wrap .dt-scroll-body::-webkit-scrollbar { width: 10px; height: 12px; }
-.informes-table-wrap .dt-scroll-body::-webkit-scrollbar-track { background: #eef2f7; }
+.informes-table-wrap .dt-scroll-body::-webkit-scrollbar { height: 10px; }
+.informes-table-wrap .dt-scroll-body::-webkit-scrollbar-track { background: #f1f5f9; }
 .informes-table-wrap .dt-scroll-body::-webkit-scrollbar-thumb {
-    background: #94a3b8;
-    border: 2px solid #eef2f7;
+    background: #cbd5e1;
     border-radius: 999px;
+}
+.informes-table-wrap .dt-scroll-body::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
 }
 
 .informes-table-wrap .dt-scroll-head th {

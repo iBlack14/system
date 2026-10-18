@@ -54,48 +54,52 @@
 }
 
 #listadoTable {
-    min-width: 1800px;
+    min-width: 1700px;
     margin-bottom: 0 !important;
 }
 
 #listadoTable th,
 #listadoTable td {
     vertical-align: middle;
+    padding: 0.5rem 0.65rem !important;
+    font-size: 0.83rem;
 }
 
 #listadoTable th {
     white-space: nowrap;
+    font-size: 0.76rem;
+    font-weight: 700;
 }
 
 .ordenes-table-wrap .dt-container > .row:first-child,
 .ordenes-table-wrap .dataTables_wrapper > .row:first-child {
-    padding: 0.85rem 1rem;
+    padding: 0.75rem 1rem;
     margin: 0;
     border-bottom: 1px solid #e2e8f0;
     background: #f8fafc;
 }
 
 .ordenes-table-wrap .dt-scroll-body {
-    max-height: calc(100vh - 355px);
-    overflow-y: auto !important;
+    max-height: none !important;
+    overflow-y: visible !important;
     border-bottom: 1px solid #e2e8f0 !important;
-    scrollbar-color: #94a3b8 #eef2f7;
-    scrollbar-width: thin;
 }
 
 .ordenes-table-wrap .dt-scroll-body::-webkit-scrollbar {
-    width: 10px;
-    height: 12px;
+    height: 10px;
 }
 
 .ordenes-table-wrap .dt-scroll-body::-webkit-scrollbar-track {
-    background: #eef2f7;
+    background: #f1f5f9;
 }
 
 .ordenes-table-wrap .dt-scroll-body::-webkit-scrollbar-thumb {
-    background: #94a3b8;
-    border: 2px solid #eef2f7;
+    background: #cbd5e1;
     border-radius: 999px;
+}
+
+.ordenes-table-wrap .dt-scroll-body::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
 }
 
 .ordenes-table-wrap .dt-scroll-head th {
