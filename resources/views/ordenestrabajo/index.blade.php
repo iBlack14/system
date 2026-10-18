@@ -102,6 +102,39 @@
     background: #94a3b8;
 }
 
+/* Scroll horizontal superior (Eje X superior) */
+.ordenes-table-wrap .dt-top-scroll {
+    overflow-x: auto;
+    overflow-y: hidden;
+    width: 100%;
+    height: 10px;
+    background: #f1f5f9;
+    border-bottom: 1px solid #e2e8f0;
+    scrollbar-color: #cbd5e1 #f1f5f9;
+    scrollbar-width: thin;
+}
+
+.ordenes-table-wrap .dt-top-scroll::-webkit-scrollbar {
+    height: 10px;
+}
+
+.ordenes-table-wrap .dt-top-scroll::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+.ordenes-table-wrap .dt-top-scroll::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 999px;
+}
+
+.ordenes-table-wrap .dt-top-scroll::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+.ordenes-table-wrap .dt-top-scroll-inner {
+    height: 1px;
+}
+
 .ordenes-table-wrap .dt-scroll-head th {
     background: #f8fafc !important;
     color: #334155;
@@ -481,6 +514,60 @@ class OrdenTrabajoManager extends CrudManager {
             scrollX: true,
             autoWidth: true
         });
+
+        this.tabla.on('draw.dt', () => this.setupDoubleScroll());
+        $(window).on('resize', () => this.setupDoubleScroll());
+        setTimeout(() => this.setupDoubleScroll(), 300);
+    }
+
+    setupDoubleScroll() {
+        const wrap = document.querySelector('.ordenes-table-wrap');
+        if (!wrap) return;
+
+        const scrollBody = wrap.querySelector('.dt-scroll-body');
+        if (!scrollBody) return;
+
+        let topScroll = wrap.querySelector('.dt-top-scroll');
+        if (!topScroll) {
+            topScroll = document.createElement('div');
+            topScroll.className = 'dt-top-scroll';
+            topScroll.innerHTML = '<div class="dt-top-scroll-inner"></div>';
+
+            const targetContainer = wrap.querySelector('.dt-scroll') || wrap.querySelector('.dt-scroll-head') || scrollBody;
+            targetContainer.parentNode.insertBefore(topScroll, targetContainer);
+
+            let syncingTop = false;
+            let syncingBody = false;
+
+            topScroll.addEventListener('scroll', function () {
+                if (syncingBody) {
+                    syncingBody = false;
+                    return;
+                }
+                syncingTop = true;
+                scrollBody.scrollLeft = topScroll.scrollLeft;
+            });
+
+            scrollBody.addEventListener('scroll', function () {
+                if (syncingTop) {
+                    syncingTop = false;
+                    return;
+                }
+                syncingBody = true;
+                topScroll.scrollLeft = scrollBody.scrollLeft;
+            });
+        }
+
+        const inner = topScroll.querySelector('.dt-top-scroll-inner');
+        if (inner) {
+            if (scrollBody.scrollWidth > scrollBody.clientWidth) {
+                topScroll.style.display = 'block';
+                inner.style.width = scrollBody.scrollWidth + 'px';
+                topScroll.scrollLeft = scrollBody.scrollLeft;
+            } else {
+                topScroll.style.display = 'none';
+            }
+        }
     }
 
 async showEditModal(id) {
