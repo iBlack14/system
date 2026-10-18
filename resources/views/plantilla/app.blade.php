@@ -17,7 +17,6 @@
       content="Sistema en laravel, Sistema de Ventas"
     />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <!--end::Primary Meta Tags-->
     <link rel="icon" href="{{ asset('assets/branding/acotec-mark.png') }}" type="image/png">
     <!--begin::Fonts-->
