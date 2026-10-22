@@ -104,6 +104,52 @@
     <script src="{{asset('datatables/jquery-3.7.1.js')}}"></script>
     <script src="{{asset('datatables/dataTables.js')}}"></script>
     <script src="{{asset('datatables/dataTables.bootstrap5.js')}}"></script>
+    <script>
+      // Barra horizontal superior sincronizada con la barra inferior de cada tabla.
+      $(document).on('init.dt', function (event, settings) {
+        const table = settings && settings.nTable;
+        if (!table) return;
+
+        const dataTable = $(table);
+        const dataContainer = dataTable.closest('.dt-container');
+        const scrollBody = dataContainer.find('.dt-scroll-body').first();
+        const scrollTarget = scrollBody.length
+          ? scrollBody
+          : dataTable.closest('.table-responsive');
+
+        if (!scrollTarget.length || scrollTarget.data('top-scroll-ready')) return;
+
+        const topScroll = $('<div class="acotec-top-table-scroll" aria-label="Desplazamiento horizontal de la tabla" tabindex="0"><div></div></div>');
+        scrollTarget.before(topScroll);
+        scrollTarget.data('top-scroll-ready', true);
+
+        const updateTopScroll = () => {
+          const contentWidth = scrollTarget[0].scrollWidth;
+          topScroll.children('div').css('width', `${contentWidth}px`);
+          topScroll.toggle(contentWidth > scrollTarget[0].clientWidth + 1);
+          topScroll[0].scrollLeft = scrollTarget[0].scrollLeft;
+        };
+
+        let syncing = false;
+        scrollTarget.on('scroll.acotecTopScroll', function () {
+          if (syncing) return;
+          syncing = true;
+          topScroll[0].scrollLeft = this.scrollLeft;
+          syncing = false;
+        });
+
+        topScroll.on('scroll.acotecTopScroll', function () {
+          if (syncing) return;
+          syncing = true;
+          scrollTarget[0].scrollLeft = this.scrollLeft;
+          syncing = false;
+        });
+
+        dataTable.on('draw.dt.acotecTopScroll', updateTopScroll);
+        window.addEventListener('resize', updateTopScroll);
+        updateTopScroll();
+      });
+    </script>
     <script src="{{asset('js/sweetalert2.js')}}"></script>
     <script src="{{asset('js/crud.js')}}"></script>
     @stack('scripts')

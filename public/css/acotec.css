@@ -635,6 +635,35 @@ body.acotec-app:not(.sidebar-collapse) .sidebar-menu .nav-treeview .nav-link.act
   border-radius: 999px;
 }
 
+/* Barra horizontal superior sincronizada con la barra inferior */
+.acotec-top-table-scroll {
+  width: 100%;
+  height: 12px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: #94a3b8 #eef2f7;
+  margin-bottom: 4px;
+}
+
+.acotec-top-table-scroll > div {
+  height: 1px;
+}
+
+.acotec-top-table-scroll::-webkit-scrollbar {
+  height: 12px;
+}
+
+.acotec-top-table-scroll::-webkit-scrollbar-track {
+  background: #eef2f7;
+}
+
+.acotec-top-table-scroll::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+  border: 2px solid #eef2f7;
+  border-radius: 999px;
+}
+
 @media (min-width: 768px) {
   .acotec-app table.wide-data-table {
     width: 100% !important;

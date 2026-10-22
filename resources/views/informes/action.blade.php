@@ -417,23 +417,6 @@
                                     <span class="fw-bold text-white text-truncate" style="font-size: 0.86rem;">{{ $aspecto->orden }}.- {{ $aspecto->nombre }}</span>
                                 </div>
 
-                                <div class="d-flex align-items-center gap-1 flex-shrink-0" onclick="event.stopPropagation();">
-                                    <button type="button"
-                                            class="btn btn-xs btn-primary btn-add-item fw-semibold py-0 px-2 shadow-sm"
-                                            data-aspecto="{{ $aspecto->id }}"
-                                            style="font-size: 0.74rem; height: 24px;">
-                                        <i class="bi bi-plus-lg me-1"></i> Item
-                                    </button>
-
-                                    @if ($aspecto->permite_imagenes)
-                                    <button type="button"
-                                            class="btn btn-xs btn-success btn-add-grupo fw-semibold py-0 px-2 shadow-sm"
-                                            data-aspecto="{{ $aspecto->id }}"
-                                            style="font-size: 0.74rem; height: 24px;">
-                                        <i class="bi bi-folder-plus me-1"></i> Fotos
-                                    </button>
-                                    @endif
-                                </div>
                             </div>
 
                             <div class="card-body aspecto-body">
